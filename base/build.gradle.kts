@@ -1,28 +1,28 @@
 plugins {
-    id ("com.android.application")
-    id ("org.jetbrains.kotlin.android")
-    id ("kotlin-kapt")
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
-
+    namespace = "com.wantique.base"
     compileSdk = Version.compileSdk
-    buildToolsVersion = Version.buildToolsVersion
 
     defaultConfig {
-        applicationId = "com.wantique.allinone"
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             isMinifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -36,19 +36,18 @@ android {
     buildFeatures {
         dataBinding = true
     }
-
-    namespace  = "com.wantique.allinone"
 }
 
 dependencies {
-    implementation(project(":resource"))
-    implementation(project(":base"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
-    implementation(AndroidX.CONSTRAINT_LAYOUT)
     testImplementation(AndroidTest.JUNIT)
     androidTestImplementation(AndroidTest.EXT_JUNIT)
     androidTestImplementation(AndroidTest.ESPRESSO_CORE)
+    implementation(ThirdParty.DAGGER)
+    kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(AndroidX.NAVIGATION_UI)
+    implementation(AndroidX.NAVIGATION_FRAGMENT)
 }
