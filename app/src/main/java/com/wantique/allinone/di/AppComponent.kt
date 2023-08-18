@@ -3,6 +3,7 @@ package com.wantique.allinone.di
 import android.content.Context
 import com.wantique.auth.ui.di.AuthComponent
 import com.wantique.base.di.CoroutineDispatcherModule
+import com.wantique.base.di.ViewModelFactoryModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module

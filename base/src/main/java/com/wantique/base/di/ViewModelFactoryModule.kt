@@ -1,7 +1,6 @@
-package com.wantique.allinone.di
+package com.wantique.base.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.wantique.base.di.ViewModelFactory
 import dagger.Binds
 import dagger.Module
 
