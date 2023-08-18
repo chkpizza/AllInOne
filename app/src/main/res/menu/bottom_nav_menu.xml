@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home_nav_graph"
+        android:title="홈" />
+    <item android:id="@+id/daily_nav_graph"
+        android:title="제보" />
+    <item android:id="@+id/mypage_nav_graph"
+        android:title="마이" />
+</menu>

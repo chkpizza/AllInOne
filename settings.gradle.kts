@@ -16,3 +16,4 @@ rootProject.name = "AllInOne"
 include(":app")
 include(":resource")
 include(":base")
+include(":auth")
