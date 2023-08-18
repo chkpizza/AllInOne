@@ -16,7 +16,7 @@ rootProject.name = "AllInOne"
 include(":app")
 include(":resource")
 include(":base")
-include(":auth")
+include(":feature:auth")
 include(":feature:home")
 include(":feature:daily")
 include(":feature:mypage")

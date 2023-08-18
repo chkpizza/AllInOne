@@ -43,7 +43,6 @@ android {
 dependencies {
     implementation(project(":resource"))
     implementation(project(":base"))
-
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
