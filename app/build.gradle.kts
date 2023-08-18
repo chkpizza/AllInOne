@@ -43,6 +43,11 @@ android {
 dependencies {
     implementation(project(":resource"))
     implementation(project(":base"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:home"))
+    implementation(project(":feature:daily"))
+    implementation(project(":feature:mypage"))
+
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
