@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="defaultButtonStyle">
+        <item name="android:background">@drawable/common_btn_selector</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@drawable/common_tv_selector</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="toolbarTextViewStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="titleTextViewStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="defaultTextViewStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="defaultEditTextStyle">
+        <item name="android:background">@drawable/common_et_background</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/subText</item>
+    </style>
+
+    <style name="dialogBodyTextStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/mainText</item>
+    </style>
+
+    <style name="dialogPositiveButtonTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="dialogNegativeButtonTextStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/subText</item>
+    </style>
+
+    <style name="defaultProgressBar">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+</resources>

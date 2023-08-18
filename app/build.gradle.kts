@@ -37,6 +37,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":resource"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)

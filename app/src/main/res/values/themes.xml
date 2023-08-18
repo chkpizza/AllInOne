@@ -6,5 +6,8 @@
         <item name="android:colorBackground">@color/white</item>
     </style>
 
-    <style name="Theme.AllInOne" parent="Base.Theme.AllInOne" />
+    <style name="Theme.AllInOne" parent="Base.Theme.AllInOne">
+        <item name="android:navigationBarColor">#B3FFFFFF</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
 </resources>
