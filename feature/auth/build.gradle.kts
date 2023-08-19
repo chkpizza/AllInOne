@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation(project(":resource"))
     implementation(project(":base"))
+    implementation(project(":firebase"))
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
     implementation(Google.MATERIAL)
@@ -51,6 +52,4 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
-    implementation(platform(Firebase.FIREBASE_BOM))
-    implementation(Firebase.FIREBASE_AUTH)
 }
