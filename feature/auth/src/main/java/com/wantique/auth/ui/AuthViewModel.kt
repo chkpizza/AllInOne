@@ -15,6 +15,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -28,8 +29,8 @@ class AuthViewModel @Inject constructor(
     private val _navigateToHome = MutableSharedFlow<Boolean>()
     val navigateToHome = _navigateToHome.asSharedFlow()
 
-    private val _timer = MutableLiveData<Int>()
-    val timer: LiveData<Int> get() = _timer
+    private val _timer = MutableStateFlow<UiState<Int>>(UiState.Initialize)
+    val timer = _timer.asStateFlow()
 
     private lateinit var timerJob: Job
 
@@ -41,7 +42,7 @@ class AuthViewModel @Inject constructor(
         timerJob = viewModelScope.launch {
             var remain = limit
             while (remain > 0) {
-                _timer.value = --remain
+                _timer.value = UiState.Success(--remain)
                 delay(1000)
             }
         }

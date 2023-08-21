@@ -45,7 +45,6 @@ class VerificationFragment :
     private val onVerificationCredentialCallback = object : OnVerificationCredentialCallback {
         /** 인증 번호 검증 성공 시 호출 */
         override fun onSuccess() {
-            //navigator.navigateToMain()
             viewModel.isExistUser()
         }
 
