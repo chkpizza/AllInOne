@@ -11,8 +11,8 @@ import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -21,8 +21,8 @@ import kotlinx.coroutines.launch
 
 
 open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Context) : ViewModel() {
-    protected val _errorState = MutableSharedFlow<Throwable>()
-    val errorState = _errorState.asSharedFlow()
+    protected val _errorState = MutableStateFlow<Throwable?>(null)
+    val errorState = _errorState.asStateFlow()
 
     private lateinit var networkState: NetworkState
 

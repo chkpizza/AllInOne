@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.VerificationFragment">
+        tools:context=".ui.VerificationFragment"
+        app:error="@{vm.errorState}">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/verification_group"

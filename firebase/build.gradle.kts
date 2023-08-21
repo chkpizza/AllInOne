@@ -44,4 +44,6 @@ dependencies {
     implementation(platform(Firebase.FIREBASE_BOM))
     implementation(Firebase.FIREBASE_ANALYTICS)
     implementation(Firebase.FIREBASE_AUTH)
+    implementation(Firebase.FIRESTORE)
+
 }

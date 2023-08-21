@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navGraphViewModels
-import com.google.android.material.snackbar.Snackbar
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentVerificationBinding
 import com.wantique.auth.ui.di.AuthComponentProvider
@@ -21,7 +20,6 @@ import com.wantique.firebase.FirebaseAuth
 import com.wantique.firebase.listener.OnVerificationCredentialCallback
 import com.wantique.firebase.listener.OnVerificationStateCallback
 import kotlinx.coroutines.launch
-import java.text.DecimalFormat
 import javax.inject.Inject
 
 class VerificationFragment :
@@ -47,7 +45,8 @@ class VerificationFragment :
     private val onVerificationCredentialCallback = object : OnVerificationCredentialCallback {
         /** 인증 번호 검증 성공 시 호출 */
         override fun onSuccess() {
-            navigator.navigateToMain()
+            //navigator.navigateToMain()
+            viewModel.isExistUser()
         }
 
         /** 인증 번호 검증 실패 시 호출 예) 시간 만료 등 */
@@ -69,6 +68,7 @@ class VerificationFragment :
 
         updateInsets()
         setUpViewListener()
+        setUpObservers()
     }
 
     private fun setUpViewListener() {
@@ -110,5 +110,18 @@ class VerificationFragment :
 
     private fun verifyCode() {
         FirebaseAuth.getInstance().verifyCode(verificationId!!, binding.verificationEtInputCode.text.toString(), onVerificationCredentialCallback)
+    }
+
+    private fun setUpObservers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToHome.collect {
+                    when(it) {
+                        true -> navigator.navigateToMain()
+                        false -> navigator.navigate(R.id.action_verificationFragment_to_settingsFragment)
+                    }
+                }
+            }
+        }
     }
 }
