@@ -1,7 +1,6 @@
 package com.wantique.firebase.listener
 
 interface OnVerificationStateCallback {
-    fun onVerificationCompleted()
-    fun onVerificationFailed()
+    fun onVerificationFailed(message: String)
     fun onCodeSent(verificationId: String)
 }

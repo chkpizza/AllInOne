@@ -4,4 +4,12 @@
         format: component_description
         ex: sms_verify_toolbar_title
      -->
+    <string name="auth_sign_in">시작하기</string>
+
+    <string name="verification_toolbar_title">본인인증</string>
+    <string name="verification_input_phone_number_title">휴대폰 인증</string>
+    <string name="verification_input_phone_number_hint">휴대폰 번호를 입력해주세요</string>
+    <string name="verification_request_code">인증번호 받기</string>
+    <string name="verification_input_code_hint">인증번호를 입력해주세요</string>
+    <string name="verification_verify_code">인증번호 확인하기</string>
 </resources>
