@@ -4,15 +4,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+        <import type="com.wantique.base.state.UiState" />
         <variable
             name="vm"
-            type="com.wantique.auth.ui.AuthViewModel" />
+            type="com.wantique.auth.ui.vm.AuthViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.VerificationFragment"
+        tools:context=".ui.view.VerificationFragment"
         app:error="@{vm.errorState}">
 
         <androidx.constraintlayout.widget.Group
@@ -118,6 +120,17 @@
             android:layout_marginEnd="16dp"
             android:text="@string/verification_verify_code"
             style="@style/defaultButtonStyle"/>
+
+        <ProgressBar
+            android:id="@+id/verification_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="7dp"
+            android:visibility="@{(vm.loadingState instanceof UiState.Loading) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

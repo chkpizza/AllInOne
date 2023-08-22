@@ -24,6 +24,9 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
 
+    protected val _loadingState = MutableStateFlow<UiState<Boolean>>(UiState.Initialize)
+    val loadingState = _loadingState.asStateFlow()
+
     private lateinit var networkState: NetworkState
 
     init {
@@ -57,10 +60,14 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     }
 
     fun <T> safeCall(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
+        _loadingState.value = UiState.Loading
+
         if (isNetworkAvailable()) {
             emitAll(call())
         } else {
             emit(UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요")))
         }
+
+        _loadingState.value = UiState.Initialize
     }
 }

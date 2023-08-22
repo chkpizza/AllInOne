@@ -1,6 +1,7 @@
-package com.wantique.auth.ui
+package com.wantique.auth.ui.view
 
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,12 +15,16 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navGraphViewModels
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentVerificationBinding
+import com.wantique.auth.ui.vm.AuthViewModel
 import com.wantique.auth.ui.di.AuthComponentProvider
 import com.wantique.base.ui.BaseFragment
+import com.wantique.firebase.FireStore
 import com.wantique.firebase.FirebaseAuth
 import com.wantique.firebase.listener.OnVerificationCredentialCallback
 import com.wantique.firebase.listener.OnVerificationStateCallback
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class VerificationFragment :
@@ -114,13 +119,44 @@ class VerificationFragment :
     private fun setUpObservers() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateToHome.collect {
+                viewModel.exist.collect {
                     when(it) {
-                        true -> navigator.navigateToMain()
-                        false -> navigator.navigate(R.id.action_verificationFragment_to_settingsFragment)
+                        true -> viewModel.isWithdrawalUser()
+                        false -> viewModel.registerUser()
                     }
                 }
             }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.withdrawal.collect {
+                    when(it) {
+                        true -> navigator.navigate(R.id.action_verificationFragment_to_cancelWithdrawalFragment)
+                        false -> finalize()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.registration.collect {
+                    when(it) {
+                        true -> finalize()
+                        false -> Toast.makeText(requireActivity(), "사용자 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun finalize() {
+        lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                requireActivity().getPreferences(MODE_PRIVATE).edit().putBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), true).apply()
+            }
+            navigator.navigateToMain()
         }
     }
 }

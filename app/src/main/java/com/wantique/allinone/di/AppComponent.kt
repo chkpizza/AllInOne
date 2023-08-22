@@ -20,6 +20,7 @@ interface AppComponent {
     }
 
     fun getAuthComponent(): AuthComponent.Factory
+
 }
 
 @Module(subcomponents = [AuthComponent::class])

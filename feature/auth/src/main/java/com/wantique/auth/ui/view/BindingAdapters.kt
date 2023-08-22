@@ -1,9 +1,12 @@
-package com.wantique.auth.ui
+package com.wantique.auth.ui.view
 
+import android.net.Uri
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
+import com.bumptech.glide.Glide
 import com.wantique.base.state.UiState
 import com.wantique.base.state.isSuccessOrNull
 import java.text.DecimalFormat
@@ -29,6 +32,16 @@ object BindingAdapters {
     fun setError(view: ConstraintLayout, error: Throwable?) {
         error?.let {
             Toast.makeText(view.context, "에러 발생!!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @BindingAdapter("image")
+    @JvmStatic
+    fun setImage(view: ImageView, item: UiState<String>) {
+        item.isSuccessOrNull()?.let {
+            Glide.with(view.context)
+                .load(it)
+                .into(view)
         }
     }
 }

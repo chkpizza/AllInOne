@@ -10,14 +10,6 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 class RepositoryModule {
-    /*
-    @Provides
-    @FeatureScope
-    fun provideAuthRepository(dispatcher: CoroutineDispatcher): TestRepository {
-        return TestRepositoryImpl(dispatcher)
-    }
-     */
-
     @FeatureScope
     @Provides
     fun provideAuthRepository(dispatcher: CoroutineDispatcher, firestore: FireStore): AuthRepository {

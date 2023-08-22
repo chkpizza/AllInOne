@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.AuthFragment">
+        tools:context=".ui.view.AuthFragment">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/auth_btn_sign_in"

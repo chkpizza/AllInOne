@@ -1,7 +1,8 @@
 package com.wantique.auth.ui.di
 
-import com.wantique.auth.ui.AuthFragment
-import com.wantique.auth.ui.VerificationFragment
+import com.wantique.auth.ui.view.AuthFragment
+import com.wantique.auth.ui.view.CancelWithdrawalFragment
+import com.wantique.auth.ui.view.VerificationFragment
 import com.wantique.base.di.FeatureScope
 import dagger.Subcomponent
 
@@ -15,4 +16,5 @@ interface AuthComponent {
 
     fun inject(fragment: AuthFragment)
     fun inject(fragment: VerificationFragment)
+    fun inject(fragment: CancelWithdrawalFragment)
 }

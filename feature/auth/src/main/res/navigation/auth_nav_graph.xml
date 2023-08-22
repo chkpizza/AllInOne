@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/authFragment"
-        android:name="com.wantique.auth.ui.AuthFragment"
+        android:name="com.wantique.auth.ui.view.AuthFragment"
         android:label="fragment_auth"
         tools:layout="@layout/fragment_auth" >
         <action
@@ -16,14 +16,14 @@
     </fragment>
     <fragment
         android:id="@+id/verificationFragment"
-        android:name="com.wantique.auth.ui.VerificationFragment"
+        android:name="com.wantique.auth.ui.view.VerificationFragment"
         android:label="VerificationFragment" >
         <action
-            android:id="@+id/action_verificationFragment_to_settingsFragment"
-            app:destination="@id/settingsFragment" />
+            android:id="@+id/action_verificationFragment_to_cancelWithdrawalFragment"
+            app:destination="@id/cancelWithdrawalFragment" />
     </fragment>
     <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.wantique.auth.ui.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:id="@+id/cancelWithdrawalFragment"
+        android:name="com.wantique.auth.ui.view.CancelWithdrawalFragment"
+        android:label="CancelWithdrawalFragment" />
 </navigation>
