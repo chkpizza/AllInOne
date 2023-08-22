@@ -11,4 +11,5 @@ class NewApplication : Application(), AuthComponentProvider {
     override fun getAuthComponent(): AuthComponent {
         return appComponent.getAuthComponent().create()
     }
+
 }

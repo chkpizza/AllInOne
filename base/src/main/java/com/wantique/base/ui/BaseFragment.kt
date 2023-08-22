@@ -19,7 +19,7 @@ open class BaseFragment<T: ViewDataBinding>(
     @LayoutRes private val layoutResId: Int
 ) : Fragment() {
     private var _binding: T? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     protected lateinit var navigator: Navigator
 

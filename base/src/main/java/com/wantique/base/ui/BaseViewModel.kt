@@ -11,8 +11,8 @@ import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
@@ -21,8 +21,11 @@ import kotlinx.coroutines.launch
 
 
 open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Context) : ViewModel() {
-    protected val _errorState = MutableSharedFlow<Throwable>()
-    val errorState = _errorState.asSharedFlow()
+    protected val _errorState = MutableStateFlow<Throwable?>(null)
+    val errorState = _errorState.asStateFlow()
+
+    protected val _loadingState = MutableStateFlow<UiState<Boolean>>(UiState.Initialize)
+    val loadingState = _loadingState.asStateFlow()
 
     private lateinit var networkState: NetworkState
 
@@ -57,10 +60,14 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     }
 
     fun <T> safeCall(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
+        _loadingState.value = UiState.Loading
+
         if (isNetworkAvailable()) {
             emitAll(call())
         } else {
             emit(UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요")))
         }
+
+        _loadingState.value = UiState.Initialize
     }
 }

@@ -5,17 +5,6 @@ sealed class UiState<out T> {
     object Loading: UiState<Nothing>()
     data class Success<T>(val data: T): UiState<T>()
     data class Error(val error: Throwable?): UiState<Nothing>()
-
-    /*
-    fun<T> isSuccess(value: UiState<T>): T? {
-        return if(value is Success) {
-            value.data
-        } else {
-            null
-        }
-    }
-
-     */
 }
 
 fun <T> UiState<T>.isSuccessOrNull(): T? {
@@ -32,4 +21,8 @@ fun <T> UiState<T>.isErrorOrNull(): Throwable? {
     } else {
         null
     }
+}
+
+fun <T> UiState<T>.getValue(): T {
+    return (this as UiState.Success).data
 }

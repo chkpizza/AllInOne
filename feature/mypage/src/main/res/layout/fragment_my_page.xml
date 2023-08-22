@@ -15,7 +15,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/hello_blank_fragment" />
+            android:gravity="center"
+            android:text="MyPage Fragment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

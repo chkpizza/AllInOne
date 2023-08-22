@@ -1,12 +1,14 @@
-package com.wantique.auth.ui
+package com.wantique.auth.ui.view
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
+import com.bumptech.glide.Glide
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentAuthBinding
+import com.wantique.auth.ui.vm.AuthViewModel
 import com.wantique.auth.ui.di.AuthComponentProvider
 import com.wantique.base.ui.BaseFragment
 import javax.inject.Inject
@@ -23,5 +25,11 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        updateInsets()
+        setUpViewListener()
+    }
+
+    private fun setUpViewListener() {
+        binding.authBtnSignIn.setOnClickListener { navigator.navigate(R.id.action_authFragment_to_verificationFragment) }
     }
 }

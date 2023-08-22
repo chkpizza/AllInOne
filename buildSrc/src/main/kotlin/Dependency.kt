@@ -20,14 +20,18 @@ object AndroidTest {
 }
 
 object Firebase {
-    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:32.2.0"
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:32.2.2"
     const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx"
     const val FIREBASE_AUTH = "com.google.firebase:firebase-auth-ktx"
     const val FIRESTORE = "com.google.firebase:firebase-firestore-ktx"
+    const val FIREBASE_STORAGE = "com.google.firebase:firebase-storage-ktx"
 }
 
 object ThirdParty {
     const val DAGGER = "com.google.dagger:dagger:2.25.2"
     const val DAGGER_COMPILER = "com.google.dagger:dagger-compiler:2.25.2"
     const val NAVER_MAP = "com.naver.maps:map-sdk:3.17.0"
+    const val SQUIRCLE_IMAGE_VIEW = "app.juky:squircleview:0.6.1"
+    const val GLIDE = "com.github.bumptech.glide:glide:4.16.0"
+
 }

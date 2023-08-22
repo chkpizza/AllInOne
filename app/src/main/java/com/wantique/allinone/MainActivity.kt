@@ -1,6 +1,5 @@
 package com.wantique.allinone
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
@@ -35,7 +34,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
     }
 
     private fun initializeNavigationGraph() {
-        navigator.navigateToInit()
+        if(getPreferences(MODE_PRIVATE).getBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), false)) {
+            navigator.navigateToMain()
+        } else {
+            navigator.navigateToInit()
+        }
     }
 
     override fun getNavigator(): Navigator = navigator
