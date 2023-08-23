@@ -1,9 +1,11 @@
 package com.wantique.home.ui.vm
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
+import com.wantique.base.state.getError
 import com.wantique.base.state.getValue
 import com.wantique.base.state.isErrorOrNull
 import com.wantique.base.state.isSuccessOrNull
@@ -29,27 +31,22 @@ class HomeViewModel @Inject constructor(
     val currentCategoryPosition = _currentCategoryPosition.asStateFlow()
 
     fun fetchHome() {
-        if(home.value is UiState.Initialize) {
+        if(home.value !is UiState.Success) {
             viewModelScope.launch {
-                mutableListOf<Home>().apply {
-                    getBanner().also {
-                        it.isErrorOrNull()?.let { e ->
-                            _errorState.emit(e)
-                        } ?: run {
-                            add(it.getValue())
-                        }
-                    }
+                val banner = getBanner()
+                val category = getCategory()
 
-                    getCategory().also {
-                        it.isErrorOrNull()?.let { e ->
-                            _errorState.emit(e)
-                        } ?: run {
-                            add(it.getValue())
-                        }
+                when {
+                    banner.isErrorOrNull() != null -> {
+                        _errorState.value = banner.getError()
                     }
-
-                    _home.value = UiState.Success(this)
-                    _currentCategoryPosition.value = UiState.Success(0)
+                    category.isErrorOrNull() != null -> {
+                        _errorState.value = category.getError()
+                    }
+                    else -> {
+                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue()))
+                        _currentCategoryPosition.value = UiState.Success(0)
+                    }
                 }
             }
         }

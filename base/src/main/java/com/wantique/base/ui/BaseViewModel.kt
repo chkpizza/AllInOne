@@ -64,41 +64,23 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
         _loadingState.value = UiState.Loading
 
         if (isNetworkAvailable()) {
+            _errorState.value = null
             emitAll(call())
         } else {
-            emit(UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요")))
+            emit(UiState.Error(Throwable("NETWORK_CONNECTION_ERROR")))
         }
 
         _loadingState.value = UiState.Initialize
     }
-
-
-    /*
-    @OptIn(ExperimentalTypeInference::class)
-    @OverloadResolutionByLambdaReturnType
-    suspend fun <T> safeFlow(call: suspend () -> UiState<T>): UiState<T> {
-        _loadingState.value = UiState.Loading
-
-        val state = if(isNetworkAvailable()) {
-             call()
-        } else {
-            UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요"))
-        }
-
-        _loadingState.value = UiState.Initialize
-
-        return state
-    }
-
-     */
 
     suspend fun <T> safeCall(call: suspend  () -> UiState<T>): UiState<T> {
         _loadingState.value = UiState.Loading
 
         val state = if(isNetworkAvailable()) {
+            _errorState.value = null
             call()
         } else {
-            UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요"))
+            UiState.Error(Throwable("NETWORK_CONNECTION_ERROR"))
         }
 
         _loadingState.value = UiState.Initialize

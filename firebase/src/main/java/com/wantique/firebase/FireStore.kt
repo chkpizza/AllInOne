@@ -31,13 +31,13 @@ class FireStore private constructor() {
     }
 
     suspend fun getBanner(): BannerDto? {
-        Firebase.firestore.collection("home").document("banner").get().await().also {
+        Firebase.firestore.collection("banner").document("home").get().await().also {
             return it.toObject<BannerDto>()
         }
     }
 
     suspend fun getCategory(): CategoryDto? {
-        Firebase.firestore.collection("home").document("category").get().await().also {
+        Firebase.firestore.collection("category").document("subject").get().await().also {
             return it.toObject<CategoryDto>()
         }
     }
@@ -59,48 +59,37 @@ class FireStore private constructor() {
         }
     }
 
-    suspend fun bannerTest() {
-        /*
-        Firebase.firestore.collection("home").document("banner").set(
-            Banner(
-                "공지사항입니다",
-                listOf(BannerItem("htts://www.google.com", "123123"), BannerItem("https://www.naver.com", "123123123"))
+    suspend fun test() {
+        Firebase.firestore.collection("professor_list").document("korean").set(
+            Professor(
+                listOf(ProfessorItem("8e4cf5c70c93a506889bf9e43835cc9f", "이선재","공단기"), ProfessorItem("b19d46253ba9ce5becc22d2a18580e14", "이유진", "메가"))
             )
         ).await()
-
-         */
-        /*
-        Firebase.firestore.collection("home").document("banner").get().await().also {
-            it.toObject<Banner>()?.let { banner ->
-                Log.d("BannerTest", banner.toString())
-            }
-        }
-
-         */
     }
 }
 
 /*
-data class Banner(
-    val item: List<BannerItem> = emptyList()
+data class Professors(
+    val item: List<Professor>
 )
 
-data class BannerItem(
-    val url: String = "",
-    val id: String = ""
+data class Professor(
+    val subject: String,
+    val item: List<ProfessorItem>
 )
 
- */
-
-/*
-data class Banner(
-    val notice: String = "",
-    val item: List<BannerItem> = emptyList()
-)
-
-data class BannerItem(
-    val url: String = "",
-    val id: String = ""
+data class ProfessorItem(
+    val name: String,
+    val belong: String
 )
 
  */
+data class Professor(
+    val item: List<ProfessorItem>
+)
+
+data class ProfessorItem(
+    val id: String,
+    val name: String,
+    val belong: String
+)

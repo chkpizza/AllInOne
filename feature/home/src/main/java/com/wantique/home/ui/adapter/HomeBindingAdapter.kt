@@ -2,8 +2,6 @@ package com.wantique.home.ui.adapter
 
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
@@ -12,7 +10,7 @@ import com.wantique.base.state.UiState
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.home.domain.model.Home
 
-object BindingAdapters {
+object HomeBindingAdapter {
     @BindingAdapter("home")
     @JvmStatic
     fun setHome(view: RecyclerView, item: UiState<List<Home>>) {
@@ -43,13 +41,23 @@ object BindingAdapters {
         }
     }
 
+    /*
     @BindingAdapter("errorHandler")
     @JvmStatic
     fun handleError(view: ConstraintLayout, e: Throwable?) {
         e?.let {
-            Toast.makeText(view.context, e.message.toString(), Toast.LENGTH_SHORT).show()
+            if(it.message == "NETWORK_CONNECTION_ERROR") {
+                view.isVisible = true
+            } else {
+                Toast.makeText(view.context, it.message, Toast.LENGTH_SHORT).show()
+                view.isVisible = false
+            }
+        } ?: run {
+            view.isVisible = false
         }
     }
+
+     */
 
     @BindingAdapter("indicator")
     @JvmStatic

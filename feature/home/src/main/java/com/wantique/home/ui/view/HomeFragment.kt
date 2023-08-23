@@ -2,6 +2,7 @@ package com.wantique.home.ui.view
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         updateInsets()
         setUpRecyclerView()
+        setUpViewListener()
     }
 
     private fun setUpRecyclerView() {
@@ -79,6 +81,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         homeAdapter = HomeAdapter(onCategoryClickListener)
         binding.homeRvContent.adapter = homeAdapter
         viewModel.fetchHome()
+    }
+
+    private fun setUpViewListener() {
+        binding.homeLayoutError.networkErrorBtnRetry.setOnClickListener {
+            viewModel.fetchHome()
+        }
     }
 
     override fun onDestroyView() {
