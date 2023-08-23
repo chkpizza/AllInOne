@@ -63,7 +63,7 @@ class AuthViewModel @Inject constructor(
 
     fun isExistUser() {
         viewModelScope.launch {
-            safeCall {
+            safeFlow {
                 isExistUserUseCase()
             }.onEach {
                 it.isErrorOrNull()?.let { throwable ->
@@ -77,7 +77,7 @@ class AuthViewModel @Inject constructor(
 
     fun isWithdrawalUser() {
         viewModelScope.launch {
-            safeCall {
+            safeFlow {
                 isWithdrawalUserUseCase()
             }.onEach {
                 it.isErrorOrNull()?.let { throwable ->
@@ -91,7 +91,7 @@ class AuthViewModel @Inject constructor(
 
     fun registerUser() {
         viewModelScope.launch {
-            safeCall {
+            safeFlow {
                 registerUserUseCase()
             }.onEach {
                 it.isErrorOrNull()?.let { throwable ->
@@ -105,7 +105,7 @@ class AuthViewModel @Inject constructor(
 
     fun redoUser() {
         viewModelScope.launch {
-            safeCall {
+            safeFlow {
                 redoUserUseCase()
             }.onEach {
                 it.isErrorOrNull()?.let { throwable ->
@@ -114,6 +114,26 @@ class AuthViewModel @Inject constructor(
                     _redo.emit(it.getValue())
                 }
             }.collect()
+        }
+    }
+
+    fun testOuter() {
+        viewModelScope.launch {
+            val home = mutableListOf<Boolean>()
+
+            test().also {
+                it.isErrorOrNull()?.let { throwable ->
+                    _errorState.emit(throwable)
+                } ?: run {
+                    home.add(it.getValue())
+                }
+            }
+        }
+    }
+
+    private suspend fun test(): UiState<Boolean> {
+        return safeCall {
+            UiState.Success(true)
         }
     }
 }

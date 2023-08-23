@@ -27,6 +27,20 @@
         <item name="android:fontFamily">@font/pretendard_medium</item>
     </style>
 
+    <style name="indicatorTextViewStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="noticeTextViewStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:background">@color/colorPrimary</item>
+
+    </style>
+
     <style name="defaultEditTextStyle">
         <item name="android:background">@drawable/common_et_background</item>
         <item name="android:padding">16dp</item>

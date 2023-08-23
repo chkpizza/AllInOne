@@ -40,6 +40,7 @@ android {
 dependencies {
     implementation(project(":resource"))
     implementation(project(":base"))
+    implementation(project(":firebase"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
@@ -51,4 +52,6 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(ThirdParty.GLIDE)
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
 }

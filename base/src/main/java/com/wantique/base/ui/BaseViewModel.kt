@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import kotlin.experimental.ExperimentalTypeInference
 
 
 open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Context) : ViewModel() {
@@ -59,7 +60,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
         is NetworkState.UnAvailable -> false
     }
 
-    fun <T> safeCall(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
+    fun <T> safeFlow(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
         _loadingState.value = UiState.Loading
 
         if (isNetworkAvailable()) {
@@ -69,5 +70,39 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
         }
 
         _loadingState.value = UiState.Initialize
+    }
+
+
+    /*
+    @OptIn(ExperimentalTypeInference::class)
+    @OverloadResolutionByLambdaReturnType
+    suspend fun <T> safeFlow(call: suspend () -> UiState<T>): UiState<T> {
+        _loadingState.value = UiState.Loading
+
+        val state = if(isNetworkAvailable()) {
+             call()
+        } else {
+            UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요"))
+        }
+
+        _loadingState.value = UiState.Initialize
+
+        return state
+    }
+
+     */
+
+    suspend fun <T> safeCall(call: suspend  () -> UiState<T>): UiState<T> {
+        _loadingState.value = UiState.Loading
+
+        val state = if(isNetworkAvailable()) {
+            call()
+        } else {
+            UiState.Error(Throwable("네트워크 연결 상태를 확인해 주세요"))
+        }
+
+        _loadingState.value = UiState.Initialize
+
+        return state
     }
 }

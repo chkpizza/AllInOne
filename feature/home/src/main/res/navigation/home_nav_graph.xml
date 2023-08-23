@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.wantique.home.HomeFragment"
+        android:name="com.wantique.home.ui.view.HomeFragment"
         android:label="HomeFragment" />
 </navigation>

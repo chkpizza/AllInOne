@@ -4,6 +4,7 @@ import android.content.Context
 import com.wantique.auth.ui.di.AuthComponent
 import com.wantique.base.di.CoroutineDispatcherModule
 import com.wantique.base.di.ViewModelFactoryModule
+import com.wantique.home.di.HomeComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -20,8 +21,8 @@ interface AppComponent {
     }
 
     fun getAuthComponent(): AuthComponent.Factory
-
+    fun getHomeComponent(): HomeComponent.Factory
 }
 
-@Module(subcomponents = [AuthComponent::class])
+@Module(subcomponents = [AuthComponent::class, HomeComponent::class])
 object SubComponentModule
