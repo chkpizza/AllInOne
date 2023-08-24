@@ -8,6 +8,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.ProfessorsDto
 import com.wantique.firebase.model.UserDto
 import kotlinx.coroutines.tasks.await
 
@@ -42,6 +43,52 @@ class FireStore private constructor() {
         }
     }
 
+    suspend fun getProfessors(): List<ProfessorsDto> {
+        val professors = mutableListOf<ProfessorsDto>()
+        Firebase.firestore.collection("professor_list").document("korean").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorsDto>()?.let {
+                professors.add(it)
+            } ?: run {
+                professors.add(ProfessorsDto())
+            }
+        }
+
+
+        Firebase.firestore.collection("professor_list").document("english").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorsDto>()?.let {
+                professors.add(it)
+            } ?: run {
+                professors.add(ProfessorsDto())
+            }
+        }
+
+        Firebase.firestore.collection("professor_list").document("history").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorsDto>()?.let {
+                professors.add(it)
+            } ?: run {
+                professors.add(ProfessorsDto())
+            }
+        }
+
+        Firebase.firestore.collection("professor_list").document("administrative_law").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorsDto>()?.let {
+                professors.add(it)
+            } ?: run {
+                professors.add(ProfessorsDto())
+            }
+        }
+
+        Firebase.firestore.collection("professor_list").document("public_administration").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorsDto>()?.let {
+                professors.add(it)
+            } ?: run {
+                professors.add(ProfessorsDto())
+            }
+        }
+
+        return professors
+    }
+
     private suspend fun uploadProfileImage(imageUri: String): String {
         val ref = Firebase.storage.reference.child("profile").child(Firebase.auth.uid.toString()).child("profileImage.jpg")
         return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
@@ -58,38 +105,4 @@ class FireStore private constructor() {
             return firestore
         }
     }
-
-    suspend fun test() {
-        Firebase.firestore.collection("professor_list").document("korean").set(
-            Professor(
-                listOf(ProfessorItem("8e4cf5c70c93a506889bf9e43835cc9f", "이선재","공단기"), ProfessorItem("b19d46253ba9ce5becc22d2a18580e14", "이유진", "메가"))
-            )
-        ).await()
-    }
 }
-
-/*
-data class Professors(
-    val item: List<Professor>
-)
-
-data class Professor(
-    val subject: String,
-    val item: List<ProfessorItem>
-)
-
-data class ProfessorItem(
-    val name: String,
-    val belong: String
-)
-
- */
-data class Professor(
-    val item: List<ProfessorItem>
-)
-
-data class ProfessorItem(
-    val id: String,
-    val name: String,
-    val belong: String
-)

@@ -23,7 +23,9 @@ import com.wantique.home.domain.model.BannerItem
 import com.wantique.home.domain.model.Home
 import com.wantique.home.ui.adapter.HomeAdapter
 import com.wantique.home.di.HomeComponentProvider
+import com.wantique.home.domain.model.ProfessorItem
 import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.adapter.listener.OnProfessorClickListener
 import com.wantique.home.ui.vm.HomeViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -66,7 +68,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
-        updateInsets()
+        updateTopInsets()
         setUpRecyclerView()
         setUpViewListener()
     }
@@ -78,7 +80,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
 
-        homeAdapter = HomeAdapter(onCategoryClickListener)
+        val onProfessorClickListener = object : OnProfessorClickListener {
+            override fun onClick(professor: ProfessorItem) {
+                Toast.makeText(requireActivity(), "${professor.belong} 소속 ${professor.name} 교수님", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener)
         binding.homeRvContent.adapter = homeAdapter
         viewModel.fetchHome()
     }

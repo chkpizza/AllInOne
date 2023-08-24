@@ -4,7 +4,7 @@ import android.util.Log
 import com.wantique.base.state.Resource
 import com.wantique.firebase.FireStore
 import com.wantique.home.data.mapper.Mapper
-import com.wantique.home.domain.model.Home
+import com.wantique.home.domain.model.Professors
 import com.wantique.home.domain.repository.HomeRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -32,6 +32,14 @@ class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDi
                 Resource.Error(Throwable("카테고리 정보를 가져오지 못했습니다"))
             }
         } catch(e: Exception) {
+            Resource.Error(e)
+        }
+    }
+
+    override suspend fun getProfessors(): Resource<List<Professors>> = withContext(dispatcher) {
+        try {
+            Resource.Success(Mapper.mapperToDomain(fireStore.getProfessors()))
+        } catch (e: Exception) {
             Resource.Error(e)
         }
     }
