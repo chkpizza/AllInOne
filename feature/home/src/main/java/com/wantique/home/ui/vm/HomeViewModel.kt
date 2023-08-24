@@ -11,7 +11,6 @@ import com.wantique.base.state.isErrorOrNull
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseViewModel
 import com.wantique.home.domain.model.Home
-import com.wantique.home.domain.model.Professors
 import com.wantique.home.domain.usecase.GetBannerUseCase
 import com.wantique.home.domain.usecase.GetCategoryUseCase
 import com.wantique.home.domain.usecase.GetProfessorsUseCase
@@ -33,7 +32,7 @@ class HomeViewModel @Inject constructor(
     private val _currentCategoryPosition = MutableStateFlow<UiState<Int>>(UiState.Initialize)
     val currentCategoryPosition = _currentCategoryPosition.asStateFlow()
 
-    private val _professorsState = MutableStateFlow<UiState<List<Professors>>>(UiState.Initialize)
+    private val _professorsState = MutableStateFlow<UiState<List<Home.Professor>>>(UiState.Initialize)
     val professorsState = _professorsState.asStateFlow()
 
     fun fetchHome() {
@@ -43,9 +42,6 @@ class HomeViewModel @Inject constructor(
                 val category = getCategory()
                 val professors = getProfessors()
 
-                professors.isSuccessOrNull()?.let {
-                    Log.d("ProfessorsTest", it[0].professor.toString())
-                }
                 when {
                     banner.isErrorOrNull() != null -> {
                         _errorState.value = banner.getError()
@@ -59,7 +55,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     else -> {
-                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), Home.Professor(professors.getValue()[0].professor)))
+                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0]))
                         _professorsState.value = professors
                         _currentCategoryPosition.value = UiState.Success(0)
                     }
@@ -68,39 +64,27 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getBanner(): UiState<Home.Banner> {
-        return safeCall {
-            getBannerUseCase()
-        }
+    private suspend fun getBanner() = safeCall { getBannerUseCase() }
+    private suspend fun getCategory() = safeCall { getCategoryUseCase() }
+    private suspend fun getProfessors() = safeCall { getProfessorsUseCase() }
+
+    fun updateCategoryPosition(position: Int) {
+        _currentCategoryPosition.value = UiState.Success(position)
+        updateProfessors(position)
     }
 
-    private suspend fun getCategory(): UiState<Home.Category> {
-        return safeCall {
-            getCategoryUseCase()
-        }
-    }
-
-    private suspend fun getProfessors(): UiState<List<Professors>> {
-        return safeCall {
-            getProfessorsUseCase()
-        }
-    }
-
-    fun updateCategory(position: Int) {
-        _home.value.isSuccessOrNull()?.let {
+    private fun updateProfessors(position: Int) {
+        home.value.isSuccessOrNull()?.let {
             it.toMutableList().apply {
                 forEachIndexed { index, home ->
                     if(home is Home.Professor) {
-                        _professorsState.value.isSuccessOrNull()?.let { professors ->
-                            set(index, Home.Professor(professors[position].professor))
+                        if(_professorsState.value.isSuccessOrNull() != null) {
+                            set(index, _professorsState.value.getValue()[position])
+                            _home.value = UiState.Success(this)
                         }
                     }
                 }
-
-                _home.value = UiState.Success(this)
             }
         }
-        _currentCategoryPosition.value = UiState.Success(position)
     }
-
 }

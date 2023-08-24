@@ -12,17 +12,13 @@ sealed class Home {
     ) : Home()
 
     data class Professor(
-        val professor: List<ProfessorItem>
+        val professors: List<ProfessorItem>
     ) : Home()
 }
 
 data class BannerItem(
     val id: String,
     val url: String
-)
-
-data class Professors(
-    val professor: List<ProfessorItem>
 )
 
 data class ProfessorItem(

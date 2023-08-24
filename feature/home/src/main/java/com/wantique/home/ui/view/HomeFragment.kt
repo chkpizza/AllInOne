@@ -76,7 +76,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private fun setUpRecyclerView() {
         val onCategoryClickListener = object : OnCategoryClickListener {
             override fun onClick(position: Int) {
-                viewModel.updateCategory(position)
+                Log.d("onClickTest", "${position} clicked")
+                viewModel.updateCategoryPosition(position)
             }
         }
 

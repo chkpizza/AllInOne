@@ -2,13 +2,11 @@ package com.wantique.home.data.mapper
 
 import android.util.Log
 import com.wantique.firebase.model.BannerDto
-import com.wantique.firebase.model.BannerItemDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ProfessorsDto
+import com.wantique.firebase.model.ProfessorDto
 import com.wantique.home.domain.model.BannerItem
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.model.ProfessorItem
-import com.wantique.home.domain.model.Professors
 
 object Mapper {
     fun mapperToDomain(dto: BannerDto): Home.Banner {
@@ -25,19 +23,13 @@ object Mapper {
         return Home.Category(dto.title, dto.item)
     }
 
-    fun mapperToDomain(dto: List<ProfessorsDto>): List<Professors> {
-
-        val domain = mutableListOf<Professors>()
-
-        dto.forEach {
-            it.item.map { dto ->
-                Log.d("ProfessorsMapping", "${dto.toString()}")
-                ProfessorItem(dto.id, dto.name, dto.belong, dto.update)
-            }.apply {
-                domain.add(Professors(this))
+    fun mapperToDomain(dto: List<ProfessorDto>): List<Home.Professor> {
+        return dto.map {
+            val professorItemList = mutableListOf<ProfessorItem>()
+            it.item.forEach { item ->
+                professorItemList.add(ProfessorItem(item.id, item.name, item.belong, item.update))
             }
+            Home.Professor(professorItemList)
         }
-
-        return domain
     }
 }

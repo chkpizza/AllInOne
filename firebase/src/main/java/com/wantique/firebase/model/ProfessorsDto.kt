@@ -1,10 +1,10 @@
 package com.wantique.firebase.model
 
-data class ProfessorsDto(
-    val item: List<ProfessorPreviewDto> = emptyList()
+data class ProfessorDto(
+    val item: List<ProfessorItemDto> = emptyList()
 )
 
-data class ProfessorPreviewDto(
+data class ProfessorItemDto(
     val id: String = "",
     val name: String = "",
     val belong: String = "",

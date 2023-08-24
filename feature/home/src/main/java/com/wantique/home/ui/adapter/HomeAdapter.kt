@@ -53,7 +53,7 @@ class HomeAdapter(
         fun bind(item: Home) {
             (item as Home.Professor).also {
                 binding.homeRvProfessor.adapter = professorAdapter
-                professorAdapter.submitList(it.professor)
+                professorAdapter.submitList(it.professors)
             }
         }
     }

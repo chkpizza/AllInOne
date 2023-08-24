@@ -1,5 +1,6 @@
 package com.wantique.firebase
 
+import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -8,7 +9,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ProfessorsDto
+import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.UserDto
 import kotlinx.coroutines.tasks.await
 
@@ -43,56 +44,57 @@ class FireStore private constructor() {
         }
     }
 
-    suspend fun getProfessors(): List<ProfessorsDto> {
-        val professors = mutableListOf<ProfessorsDto>()
-        Firebase.firestore.collection("professor_list").document("korean").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorsDto>()?.let {
-                professors.add(it)
+    suspend fun getProfessors(): List<ProfessorDto> {
+        val professorDtoList = mutableListOf<ProfessorDto>()
+
+        Firebase.firestore.collection("professors").document("korean").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorDto>()?.let {
+                professorDtoList.add(it)
             } ?: run {
-                professors.add(ProfessorsDto())
+                professorDtoList.add(ProfessorDto(emptyList()))
             }
         }
 
-
-        Firebase.firestore.collection("professor_list").document("english").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorsDto>()?.let {
-                professors.add(it)
+        Firebase.firestore.collection("professors").document("english").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorDto>()?.let {
+                professorDtoList.add(it)
             } ?: run {
-                professors.add(ProfessorsDto())
+                professorDtoList.add(ProfessorDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("professor_list").document("history").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorsDto>()?.let {
-                professors.add(it)
+        Firebase.firestore.collection("professors").document("history").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorDto>()?.let {
+                professorDtoList.add(it)
             } ?: run {
-                professors.add(ProfessorsDto())
+                professorDtoList.add(ProfessorDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("professor_list").document("administrative_law").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorsDto>()?.let {
-                professors.add(it)
+        Firebase.firestore.collection("professors").document("administrative_law").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorDto>()?.let {
+                professorDtoList.add(it)
             } ?: run {
-                professors.add(ProfessorsDto())
+                professorDtoList.add(ProfessorDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("professor_list").document("public_administration").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorsDto>()?.let {
-                professors.add(it)
+        Firebase.firestore.collection("professors").document("public_administration").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorDto>()?.let {
+                professorDtoList.add(it)
             } ?: run {
-                professors.add(ProfessorsDto())
+                professorDtoList.add(ProfessorDto(emptyList()))
             }
         }
 
-        return professors
+        return professorDtoList
     }
 
     private suspend fun uploadProfileImage(imageUri: String): String {
         val ref = Firebase.storage.reference.child("profile").child(Firebase.auth.uid.toString()).child("profileImage.jpg")
         return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
     }
+
 
     companion object {
         private lateinit var firestore: FireStore
