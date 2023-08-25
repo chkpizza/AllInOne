@@ -63,8 +63,8 @@ object HomeBindingAdapter {
 
     @BindingAdapter("mask")
     @JvmStatic
-    fun setMask(view: TextView, item: ProfessorItem) {
-        view.isVisible = !item.update
+    fun setMask(view: TextView, item: Boolean) {
+        view.isVisible = !item
     }
 
     /*

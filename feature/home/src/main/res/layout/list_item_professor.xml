@@ -55,8 +55,11 @@
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/maskTextViewStyle"
             android:text="@string/home_professor_not_update"
-            android:visibility="@{item.update != true ? View.VISIBLE : View.GONE}"
+            app:mask="@{item.update}"
+            android:visibility="gone"
             android:gravity="center" />
+
+        <!--android:visibility="@{item.update != true ? View.VISIBLE : View.GONE}" -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

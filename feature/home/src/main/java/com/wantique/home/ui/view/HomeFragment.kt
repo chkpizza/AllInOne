@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.wantique.base.state.getValue
 import com.wantique.base.state.isSuccessOrNull
@@ -33,8 +34,8 @@ import javax.inject.Inject
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     @Inject lateinit var factory: ViewModelProvider.Factory
-    private val viewModel by navGraphViewModels<HomeViewModel>(R.id.home_nav_graph) { factory }
-
+    //private val viewModel by navGraphViewModels<HomeViewModel>(R.id.home_nav_graph) { factory }
+    private val viewModel by lazy { ViewModelProvider(this, factory)[HomeViewModel::class.java]}
     private var clickTime: Long = 0
     private lateinit var onBackPressedCallback: OnBackPressedCallback
 
@@ -82,7 +83,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         val onProfessorClickListener = object : OnProfessorClickListener {
             override fun onClick(professor: ProfessorItem) {
-                Toast.makeText(requireActivity(), "${professor.belong} 소속 ${professor.name} 교수님", Toast.LENGTH_SHORT).show()
+                navigator.navigate(HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment("hello_professors~!"))
             }
 
         }
@@ -102,14 +103,4 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         super.onDestroyView()
         onBackPressedCallback.remove()
     }
-
-
-    /*
-    private fun test() {
-        lifecycleScope.launch {
-            FireStore.getInstance().test()
-        }
-    }
-
-     */
 }

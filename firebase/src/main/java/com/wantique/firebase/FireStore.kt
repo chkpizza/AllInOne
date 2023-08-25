@@ -130,8 +130,7 @@ class FireStore private constructor() {
         }
     }
 
-
-/*
+    /*
     suspend fun test() {
         Firebase.firestore.collection("exam").document("yearly").set(
             ExamDto(
@@ -142,50 +141,10 @@ class FireStore private constructor() {
                     ExamItemDto("3월 13일 ~ 17일", "6월 10일", "지방직 9급", true),
                     ExamItemDto("5월 23일 ~ 25일", "9월 23일", "국가직 7급 2차", false),
                     ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
-                    ExamItemDto("7월 17일 ~ 21일", "10월 28일", "지방직 7급", false),
                 )
             )
         ).await()
     }
-
-
- */
+     */
 }
 

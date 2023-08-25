@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.wantique.home.ui.view.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_professorDetailsFragment"
+            app:destination="@id/professorDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/professorDetailsFragment"
+        android:name="com.wantique.home.ui.view.ProfessorDetailsFragment"
+        android:label="ProfessorDetailsFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
 </navigation>

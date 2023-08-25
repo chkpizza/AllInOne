@@ -2,6 +2,7 @@ package com.wantique.home.di
 
 import com.wantique.base.di.FeatureScope
 import com.wantique.home.ui.view.HomeFragment
+import com.wantique.home.ui.view.ProfessorDetailsFragment
 import dagger.Subcomponent
 
 @FeatureScope
@@ -13,4 +14,5 @@ interface HomeComponent {
     }
 
     fun inject(fragment: HomeFragment)
+    fun inject(fragment: ProfessorDetailsFragment)
 }
