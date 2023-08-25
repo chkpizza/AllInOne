@@ -54,5 +54,9 @@ dependencies {
     kapt(ThirdParty.DAGGER_COMPILER)
     implementation(ThirdParty.SQUIRCLE_IMAGE_VIEW)
     implementation(ThirdParty.GLIDE)
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
+    implementation(Firebase.FIREBASE_ANALYTICS)
+    implementation(Firebase.FIREBASE_AUTH)
+    implementation(Google.PLAY_SERVICE_AUTH)
+    implementation(ThirdParty.GOOGLE_SIGN_IN_BUTTON)
+    implementation(AndroidX.LIVEDATA)
 }

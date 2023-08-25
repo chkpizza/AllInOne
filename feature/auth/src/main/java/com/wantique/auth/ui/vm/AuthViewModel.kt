@@ -47,27 +47,8 @@ class AuthViewModel @Inject constructor(
     private val _redo = MutableSharedFlow<Boolean>()
     val redo = _redo.asSharedFlow()
 
-    private val _timer = MutableStateFlow<UiState<Int>>(UiState.Initialize)
-    val timer = _timer.asStateFlow()
-
     private val _uri = MutableStateFlow<UiState<Uri>>(UiState.Initialize)
     val uri = _uri.asStateFlow()
-
-    private lateinit var timerJob: Job
-
-    fun startTimer(limit: Int) {
-        if (::timerJob.isInitialized) {
-            timerJob.cancel()
-        }
-
-        timerJob = viewModelScope.launch {
-            var remain = limit
-            while (remain > 0) {
-                _timer.value = UiState.Success(--remain)
-                delay(1000)
-            }
-        }
-    }
 
     fun isExistUser() {
         viewModelScope.launch {

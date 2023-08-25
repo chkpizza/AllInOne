@@ -1,6 +1,5 @@
 package com.wantique.firebase
 
-import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -15,7 +14,7 @@ import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.UserDto
 import kotlinx.coroutines.tasks.await
 
-class FireStore private constructor() {
+class Firebase private constructor() {
     suspend fun getCurrentUser(): Boolean {
         return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()
     }
@@ -119,11 +118,11 @@ class FireStore private constructor() {
 
 
     companion object {
-        private lateinit var firestore: FireStore
+        private lateinit var firestore: com.wantique.firebase.Firebase
 
-        fun getInstance(): FireStore {
+        fun getInstance(): com.wantique.firebase.Firebase {
             if(!::firestore.isInitialized) {
-                firestore = FireStore()
+                firestore = Firebase()
             }
 
             return firestore

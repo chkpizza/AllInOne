@@ -1,7 +1,7 @@
 package com.wantique.home.di
 
 import com.wantique.base.di.FeatureScope
-import com.wantique.firebase.FireStore
+import com.wantique.firebase.Firebase
 import dagger.Module
 import dagger.Provides
 
@@ -9,7 +9,7 @@ import dagger.Provides
 class FireStoreModule {
     @FeatureScope
     @Provides
-    fun provideFireStore(): FireStore {
-        return FireStore.getInstance()
+    fun provideFireStore(): Firebase {
+        return Firebase.getInstance()
     }
 }

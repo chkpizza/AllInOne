@@ -2,33 +2,21 @@ package com.wantique.home.ui.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.navGraphViewModels
-import com.wantique.base.state.getValue
-import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
-import com.wantique.firebase.FireStore
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
-import com.wantique.home.domain.model.BannerItem
-import com.wantique.home.domain.model.Home
 import com.wantique.home.ui.adapter.HomeAdapter
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.domain.model.ProfessorItem
 import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
 import com.wantique.home.ui.adapter.listener.OnProfessorClickListener
 import com.wantique.home.ui.vm.HomeViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 

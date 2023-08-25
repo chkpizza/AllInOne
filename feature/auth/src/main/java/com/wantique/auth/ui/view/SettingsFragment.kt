@@ -6,22 +6,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentSettingsBinding
 import com.wantique.auth.ui.di.AuthComponentProvider
@@ -36,7 +28,6 @@ import javax.inject.Inject
 class SettingsFragment : BaseFragment<FragmentSettingsBinding>(R.layout.fragment_settings) {
     @Inject lateinit var factory: ViewModelProvider.Factory
     private val viewModel by navGraphViewModels<AuthViewModel>(R.id.auth_nav_graph) { factory }
-
 
     private val galleryLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if(result.resultCode == RESULT_OK) {
