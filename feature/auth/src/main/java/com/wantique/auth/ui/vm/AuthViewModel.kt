@@ -1,7 +1,10 @@
 package com.wantique.auth.ui.vm
 
 import android.content.Context
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.wantique.auth.domain.usecase.CheckDuplicateNickNameUseCase
 import com.wantique.auth.domain.usecase.IsExistUserUseCase
 import com.wantique.auth.domain.usecase.IsWithdrawalUserUseCase
 import com.wantique.auth.domain.usecase.RedoUserUseCase
@@ -10,6 +13,7 @@ import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import com.wantique.base.state.getValue
 import com.wantique.base.state.isErrorOrNull
+import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -27,6 +31,7 @@ class AuthViewModel @Inject constructor(
     private val isWithdrawalUserUseCase: IsWithdrawalUserUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
     private val redoUserUseCase: RedoUserUseCase,
+    private val checkDuplicateNickNameUseCase: CheckDuplicateNickNameUseCase,
     networkTracker: NetworkTracker,
     context: Context
 ) : BaseViewModel(networkTracker, context) {
@@ -44,6 +49,9 @@ class AuthViewModel @Inject constructor(
 
     private val _timer = MutableStateFlow<UiState<Int>>(UiState.Initialize)
     val timer = _timer.asStateFlow()
+
+    private val _uri = MutableStateFlow<UiState<Uri>>(UiState.Initialize)
+    val uri = _uri.asStateFlow()
 
     private lateinit var timerJob: Job
 
@@ -69,6 +77,7 @@ class AuthViewModel @Inject constructor(
                 it.isErrorOrNull()?.let { throwable ->
                     _errorState.emit(throwable)
                 } ?: run {
+                    Log.d("CallTest", "exist emit")
                     _exist.emit(it.getValue())
                 }
             }.collect()
@@ -89,6 +98,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    /*
     fun registerUser() {
         viewModelScope.launch {
             safeFlow {
@@ -102,6 +112,8 @@ class AuthViewModel @Inject constructor(
             }.collect()
         }
     }
+
+     */
 
     fun redoUser() {
         viewModelScope.launch {
@@ -117,23 +129,45 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun testOuter() {
+    fun checkNickName(nickName: String) {
         viewModelScope.launch {
-            val home = mutableListOf<Boolean>()
-
-            test().also {
+            safeFlow {
+                checkDuplicateNickNameUseCase(nickName)
+            }.onEach {
                 it.isErrorOrNull()?.let { throwable ->
                     _errorState.emit(throwable)
                 } ?: run {
-                    home.add(it.getValue())
+                    if(it.getValue()) {
+                        _errorState.emit(Throwable("중복된 닉네임입니다"))
+                    } else {
+                       registerUser(nickName)
+                    }
                 }
-            }
+            }.collect()
         }
     }
 
-    private suspend fun test(): UiState<Boolean> {
-        return safeCall {
-            UiState.Success(true)
+    private fun registerUser(nickName: String) {
+        viewModelScope.launch {
+            val profileImageUri = uri.value.isSuccessOrNull()?.let {
+                it.toString()
+            } ?: run {
+                ""
+            }
+            safeFlow {
+                registerUserUseCase(profileImageUri, nickName)
+            }.onEach {
+                it.isErrorOrNull()?.let { throwable ->
+                    _errorState.emit(throwable)
+                } ?: run {
+                    _registration.emit(it.getValue())
+                }
+            }.collect()
         }
+    }
+
+
+    fun setUri(uri: Uri) {
+        _uri.value = UiState.Success(uri)
     }
 }

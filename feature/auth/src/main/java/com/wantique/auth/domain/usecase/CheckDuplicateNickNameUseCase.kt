@@ -6,8 +6,8 @@ import com.wantique.base.state.UiState
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class RegisterUserUseCase @Inject constructor(private val authRepository: AuthRepository) {
-    operator fun invoke(profileImageUri: String, nickName: String) = authRepository.registerUser(profileImageUri, nickName)
+class CheckDuplicateNickNameUseCase @Inject constructor(private val authRepository: AuthRepository){
+    operator fun invoke(nickName: String) = authRepository.isDuplicateNickName(nickName)
         .map {
             when(it) {
                 is Resource.Success -> UiState.Success(it.data)

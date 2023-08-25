@@ -5,13 +5,16 @@ import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentVerificationBinding
@@ -32,6 +35,7 @@ class VerificationFragment :
     @Inject
     lateinit var factory: ViewModelProvider.Factory
     private val viewModel by navGraphViewModels<AuthViewModel>(R.id.auth_nav_graph) { factory }
+    //private val viewModel by lazy { ViewModelProvider(this, factory)[AuthViewModel::class.java]}
     private var verificationId: String? = null
     private val onVerificationStateCallback = object : OnVerificationStateCallback {
         /** 잘못된 전화번호, 인증 번호 요청 횟수 초과 등 예외 발생 시 호출 */
@@ -76,6 +80,10 @@ class VerificationFragment :
     }
 
     private fun setUpViewListener() {
+        binding.verificationToolbar.setNavigationOnClickListener {
+            navigator.navigateUp()
+        }
+
         binding.verificationEtInputPhoneNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
@@ -117,36 +125,17 @@ class VerificationFragment :
     }
 
     private fun setUpObservers() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.exist.collect {
-                    when(it) {
-                        true -> viewModel.isWithdrawalUser()
-                        false -> viewModel.registerUser()
-                    }
-                }
+        viewModel.exist.asLiveData().observe(viewLifecycleOwner) {
+            when(it) {
+                true -> viewModel.isWithdrawalUser()
+                false -> navigator.navigate(R.id.action_verificationFragment_to_settingsFragment)
             }
         }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.withdrawal.collect {
-                    when(it) {
-                        true -> navigator.navigate(R.id.action_verificationFragment_to_cancelWithdrawalFragment)
-                        false -> finalize()
-                    }
-                }
-            }
-        }
-
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.registration.collect {
-                    when(it) {
-                        true -> finalize()
-                        false -> Toast.makeText(requireActivity(), "사용자 등록에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        viewModel.withdrawal.asLiveData().observe(viewLifecycleOwner) {
+            when(it) {
+                true -> { navigator.navigate(R.id.action_verificationFragment_to_cancelWithdrawalFragment) }
+                false -> finalize()
             }
         }
     }

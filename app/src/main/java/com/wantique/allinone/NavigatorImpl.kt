@@ -29,4 +29,8 @@ class NavigatorImpl(private val navController: NavController) : Navigator {
         navController.navigate(id)
     }
 
+    override fun navigateUp() {
+        navController.navigateUp()
+    }
+
 }

@@ -5,4 +5,5 @@ interface Navigator {
     fun navigateToMain()
     fun navigateByDeepLink(uri: String)
     fun navigate(id: Int)
+    fun navigateUp()
 }

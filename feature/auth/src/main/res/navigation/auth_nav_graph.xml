@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/auth_nav_graph"
-    app:startDestination="@id/authFragment">
+    app:startDestination="@+id/authFragment">
 
     <fragment
         android:id="@+id/authFragment"
@@ -21,9 +21,16 @@
         <action
             android:id="@+id/action_verificationFragment_to_cancelWithdrawalFragment"
             app:destination="@id/cancelWithdrawalFragment" />
+        <action
+            android:id="@+id/action_verificationFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cancelWithdrawalFragment"
         android:name="com.wantique.auth.ui.view.CancelWithdrawalFragment"
         android:label="CancelWithdrawalFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.wantique.auth.ui.view.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

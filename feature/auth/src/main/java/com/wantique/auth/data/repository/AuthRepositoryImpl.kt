@@ -34,4 +34,10 @@ class AuthRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDi
     }.catch {
         emit(Resource.Error(it))
     }.flowOn(dispatcher)
+
+    override fun isDuplicateNickName(nickName: String) = flow<Resource<Boolean>> {
+        emit(Resource.Success(firestore.isDuplicateNickName(nickName)))
+    }.catch {
+        emit(Resource.Error(it))
+    }.flowOn(dispatcher)
 }

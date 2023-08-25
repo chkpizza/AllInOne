@@ -9,4 +9,5 @@ interface AuthRepository {
     fun isWithdrawalUser(): Flow<Resource<Boolean>>
     fun registerUser(imageUri: String = "", nickName: String = ""): Flow<Resource<Boolean>>
     fun redoUser(): Flow<Resource<Boolean>>
+    fun isDuplicateNickName(nickName: String): Flow<Resource<Boolean>>
 }

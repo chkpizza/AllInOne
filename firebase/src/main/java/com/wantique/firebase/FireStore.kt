@@ -25,13 +25,27 @@ class FireStore private constructor() {
     }
 
     suspend fun registerUser(imageUri: String, nickName: String): Boolean {
+        /*
         Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), nickName, imageUri)).await()
         return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()
+
+         */
+        if(imageUri.isNotEmpty()) {
+            Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), nickName, uploadProfileImage(imageUri))).await()
+            return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()
+        } else {
+            Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).set(UserDto(Firebase.auth.uid.toString(), nickName, imageUri)).await()
+            return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()
+        }
     }
 
     suspend fun redoUser(): Boolean {
         Firebase.firestore.collection("withdrawal").document(Firebase.auth.uid.toString()).delete().await()
         return !Firebase.firestore.collection("withdrawal").document(Firebase.auth.uid.toString()).get().await().exists()
+    }
+
+    suspend fun isDuplicateNickName(nickName: String): Boolean {
+        return !Firebase.firestore.collection("user").whereEqualTo("nickName", nickName).get().await().isEmpty
     }
 
     suspend fun getBanner(): BannerDto? {

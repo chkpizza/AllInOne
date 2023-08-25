@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.navGraphViewModels
@@ -40,20 +41,20 @@ class CancelWithdrawalFragment : BaseFragment<FragmentCancelWithdrawalBinding>(R
     }
 
     private fun setUpViewListener() {
+        binding.cancelWithdrawalToolbar.setNavigationOnClickListener {
+            navigator.navigateUp()
+        }
+
         binding.cancelWithdrawalBtnRedo.setOnClickListener {
             viewModel.redoUser()
         }
     }
 
     private fun setUpObserver() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.redo.collect {
-                    when(it) {
-                        true -> finalize()
-                        false -> Toast.makeText(requireActivity(), "탈퇴 철회에 실패하였습니다", Toast.LENGTH_SHORT).show()
-                    }
-                }
+        viewModel.redo.asLiveData().observe(viewLifecycleOwner) {
+            when(it) {
+                true -> finalize()
+                false -> Toast.makeText(requireActivity(), "탈퇴 철회에 실패하였습니다", Toast.LENGTH_SHORT).show()
             }
         }
     }

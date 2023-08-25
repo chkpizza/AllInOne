@@ -54,4 +54,5 @@ dependencies {
     kapt(ThirdParty.DAGGER_COMPILER)
     implementation(ThirdParty.SQUIRCLE_IMAGE_VIEW)
     implementation(ThirdParty.GLIDE)
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 }
