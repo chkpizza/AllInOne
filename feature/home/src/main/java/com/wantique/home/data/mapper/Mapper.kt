@@ -3,8 +3,10 @@ package com.wantique.home.data.mapper
 import android.util.Log
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.ExamDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.home.domain.model.BannerItem
+import com.wantique.home.domain.model.ExamItem
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.model.ProfessorItem
 
@@ -31,5 +33,15 @@ object Mapper {
             }
             Home.Professor(professorItemList)
         }
+    }
+
+    fun mapperToDomain(dto: ExamDto): Home.Exam {
+        val examItemList = mutableListOf<ExamItem>().apply {
+            dto.exam.forEach {
+                add(ExamItem(it.regDate, it.examDate, it.name, it.complete))
+            }
+        }
+
+        return Home.Exam(dto.title, examItemList)
     }
 }

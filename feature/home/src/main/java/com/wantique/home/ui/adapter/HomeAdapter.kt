@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wantique.home.databinding.ListItemBannerWrapperBinding
 import com.wantique.home.databinding.ListItemCategoryWrapperBinding
+import com.wantique.home.databinding.ListItemExamWrapperBinding
 import com.wantique.home.databinding.ListItemProfessorWrapperBinding
 import com.wantique.home.domain.model.Home
 import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
@@ -27,6 +28,7 @@ class HomeAdapter(
     private val bannerAdapter = BannerAdapter()
     private val categoryAdapter = CategoryAdapter(onCategoryClickListener)
     private val professorAdapter = ProfessorAdapter(onProfessorClickListener)
+    private val examAdapter = ExamAdapter()
 
     inner class BannerWrapperViewHolder(private val binding: ListItemBannerWrapperBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Home) {
@@ -58,10 +60,21 @@ class HomeAdapter(
         }
     }
 
+    inner class ExamWrapperViewHolder(private val binding: ListItemExamWrapperBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Home) {
+            (item as Home.Exam).also {
+                binding.homeTvExamTitle.text = it.title
+                binding.homeRvExam.adapter = examAdapter
+                examAdapter.submitList(it.exam)
+            }
+        }
+    }
+
     override fun getItemViewType(position: Int): Int = when(getItem(position)) {
         is Home.Banner -> 1000
         is Home.Category -> 2000
         is Home.Professor -> 3000
+        is Home.Exam -> 4000
         else -> throw RuntimeException()
     }
 
@@ -78,6 +91,10 @@ class HomeAdapter(
             val binding = ListItemProfessorWrapperBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             ProfessorWrapperViewHolder(binding)
         }
+        4000 -> {
+            val binding = ListItemExamWrapperBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ExamWrapperViewHolder(binding)
+        }
         else -> throw RuntimeException()
     }
 
@@ -86,7 +103,7 @@ class HomeAdapter(
             is Home.Banner -> (holder as BannerWrapperViewHolder).bind(getItem(position))
             is Home.Category -> (holder as CategoryWrapperViewHolder).bind(getItem(position))
             is Home.Professor -> (holder as ProfessorWrapperViewHolder).bind(getItem(position))
-            else -> throw RuntimeException()
+            is Home.Exam -> (holder as ExamWrapperViewHolder).bind(getItem(position))
         }
     }
 

@@ -21,4 +21,6 @@
 
     <string name="home_toolbar_title">홈</string>
     <string name="home_professor_not_update">NOT\nUPDATED</string>
+    <string name="home_exam_reg_name">%s 원서 접수</string>
+    <string name="home_exam_exam_name">%s 필기 시험</string>
 </resources>

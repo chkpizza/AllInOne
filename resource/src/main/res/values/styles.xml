@@ -52,6 +52,12 @@
         <item name="android:background">@color/maskColor</item>
     </style>
 
+    <style name="tagTextViewStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+
 
     <style name="defaultEditTextStyle">
         <item name="android:background">@drawable/common_et_background</item>

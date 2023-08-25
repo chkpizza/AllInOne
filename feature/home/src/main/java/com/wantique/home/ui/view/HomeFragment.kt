@@ -76,7 +76,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     private fun setUpRecyclerView() {
         val onCategoryClickListener = object : OnCategoryClickListener {
             override fun onClick(position: Int) {
-                Log.d("onClickTest", "${position} clicked")
                 viewModel.updateCategoryPosition(position)
             }
         }
@@ -103,4 +102,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         super.onDestroyView()
         onBackPressedCallback.remove()
     }
+
+
+    /*
+    private fun test() {
+        lifecycleScope.launch {
+            FireStore.getInstance().test()
+        }
+    }
+
+     */
 }

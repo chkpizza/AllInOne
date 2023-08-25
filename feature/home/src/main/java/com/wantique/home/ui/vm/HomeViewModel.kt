@@ -14,6 +14,7 @@ import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.usecase.GetBannerUseCase
 import com.wantique.home.domain.usecase.GetCategoryUseCase
 import com.wantique.home.domain.usecase.GetProfessorsUseCase
+import com.wantique.home.domain.usecase.GetYearlyExamUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -23,6 +24,7 @@ class HomeViewModel @Inject constructor(
     private val getBannerUseCase: GetBannerUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getProfessorsUseCase: GetProfessorsUseCase,
+    private val getYearlyExamUseCase: GetYearlyExamUseCase,
     networkTracker: NetworkTracker,
     context: Context
 ) : BaseViewModel(networkTracker, context) {
@@ -41,6 +43,7 @@ class HomeViewModel @Inject constructor(
                 val banner = getBanner()
                 val category = getCategory()
                 val professors = getProfessors()
+                val exam = getYearlyExam()
 
                 when {
                     banner.isErrorOrNull() != null -> {
@@ -54,8 +57,12 @@ class HomeViewModel @Inject constructor(
                         _errorState.value = professors.getError()
                     }
 
+                    exam.isErrorOrNull() != null -> {
+                        _errorState.value = exam.getError()
+                    }
+
                     else -> {
-                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0]))
+                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
                         _professorsState.value = professors
                         _currentCategoryPosition.value = UiState.Success(0)
                     }
@@ -67,6 +74,7 @@ class HomeViewModel @Inject constructor(
     private suspend fun getBanner() = safeCall { getBannerUseCase() }
     private suspend fun getCategory() = safeCall { getCategoryUseCase() }
     private suspend fun getProfessors() = safeCall { getProfessorsUseCase() }
+    private suspend fun getYearlyExam() = safeCall { getYearlyExamUseCase() }
 
     fun updateCategoryPosition(position: Int) {
         _currentCategoryPosition.value = UiState.Success(position)

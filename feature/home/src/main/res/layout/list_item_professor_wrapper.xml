@@ -32,7 +32,7 @@
             app:layout_constraintTop_toBottomOf="@id/home_rv_professor"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/disabledBackground" />
+            android:background="@color/separator" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

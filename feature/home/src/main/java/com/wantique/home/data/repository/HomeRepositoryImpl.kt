@@ -42,4 +42,16 @@ class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDi
             Resource.Error(e)
         }
     }
+
+    override suspend fun getYearlyExam(): Resource<Home.Exam> = withContext(dispatcher) {
+        try {
+            fireStore.getYearlyExam()?.let {
+                Resource.Success(Mapper.mapperToDomain(it))
+            } ?: run {
+                Resource.Error(Throwable("올해 시험 정보를 가져오지 못했습니다."))
+            }
+        } catch (e: Exception) {
+            Resource.Error(e)
+        }
+    }
 }
