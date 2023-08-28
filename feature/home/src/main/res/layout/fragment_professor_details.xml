@@ -36,14 +36,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <View
-            android:id="@+id/professor_details_view_divide_toolbar"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/separator"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/professor_details_toolbar" />
+
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/professor_details_view_container"
@@ -119,6 +112,15 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
+
+        <View
+            android:id="@+id/professor_details_view_divide_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/professor_details_toolbar" />
 
         <include layout="@layout/layout_error"
             android:id="@+id/professor_details_layout_error"

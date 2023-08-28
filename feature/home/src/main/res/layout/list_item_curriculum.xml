@@ -11,8 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@color/white"
         app:strokeWidth="1dp"
+        app:cardBackgroundColor="@color/white"
         app:strokeColor="@color/stroke"
         app:cardCornerRadius="4dp"
         app:cardElevation="0dp">
