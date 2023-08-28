@@ -2,6 +2,7 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 dependencies {
     implementation(project(":resource"))
     implementation(project(":base"))
+    implementation(project(":firebase"))
 
     implementation(AndroidX.CORE)
     implementation(AndroidX.APP_COMAPT)
@@ -51,4 +53,7 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(ThirdParty.GLIDE)
+    implementation(AndroidX.LIVEDATA)
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
 }

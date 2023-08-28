@@ -11,6 +11,7 @@ object AndroidX {
 object Google {
     const val MATERIAL = "com.google.android.material:material:1.5.0"
     const val PLAY_SERVICE_LOCATION = "com.google.android.gms:play-services-location:21.0.1"
+    const val PLAY_SERVICE_AUTH = "com.google.android.gms:play-services-auth:20.6.0"
 }
 
 object AndroidTest {
@@ -33,5 +34,6 @@ object ThirdParty {
     const val NAVER_MAP = "com.naver.maps:map-sdk:3.17.0"
     const val SQUIRCLE_IMAGE_VIEW = "app.juky:squircleview:0.6.1"
     const val GLIDE = "com.github.bumptech.glide:glide:4.16.0"
+    const val GOOGLE_SIGN_IN_BUTTON = "com.github.TutorialsAndroid:GButton:v1.0.19"
 
 }

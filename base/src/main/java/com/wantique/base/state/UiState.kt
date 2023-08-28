@@ -26,3 +26,7 @@ fun <T> UiState<T>.isErrorOrNull(): Throwable? {
 fun <T> UiState<T>.getValue(): T {
     return (this as UiState.Success).data
 }
+
+fun <T> UiState<T>.getError(): Throwable? {
+    return (this as UiState.Error).error
+}

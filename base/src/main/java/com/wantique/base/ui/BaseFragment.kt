@@ -55,4 +55,14 @@ open class BaseFragment<T: ViewDataBinding>(
             WindowInsetsCompat.CONSUMED
         }
     }
+
+    fun updateTopInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                topMargin = insets.top
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+    }
 }

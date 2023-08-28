@@ -3,6 +3,7 @@ package com.wantique.allinone
 import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
+import androidx.navigation.NavDirections
 import com.wantique.base.navigation.Navigator
 
 class NavigatorImpl(private val navController: NavController) : Navigator {
@@ -27,6 +28,14 @@ class NavigatorImpl(private val navController: NavController) : Navigator {
 
     override fun navigate(id: Int) {
         navController.navigate(id)
+    }
+
+    override fun navigate(directions: NavDirections) {
+        navController.navigate(directions)
+    }
+
+    override fun navigateUp() {
+        navController.navigateUp()
     }
 
 }
