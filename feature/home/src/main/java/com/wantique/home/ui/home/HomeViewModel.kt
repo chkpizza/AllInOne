@@ -1,7 +1,6 @@
-package com.wantique.home.ui.vm
+package com.wantique.home.ui.home
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState

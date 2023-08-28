@@ -1,4 +1,4 @@
-package com.wantique.home.ui.view
+package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle
@@ -11,12 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.wantique.base.ui.BaseFragment
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
-import com.wantique.home.ui.adapter.HomeAdapter
+import com.wantique.home.ui.home.adapter.HomeAdapter
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.domain.model.ProfessorItem
-import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
-import com.wantique.home.ui.adapter.listener.OnProfessorClickListener
-import com.wantique.home.ui.vm.HomeViewModel
+import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
 import javax.inject.Inject
 
 
@@ -71,7 +70,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         val onProfessorClickListener = object : OnProfessorClickListener {
             override fun onClick(professor: ProfessorItem) {
-                navigator.navigate(HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment("hello_professors~!"))
+                navigator.navigate(
+                    HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment(
+                        "hello_professors~!"
+                    )
+                )
             }
 
         }

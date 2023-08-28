@@ -1,16 +1,13 @@
-package com.wantique.home.ui.adapter
+package com.wantique.home.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.wantique.home.R
 import com.wantique.home.databinding.ListItemProfessorBinding
 import com.wantique.home.domain.model.ProfessorItem
-import com.wantique.home.ui.adapter.listener.OnProfessorClickListener
+import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
 
 class ProfessorAdapter(
     private val onProfessorClickListener: OnProfessorClickListener

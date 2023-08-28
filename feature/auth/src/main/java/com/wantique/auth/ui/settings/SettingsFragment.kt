@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.view
+package com.wantique.auth.ui.settings
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
@@ -16,8 +16,8 @@ import androidx.navigation.navGraphViewModels
 import com.bumptech.glide.Glide
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentSettingsBinding
-import com.wantique.auth.ui.di.AuthComponentProvider
-import com.wantique.auth.ui.vm.AuthViewModel
+import com.wantique.auth.di.AuthComponentProvider
+import com.wantique.auth.ui.auth.AuthViewModel
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
 import kotlinx.coroutines.Dispatchers
@@ -76,7 +76,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(R.layout.fragment
         })
 
         binding.settingsBtnRegistration.setOnClickListener {
-            viewModel.checkNickName(binding.settingsEtNickName.text.toString())
+            viewModel.checkNickName(binding.settingsEtNickName.text.toString().replace(" ", ""))
         }
 
         binding.settingsBtnRegistration.isEnabled = false

@@ -1,16 +1,14 @@
-package com.wantique.home.ui.view
+package com.wantique.home.ui.details
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.wantique.base.ui.BaseFragment
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentProfessorDetailsBinding
 import com.wantique.home.di.HomeComponentProvider
-import com.wantique.home.ui.vm.ProfessorDetailsViewModel
 import javax.inject.Inject
 
 class ProfessorDetailsFragment : BaseFragment<FragmentProfessorDetailsBinding>(R.layout.fragment_professor_details) {

@@ -1,7 +1,7 @@
 package com.wantique.allinone.di
 
 import android.content.Context
-import com.wantique.auth.ui.di.AuthComponent
+import com.wantique.auth.di.AuthComponent
 import com.wantique.base.di.CoroutineDispatcherModule
 import com.wantique.base.di.ViewModelFactoryModule
 import com.wantique.home.di.HomeComponent
@@ -16,7 +16,8 @@ interface AppComponent {
     @Component.Factory
     interface Factory {
         fun create(
-            @BindsInstance applicationContext: Context
+            @BindsInstance applicationContext: Context,
+            @BindsInstance webClientId: String
         ): AppComponent
     }
 

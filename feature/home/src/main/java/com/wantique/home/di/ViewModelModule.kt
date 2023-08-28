@@ -2,8 +2,8 @@ package com.wantique.home.di
 
 import androidx.lifecycle.ViewModel
 import com.wantique.base.di.ViewModelKey
-import com.wantique.home.ui.vm.HomeViewModel
-import com.wantique.home.ui.vm.ProfessorDetailsViewModel
+import com.wantique.home.ui.home.HomeViewModel
+import com.wantique.home.ui.details.ProfessorDetailsViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

@@ -1,7 +1,7 @@
-package com.wantique.auth.ui.di
+package com.wantique.auth.di
 
 import androidx.lifecycle.ViewModel
-import com.wantique.auth.ui.vm.AuthViewModel
+import com.wantique.auth.ui.auth.AuthViewModel
 import com.wantique.base.di.ViewModelKey
 import dagger.Binds
 import dagger.Module

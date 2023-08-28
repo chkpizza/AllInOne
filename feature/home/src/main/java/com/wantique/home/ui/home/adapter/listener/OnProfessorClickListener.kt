@@ -1,4 +1,4 @@
-package com.wantique.home.ui.adapter.listener
+package com.wantique.home.ui.home.adapter.listener
 
 import com.wantique.home.domain.model.ProfessorItem
 

@@ -1,6 +1,5 @@
-package com.wantique.auth.ui.view
+package com.wantique.auth.ui
 
-import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast

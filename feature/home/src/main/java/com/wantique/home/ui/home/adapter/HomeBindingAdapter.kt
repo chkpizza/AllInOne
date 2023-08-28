@@ -1,4 +1,4 @@
-package com.wantique.home.ui.adapter
+package com.wantique.home.ui.home.adapter
 
 import android.widget.ImageView
 import android.widget.TextView

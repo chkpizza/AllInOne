@@ -1,8 +1,8 @@
 package com.wantique.home.di
 
 import com.wantique.base.di.FeatureScope
-import com.wantique.home.ui.view.HomeFragment
-import com.wantique.home.ui.view.ProfessorDetailsFragment
+import com.wantique.home.ui.home.HomeFragment
+import com.wantique.home.ui.details.ProfessorDetailsFragment
 import dagger.Subcomponent
 
 @FeatureScope

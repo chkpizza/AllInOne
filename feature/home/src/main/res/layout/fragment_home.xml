@@ -7,13 +7,13 @@
     <data>
         <variable
             name="vm"
-            type="com.wantique.home.ui.vm.HomeViewModel" />
+            type="com.wantique.home.ui.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.HomeFragment">
+        tools:context=".ui.home.HomeFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/home_toolbar"

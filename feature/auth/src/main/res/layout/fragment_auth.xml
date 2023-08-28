@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.view.AuthFragment">
+        tools:context=".ui.auth.AuthFragment">
 
         <com.developer.gbuttons.GoogleSignInButton
             android:id="@+id/auth_btn_sign_in"

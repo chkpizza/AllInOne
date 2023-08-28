@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.di
+package com.wantique.auth.di
 
 import com.wantique.base.di.FeatureScope
 import com.wantique.firebase.Firebase

@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.view
+package com.wantique.auth.ui.auth
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
-import com.bumptech.glide.Glide
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
@@ -18,10 +17,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.wantique.auth.R
-import com.wantique.auth.WebClientIdProvider
 import com.wantique.auth.databinding.FragmentAuthBinding
-import com.wantique.auth.ui.vm.AuthViewModel
-import com.wantique.auth.ui.di.AuthComponentProvider
+import com.wantique.auth.di.AuthComponentProvider
 import com.wantique.base.ui.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -30,6 +27,7 @@ import javax.inject.Inject
 
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
+    @Inject lateinit var webClientId: String
     @Inject lateinit var factory: ViewModelProvider.Factory
     private val viewModel by navGraphViewModels<AuthViewModel>(R.id.auth_nav_graph) { factory }
 
@@ -67,7 +65,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
 
     private fun signInWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken((requireActivity().applicationContext as WebClientIdProvider).getWebClientId())
+            .requestIdToken(webClientId)
             .requestEmail()
             .build()
 
@@ -111,5 +109,4 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
             navigator.navigateToMain()
         }
     }
-
 }

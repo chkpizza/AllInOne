@@ -1,8 +1,8 @@
-package com.wantique.auth.ui.di
+package com.wantique.auth.di
 
-import com.wantique.auth.ui.view.AuthFragment
-import com.wantique.auth.ui.view.CancelWithdrawalFragment
-import com.wantique.auth.ui.view.SettingsFragment
+import com.wantique.auth.ui.auth.AuthFragment
+import com.wantique.auth.ui.withdrawal.CancelWithdrawalFragment
+import com.wantique.auth.ui.settings.SettingsFragment
 import com.wantique.base.di.FeatureScope
 import dagger.Subcomponent
 

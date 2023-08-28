@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.vm
+package com.wantique.auth.ui.auth
 
 import android.content.Context
 import android.net.Uri
@@ -15,8 +15,6 @@ import com.wantique.base.state.getValue
 import com.wantique.base.state.isErrorOrNull
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseViewModel
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow

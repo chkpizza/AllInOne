@@ -1,6 +1,5 @@
-package com.wantique.home.ui.adapter
+package com.wantique.home.ui.home.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,9 +7,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.card.MaterialCardView
-import com.wantique.home.R
 import com.wantique.home.databinding.ListItemCategoryBinding
-import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
 
 class CategoryAdapter(
     private val onCategoryClickListener: OnCategoryClickListener

@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.di
+package com.wantique.auth.di
 
 interface AuthComponentProvider {
     fun getAuthComponent(): AuthComponent

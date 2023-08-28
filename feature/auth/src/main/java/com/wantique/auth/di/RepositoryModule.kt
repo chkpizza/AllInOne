@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.di
+package com.wantique.auth.di
 
 import com.wantique.auth.data.repository.AuthRepositoryImpl
 import com.wantique.auth.domain.repository.AuthRepository

@@ -1,4 +1,4 @@
-package com.wantique.auth.ui.view
+package com.wantique.auth.ui.withdrawal
 
 import android.content.Context
 import android.os.Bundle
@@ -10,8 +10,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navGraphViewModels
 import com.wantique.auth.R
 import com.wantique.auth.databinding.FragmentCancelWithdrawalBinding
-import com.wantique.auth.ui.di.AuthComponentProvider
-import com.wantique.auth.ui.vm.AuthViewModel
+import com.wantique.auth.di.AuthComponentProvider
+import com.wantique.auth.ui.auth.AuthViewModel
 import com.wantique.base.ui.BaseFragment
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

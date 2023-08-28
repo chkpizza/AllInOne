@@ -1,4 +1,4 @@
-package com.wantique.home.ui.adapter
+package com.wantique.home.ui.home.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,8 +10,8 @@ import com.wantique.home.databinding.ListItemCategoryWrapperBinding
 import com.wantique.home.databinding.ListItemExamWrapperBinding
 import com.wantique.home.databinding.ListItemProfessorWrapperBinding
 import com.wantique.home.domain.model.Home
-import com.wantique.home.ui.adapter.listener.OnCategoryClickListener
-import com.wantique.home.ui.adapter.listener.OnProfessorClickListener
+import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
 
 class HomeAdapter(
     private val onCategoryClickListener: OnCategoryClickListener,
