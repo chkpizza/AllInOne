@@ -54,5 +54,6 @@ dependencies {
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
     implementation(ThirdParty.GLIDE)
+    implementation(AndroidX.LIVEDATA)
     implementation("androidx.recyclerview:recyclerview:1.3.1")
 }

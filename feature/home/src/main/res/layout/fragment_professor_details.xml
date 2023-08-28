@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <import type="com.wantique.base.state.UiState" />
+        <import type="android.view.View" />
+        <variable
+            name="vm"
+            type="com.wantique.home.ui.details.ProfessorDetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,10 +29,10 @@
             <TextView
                 android:id="@+id/professor_details_tv_toolbar_title"
                 style="@style/toolbarTextViewStyle"
+                app:toolbar="@{vm.professorInfo}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="교수님 이름 바인딩해야 함" />
+                android:layout_gravity="center" />
 
         </androidx.appcompat.widget.Toolbar>
 
@@ -39,6 +44,95 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/professor_details_toolbar" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/professor_details_view_container"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/professor_details_toolbar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/professor_details_tv_slogan"
+                    style="@style/largeTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:slogan="@{vm.professorInfo}" />
+
+                <TextView
+                    android:id="@+id/professor_details_tv_curriculum"
+                    style="@style/titleTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    app:curriculumYear="@{vm.curriculum}"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/professor_details_tv_slogan" />
+
+                <TextView
+                    android:id="@+id/professor_details_tv_curriculum_link"
+                    style="@style/linkTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:text="@string/professor_details_curriculum_details"
+                    app:layout_constraintBottom_toBottomOf="@id/professor_details_tv_curriculum"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/professor_details_tv_curriculum" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/professor_details_rv_curriculum"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:orientation="vertical"
+                    android:paddingStart="16dp"
+                    android:paddingTop="8dp"
+                    android:paddingEnd="16dp"
+                    app:curriculum="@{vm.curriculum}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/professor_details_tv_curriculum" />
+
+                <View
+                    android:id="@+id/professor_details_view_divide_curriculum"
+                    android:layout_width="0dp"
+                    android:layout_height="8dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/separator"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/professor_details_rv_curriculum" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <include layout="@layout/layout_error"
+            android:id="@+id/professor_details_layout_error"
+            bind:baseVM="@{vm}" />
+
+        <ProgressBar
+            android:id="@+id/professor_details_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{(vm.loadingState instanceof UiState.Loading) ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

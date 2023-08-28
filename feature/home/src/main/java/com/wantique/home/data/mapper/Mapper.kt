@@ -1,14 +1,19 @@
 package com.wantique.home.data.mapper
 
-import android.util.Log
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
 import com.wantique.firebase.model.ExamDto
 import com.wantique.firebase.model.ProfessorDto
+import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.home.domain.model.BannerItem
+import com.wantique.home.domain.model.Curriculum
+import com.wantique.home.domain.model.DetailCurriculum
 import com.wantique.home.domain.model.ExamItem
 import com.wantique.home.domain.model.Home
+import com.wantique.home.domain.model.ProfessorInfo
 import com.wantique.home.domain.model.ProfessorItem
+import com.wantique.home.domain.model.YearlyCurriculum
 
 object Mapper {
     fun mapperToDomain(dto: BannerDto): Home.Banner {
@@ -43,5 +48,22 @@ object Mapper {
         }
 
         return Home.Exam(dto.title, examItemList)
+    }
+
+    fun mapperToDomain(dto: YearlyCurriculumDto): YearlyCurriculum {
+        mutableListOf<Curriculum>().apply {
+            dto.curriculum.forEach {
+                val detailCurriculumList = mutableListOf<DetailCurriculum>()
+                it.detailCurriculum.forEach { detail ->
+                    detailCurriculumList.add(DetailCurriculum(detail.lecture, detail.description, detail.start))
+                }
+                add(Curriculum(it.tag, detailCurriculumList))
+            }
+            return YearlyCurriculum(dto.id, dto.year, dto.url, this)
+        }
+    }
+
+    fun mapperToDomain(dto: ProfessorInfoDto): ProfessorInfo {
+        return ProfessorInfo(dto.name, dto.slogan, dto.url)
     }
 }

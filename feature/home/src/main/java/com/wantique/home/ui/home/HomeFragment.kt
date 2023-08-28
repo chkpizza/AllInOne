@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.wantique.base.ui.BaseFragment
+import com.wantique.firebase.Firebase
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.ui.home.adapter.HomeAdapter
@@ -16,6 +18,7 @@ import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.domain.model.ProfessorItem
 import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
 import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -70,13 +73,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         val onProfessorClickListener = object : OnProfessorClickListener {
             override fun onClick(professor: ProfessorItem) {
-                navigator.navigate(
-                    HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment(
-                        "hello_professors~!"
-                    )
-                )
+                navigator.navigate(HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment(professor.id))
             }
-
         }
 
         homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener)
@@ -93,5 +91,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun onDestroyView() {
         super.onDestroyView()
         onBackPressedCallback.remove()
+    }
+
+    private fun test() {
+        lifecycleScope.launch {
+            Firebase.getInstance().set()
+        }
     }
 }

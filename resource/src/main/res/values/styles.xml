@@ -25,6 +25,24 @@
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
+    <style name="largeTextViewStyle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="smallTextViewStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+
+    <style name="linkTextViewStyle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/subText</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
     <style name="defaultTextViewStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/mainText</item>
