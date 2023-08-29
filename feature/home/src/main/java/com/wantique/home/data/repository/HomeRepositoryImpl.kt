@@ -6,51 +6,47 @@ import com.wantique.home.data.mapper.Mapper
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.repository.HomeRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDispatcher, private val firebase: Firebase) : HomeRepository {
-    override suspend fun getBanner() = withContext(dispatcher) {
-        try {
-            firebase.getBanner()?.let {
-                Resource.Success(Mapper.mapperToDomain(it))
-            } ?: run {
-                Resource.Error(Throwable("배너를 가져오지 못했습니다"))
-            }
-        } catch (e: Exception) {
-            Resource.Error(e)
+    override fun getBanner(): Flow<Resource<Home.Banner>> = flow {
+        firebase.getBanner()?.let {
+            emit(Resource.Success(Mapper.mapperToDomain(it)))
+        } ?: run {
+            emit(Resource.Error(Throwable("배너를 가져오지 못했습니다")))
         }
-    }
+    }.catch {
+        emit(Resource.Error(it))
+    }.flowOn(dispatcher)
 
-    override suspend fun getCategory() = withContext(dispatcher) {
-        try {
-            firebase.getCategory()?.let {
-                Resource.Success(Mapper.mapperToDomain(it))
-            } ?: run {
-                Resource.Error(Throwable("카테고리 정보를 가져오지 못했습니다"))
-            }
-        } catch(e: Exception) {
-            Resource.Error(e)
+    override fun getCategory(): Flow<Resource<Home.Category>> = flow {
+        firebase.getCategory()?.let {
+            emit(Resource.Success(Mapper.mapperToDomain(it)))
+        } ?: run {
+            emit(Resource.Error(Throwable("카테고리 정보를 가져오지 못했습니다")))
         }
-    }
+    }.catch {
+        emit(Resource.Error(it))
+    }.flowOn(dispatcher)
 
-    override suspend fun getProfessors(): Resource<List<Home.Professor>> = withContext(dispatcher) {
-        try {
-            Resource.Success(Mapper.mapperToDomain(firebase.getProfessors()))
-        } catch (e: Exception) {
-            Resource.Error(e)
-        }
-    }
+    override fun getProfessors(): Flow<Resource<List<Home.Professor>>> = flow<Resource<List<Home.Professor>>> {
+        emit(Resource.Success(Mapper.mapperToDomain(firebase.getProfessors())))
+    }.catch {
+        emit(Resource.Error(it))
+    }.flowOn(dispatcher)
 
-    override suspend fun getYearlyExam(): Resource<Home.Exam> = withContext(dispatcher) {
-        try {
-            firebase.getYearlyExam()?.let {
-                Resource.Success(Mapper.mapperToDomain(it))
-            } ?: run {
-                Resource.Error(Throwable("올해 시험 정보를 가져오지 못했습니다."))
-            }
-        } catch (e: Exception) {
-            Resource.Error(e)
+    override fun getYearlyExam(): Flow<Resource<Home.Exam>> = flow {
+        firebase.getYearlyExam()?.let {
+            emit(Resource.Success(Mapper.mapperToDomain(it)))
+        } ?: run {
+            emit(Resource.Error(Throwable("올해 시험 정보를 가져오지 못했습니다")))
         }
-    }
+    }.catch {
+        emit(Resource.Error(it))
+    }.flowOn(dispatcher)
 }

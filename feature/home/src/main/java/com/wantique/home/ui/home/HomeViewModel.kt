@@ -1,6 +1,7 @@
 package com.wantique.home.ui.home
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
@@ -16,6 +17,8 @@ import com.wantique.home.domain.usecase.GetProfessorsUseCase
 import com.wantique.home.domain.usecase.GetYearlyExamUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -37,43 +40,47 @@ class HomeViewModel @Inject constructor(
     val professorsState = _professorsState.asStateFlow()
 
     fun fetchHome() {
-        if(home.value !is UiState.Success) {
+        if(_home.value !is UiState.Success) {
             viewModelScope.launch {
-                val banner = getBanner()
-                val category = getCategory()
-                val professors = getProfessors()
-                val exam = getYearlyExam()
+                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam()) { banner, category, professors, exam ->
+                    when {
+                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success -> {
+                            _professorsState.value = UiState.Success(professors.getValue())
+                            _currentCategoryPosition.value = UiState.Success(0)
+                            UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
+                        }
 
-                when {
-                    banner.isErrorOrNull() != null -> {
-                        _errorState.value = banner.getError()
-                    }
-                    category.isErrorOrNull() != null -> {
-                        _errorState.value = category.getError()
-                    }
+                        banner is UiState.Error -> {
+                            _errorState.value = banner.getError()
+                            null
+                        }
 
-                    professors.isErrorOrNull() != null -> {
-                        _errorState.value = professors.getError()
-                    }
+                        category is UiState.Error -> {
+                            _errorState.value = category.getError()
+                            null
+                        }
 
-                    exam.isErrorOrNull() != null -> {
-                        _errorState.value = exam.getError()
-                    }
+                        professors is UiState.Error -> {
+                            _errorState.value = professors.getError()
+                            null
+                        }
 
-                    else -> {
-                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
-                        _professorsState.value = professors
-                        _currentCategoryPosition.value = UiState.Success(0)
+                        exam is UiState.Error -> {
+                            _errorState.value = exam.getError()
+                            null
+                        }
+                        else -> null
                     }
+                }.collect { state ->
+                    state?.let { _home.value = it }
                 }
             }
         }
     }
-
-    private suspend fun getBanner() = safeCall { getBannerUseCase() }
-    private suspend fun getCategory() = safeCall { getCategoryUseCase() }
-    private suspend fun getProfessors() = safeCall { getProfessorsUseCase() }
-    private suspend fun getYearlyExam() = safeCall { getYearlyExamUseCase() }
+    private fun getBanner() = safeFlow { getBannerUseCase() }
+    private fun getCategory() = safeFlow { getCategoryUseCase() }
+    private fun getProfessors() = safeFlow { getProfessorsUseCase() }
+    private fun getYearlyExam() = safeFlow { getYearlyExamUseCase() }
 
     fun updateCategoryPosition(position: Int) {
         _currentCategoryPosition.value = UiState.Success(position)

@@ -1,14 +1,10 @@
 package com.wantique.home.ui.details
 
 import android.content.Context
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
-import com.wantique.base.state.getError
-import com.wantique.base.state.getValue
 import com.wantique.base.state.isErrorOrNull
-import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseViewModel
 import com.wantique.home.domain.model.ProfessorInfo
 import com.wantique.home.domain.model.YearlyCurriculum
