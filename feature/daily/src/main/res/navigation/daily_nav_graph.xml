@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/dailyFragment"
-        android:name="com.wantique.daily.DailyFragment"
+        android:name="com.wantique.daily.ui.daily.DailyFragment"
         android:label="DailyFragment" />
 </navigation>

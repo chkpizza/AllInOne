@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".DailyFragment">
+        tools:context=".ui.daily.DailyFragment">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/daily_toolbar"
@@ -40,14 +40,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/daily_toolbar" />
 
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/daily_vp_exam"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/daily_rv"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/daily_view_divide_toolbar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_width="0dp"
-            android:layout_height="0dp" />
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
