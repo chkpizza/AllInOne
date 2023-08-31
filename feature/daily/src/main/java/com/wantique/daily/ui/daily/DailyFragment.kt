@@ -2,18 +2,21 @@ package com.wantique.daily.ui.daily
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
 import com.wantique.daily.R
 import com.wantique.daily.databinding.FragmentDailyBinding
 import com.wantique.daily.di.DailyComponentProvider
-import com.wantique.daily.domain.model.Daily
 import com.wantique.daily.domain.model.PastExam
 import com.wantique.daily.domain.model.Promise
 import com.wantique.daily.ui.daily.adapter.DailyAdapter
 import com.wantique.daily.ui.daily.adapter.listener.OnPastExamClickListener
+import com.wantique.daily.ui.daily.adapter.listener.OnPromisePreviewClickListener
+import com.wantique.daily.ui.daily.adapter.listener.OnWritePromiseClickListener
 import javax.inject.Inject
 
 
@@ -30,75 +33,45 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+
         updateTopInsets()
         setUpRecyclerView()
+        setUpViewListener()
+        request()
     }
 
     private fun setUpRecyclerView() {
-        val onPastExamClickListener = object : OnPastExamClickListener {
-            override fun onClick(position: Int, pastExam: List<PastExam>) {
-                Log.d("PastExamClick", "$position / $pastExam")
+        val onWritePromiseClickListener = object : OnWritePromiseClickListener {
+            override fun onClick() {
+                navigator.navigate(R.id.action_dailyFragment_to_writePromiseFragment)
             }
         }
 
-        dailyAdapter = DailyAdapter(onPastExamClickListener)
-        binding.dailyRv.adapter = dailyAdapter
+        val onPromisePreviewClickListener = object : OnPromisePreviewClickListener {
+            override fun onClick(position: Int, promise: List<Promise>) {
+                Toast.makeText(requireActivity(), "$position $promise", Toast.LENGTH_SHORT).show()
+            }
+        }
 
-        dailyAdapter.submitList(makeDaily())
+        val onPastExamClickListener = object : OnPastExamClickListener {
+            override fun onClick(position: Int, pastExam: List<PastExam>) {
+                Toast.makeText(requireActivity(), "$position $pastExam", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        dailyAdapter = DailyAdapter(onWritePromiseClickListener, onPromisePreviewClickListener, onPastExamClickListener)
+        binding.dailyRv.adapter = dailyAdapter
     }
 
-    private fun makeDaily(): List<Daily> {
-        val daily = mutableListOf<Daily>().apply {
-            add(Daily.DailyLetter("날씨가 쌀쌀하네요!\n오늘 하루도\n화이팅해봐요!!"))
-            add(Daily.DailyPromise(
-                "매일 아침 하루의 다짐으로!",
-                "오늘의 다짐들",
-                listOf(
-                    Promise("", "https://cdn.topstarnews.net/news/photo/202208/14725276_939158_583.jpg"),
-                    Promise("[1] 오늘 행정법 기본서 1회독 가즈아!!", "https://cdn.topstarnews.net/news/photo/202208/14725276_939158_583.jpg"),
-                    Promise("[2] 오늘 행정법 기본서 1회독 가즈아!!", "https://cdn.topstarnews.net/news/photo/202208/14725276_939158_583.jpg"),
-                    Promise("[3] 오늘 행정법 기본서 1회독 가즈아!!", ""),
-                    Promise("[4] 오늘 행정법 기본서 1회독 가즈아!!", "https://cdn.topstarnews.net/news/photo/202208/14725276_939158_583.jpg"),
-                    Promise("[5] 오늘 행정법 기본서 1회독 가즈아!!", ""),
-                    Promise("[6] 오늘 행정법 기본서 1회독 가즈아!!", "https://cdn.topstarnews.net/news/photo/202208/14725276_939158_583.jpg")
-                )
-            ))
-            add(
-                Daily.DailyPastExam(
-                    "하루 3문제 매일 다른 기출!",
-                    "오늘의 기출문제 리스트",
-                    listOf(
-                        PastExam(
-                            "DEFAULT",
-                            "질문",
-                            emptyList(),
-                            emptyList(),
-                            1,
-                            "",
-                            "2023년 지방직 9급 행정법 1번"
-                        ),
-                        PastExam(
-                            "DEFAULT",
-                            "질문",
-                            emptyList(),
-                            emptyList(),
-                            1,
-                            "",
-                            "2023년 지방직 9급 행정법 2번"
-                        ),
-                        PastExam(
-                            "DEFAULT",
-                            "질문",
-                            emptyList(),
-                            emptyList(),
-                            1,
-                            "",
-                            "2023년 지방직 9급 행정법 3번"
-                        )
-                    )
-                )
-            )
+    private fun setUpViewListener() {
+        binding.dailyLayoutError.networkErrorBtnRetry.setOnClickListener {
+            viewModel.fetchDaily()
         }
-        return daily
+    }
+
+    private fun request() {
+        viewModel.fetchDaily()
     }
 }

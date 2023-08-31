@@ -2,6 +2,7 @@ package com.wantique.daily.ui.daily.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,8 +11,12 @@ import com.wantique.daily.databinding.ListItemDailyPastExamBinding
 import com.wantique.daily.databinding.ListItemDailyPromiseBinding
 import com.wantique.daily.domain.model.Daily
 import com.wantique.daily.ui.daily.adapter.listener.OnPastExamClickListener
+import com.wantique.daily.ui.daily.adapter.listener.OnPromisePreviewClickListener
+import com.wantique.daily.ui.daily.adapter.listener.OnWritePromiseClickListener
 
 class DailyAdapter(
+    private val onWritePromiseClickListener: OnWritePromiseClickListener,
+    private val onPromisePreviewClickListener: OnPromisePreviewClickListener,
     private val onPastExamClickListener: OnPastExamClickListener
 ) : ListAdapter<Daily, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<Daily>() {
     override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean {
@@ -22,11 +27,13 @@ class DailyAdapter(
         return oldItem == newItem
     }
 }) {
+    private val promisePreviewAdapter = PromisePreviewAdapter(onPromisePreviewClickListener)
     private val pastExamPreviewAdapter = PastExamPreviewAdapter(onPastExamClickListener)
+
     inner class DailyLetterViewHolder(private val binding: ListItemDailyLetterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Daily) {
             (item as Daily.DailyLetter).also {
-                binding.dailyLetterTvTitle.text = it.letter
+                binding.item = it
             }
         }
     }
@@ -34,12 +41,11 @@ class DailyAdapter(
     inner class DailyPromiseViewHolder(private val binding: ListItemDailyPromiseBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Daily) {
             (item as Daily.DailyPromise).also {
-                binding.dailyPromiseTvTitle.text = it.title
-                binding.dailyPromiseTvSubtitle.text = it.subTitle
-
-                val promisePreviewAdapter = PromisePreviewAdapter()
+                binding.item = it
                 binding.dailyPromiseRvPromise.adapter = promisePreviewAdapter
-                promisePreviewAdapter.submitList(it.promise)
+                binding.dailyPromiseTvWrite.setOnClickListener {
+                    onWritePromiseClickListener.onClick()
+                }
             }
         }
     }

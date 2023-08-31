@@ -25,4 +25,6 @@
     <string name="home_exam_exam_name">%s 필기 시험</string>
 
     <string name="professor_details_curriculum_details">상세 커리큘럼</string>
+
+    <string name="daily_toolbar_title">데일리 공시</string>
 </resources>

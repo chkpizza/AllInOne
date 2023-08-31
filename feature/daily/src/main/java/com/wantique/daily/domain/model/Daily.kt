@@ -19,8 +19,10 @@ sealed class Daily {
 }
 
 data class Promise(
+    val imageUrl: String,
     val body: String,
-    val imageUrl: String
+    val authorId: String,
+    val documentId: String
 )
 
 data class PastExam(

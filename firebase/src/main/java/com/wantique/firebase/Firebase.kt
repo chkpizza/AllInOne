@@ -4,13 +4,17 @@ import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.DailyLetterDto
+import com.wantique.firebase.model.DailyPromiseTitleDto
 import com.wantique.firebase.model.ExamDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.PromiseDto
 import com.wantique.firebase.model.ReferenceKey
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
@@ -128,8 +132,54 @@ class Firebase private constructor() {
         }
     }
 
+    suspend fun getDailyLetter(): DailyLetterDto? {
+        return Firebase.firestore.collection("daily").document("letter").get().await().run {
+            toObject<DailyLetterDto>()
+        }
+    }
+
+    suspend fun getDailyPromise(): List<PromiseDto> {
+        getPromiseReferenceKey()?.let { referenceKey ->
+            return Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").get().await().run {
+                toObjects<PromiseDto>()
+            }
+        }
+
+        return emptyList()
+    }
+
+    suspend fun getDailyPromiseTitle(): DailyPromiseTitleDto? {
+        return Firebase.firestore.collection("promise").document("title").get().await().run {
+            toObject<DailyPromiseTitleDto>()
+        }
+    }
+
+    suspend fun writePromise(imageUri: String, body: String): Boolean {
+        getPromiseReferenceKey()?.let { referenceKey ->
+            val documentId = System.currentTimeMillis().toString()
+            Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").document(documentId).set(
+                PromiseDto(
+                    uploadPromiseImage(imageUri),
+                    body,
+                    Firebase.auth.uid.toString(),
+                    documentId
+                )
+            ).await()
+
+            return Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").document(documentId).get().await().exists()
+        }
+
+        return false
+    }
+
     private suspend fun getReferenceKey(): ReferenceKey? {
         return Firebase.firestore.collection("professor_details").document("reference").get().await().run {
+            toObject<ReferenceKey>()
+        }
+    }
+
+    private suspend fun getPromiseReferenceKey(): ReferenceKey? {
+        return Firebase.firestore.collection("promise").document("reference").get().await().run {
             toObject<ReferenceKey>()
         }
     }
@@ -139,6 +189,10 @@ class Firebase private constructor() {
         return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
     }
 
+    private suspend fun uploadPromiseImage(imageUri: String): String {
+        val ref = Firebase.storage.reference.child("promise").child(Firebase.auth.uid.toString()).child("${System.currentTimeMillis()}.jpg")
+        return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
+    }
 
     companion object {
         private lateinit var firestore: com.wantique.firebase.Firebase
@@ -152,3 +206,5 @@ class Firebase private constructor() {
         }
     }
 }
+
+
