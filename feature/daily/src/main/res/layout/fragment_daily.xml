@@ -48,7 +48,6 @@
             android:id="@+id/daily_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:daily="@{vm.daily}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@id/daily_view_divide_toolbar"

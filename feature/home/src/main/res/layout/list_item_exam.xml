@@ -6,7 +6,7 @@
     <data>
         <variable
             name="item"
-            type="com.wantique.home.domain.model.ExamItem" />
+            type="com.wantique.home.domain.model.ExamPlanItem" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

@@ -12,7 +12,7 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDispatcher, private val firestore: Firebase) : AuthRepository {
     override fun isExistUser() = flow<Resource<Boolean>> {
-        emit(Resource.Success(firestore.getCurrentUser()))
+        emit(Resource.Success(firestore.isExistUser()))
     }.catch {
         emit(Resource.Error(it))
     }.flowOn(dispatcher)

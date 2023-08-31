@@ -1,7 +1,5 @@
 package com.wantique.home.domain.model
 
-import com.wantique.firebase.model.ExamItemDto
-
 sealed class Home {
     data class Banner(
         val notice: String,
@@ -17,9 +15,9 @@ sealed class Home {
         val professors: List<ProfessorItem>
     ) : Home()
 
-    data class Exam(
+    data class YearlyExamPlan(
         val title: String,
-        val exam: List<ExamItem>
+        val exam: List<ExamPlanItem>
     ) : Home()
 }
 
@@ -35,7 +33,7 @@ data class ProfessorItem(
     val update : Boolean
 )
 
-data class ExamItem(
+data class ExamPlanItem(
     val regDate: String,
     val examDate: String,
     val name: String,

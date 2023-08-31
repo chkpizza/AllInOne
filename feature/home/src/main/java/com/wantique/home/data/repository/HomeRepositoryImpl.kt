@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDispatcher, private val firebase: Firebase) : HomeRepository {
@@ -40,7 +39,7 @@ class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDi
         emit(Resource.Error(it))
     }.flowOn(dispatcher)
 
-    override fun getYearlyExam(): Flow<Resource<Home.Exam>> = flow {
+    override fun getYearlyExam(): Flow<Resource<Home.YearlyExamPlan>> = flow {
         firebase.getYearlyExam()?.let {
             emit(Resource.Success(Mapper.mapperToDomain(it)))
         } ?: run {
