@@ -1,4 +1,4 @@
-package com.wantique.daily.data
+package com.wantique.daily.data.repository
 
 import com.wantique.base.state.Resource
 import com.wantique.daily.data.mapper.Mapper
