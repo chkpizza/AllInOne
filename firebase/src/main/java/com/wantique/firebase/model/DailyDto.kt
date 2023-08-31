@@ -9,7 +9,8 @@ data class PromiseDto(
     val imageUrl: String = "",
     val body: String = "",
     val authorId: String = "",
-    val documentId: String = ""
+    val documentId: String = "",
+    val date: String = ""
 )
 
 data class DailyLetterDto(

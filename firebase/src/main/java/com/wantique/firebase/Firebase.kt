@@ -1,5 +1,6 @@
 package com.wantique.firebase
 
+import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -140,46 +141,46 @@ class Firebase private constructor() {
 
     suspend fun getDailyPromise(): List<PromiseDto> {
         getPromiseReferenceKey()?.let { referenceKey ->
-            return Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").get().await().run {
+            return Firebase.firestore.collection("promise").whereEqualTo("date", referenceKey.key).get().await().run {
                 toObjects<PromiseDto>()
             }
         }
-
         return emptyList()
     }
 
     suspend fun getDailyPromiseTitle(): DailyPromiseTitleDto? {
-        return Firebase.firestore.collection("promise").document("title").get().await().run {
+        return Firebase.firestore.collection("promise_title").document("title").get().await().run {
             toObject<DailyPromiseTitleDto>()
         }
     }
 
     suspend fun writePromise(imageUri: String, body: String): Boolean {
         getPromiseReferenceKey()?.let { referenceKey ->
-            val documentId = System.currentTimeMillis().toString()
-            Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").document(documentId).set(
+            val documentId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+            Firebase.firestore.collection("promise").document(documentId).set(
                 PromiseDto(
                     uploadPromiseImage(imageUri),
                     body,
                     Firebase.auth.uid.toString(),
-                    documentId
+                    documentId,
+                    referenceKey.key
                 )
             ).await()
 
-            return Firebase.firestore.collection("promise").document(referenceKey.key).collection("today").document(documentId).get().await().exists()
+            return Firebase.firestore.collection("promise").document(documentId).get().await().exists()
         }
 
         return false
     }
 
     private suspend fun getReferenceKey(): ReferenceKey? {
-        return Firebase.firestore.collection("professor_details").document("reference").get().await().run {
+        return Firebase.firestore.collection("professor_details_reference").document("reference").get().await().run {
             toObject<ReferenceKey>()
         }
     }
 
     private suspend fun getPromiseReferenceKey(): ReferenceKey? {
-        return Firebase.firestore.collection("promise").document("reference").get().await().run {
+        return Firebase.firestore.collection("promise_reference").document("reference").get().await().run {
             toObject<ReferenceKey>()
         }
     }
@@ -206,5 +207,3 @@ class Firebase private constructor() {
         }
     }
 }
-
-

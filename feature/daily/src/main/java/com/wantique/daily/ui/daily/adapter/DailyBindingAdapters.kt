@@ -2,6 +2,7 @@ package com.wantique.daily.ui.daily.adapter
 
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -30,7 +31,10 @@ object DailyBindingAdapters {
     @JvmStatic
     fun setPromisePreview(view: RecyclerView, promise: List<Promise>) {
         if(promise.isNotEmpty()) {
+            view.isVisible = true
             (view.adapter as PromisePreviewAdapter).submitList(promise)
+        } else {
+            view.isVisible = false
         }
     }
 

@@ -55,7 +55,7 @@ class WritePromiseFragment : BaseFragment<FragmentWritePromiseBinding>(R.layout.
 
     private fun writePromiseTest() {
         lifecycleScope.launch {
-            val result = Firebase.getInstance().writePromise(viewModel.uri.value.getValue().toString(), "오늘의 다짐 테스트 중입니다")
+            val result = Firebase.getInstance().writePromise(viewModel.uri.value.getValue().toString(), "등록 테스트 중")
             if(result) {
                 Toast.makeText(requireActivity(), "등록 성공!", Toast.LENGTH_SHORT).show()
                 navigator.navigateUp()

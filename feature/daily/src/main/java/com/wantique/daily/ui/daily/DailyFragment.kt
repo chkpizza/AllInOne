@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.lifecycleScope
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
 import com.wantique.daily.R
@@ -17,6 +18,8 @@ import com.wantique.daily.ui.daily.adapter.DailyAdapter
 import com.wantique.daily.ui.daily.adapter.listener.OnPastExamClickListener
 import com.wantique.daily.ui.daily.adapter.listener.OnPromisePreviewClickListener
 import com.wantique.daily.ui.daily.adapter.listener.OnWritePromiseClickListener
+import com.wantique.firebase.Firebase
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
