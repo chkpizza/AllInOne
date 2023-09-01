@@ -146,19 +146,12 @@ class Firebase private constructor() {
         getRecordReferenceKey()?.let { referenceKey ->
             val documentId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
             val imageUrl = if(imageUri.isNotEmpty()) uploadRecordImage(imageUri) else ""
-
-            Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).set(
-                RecordDto(
-                    Firebase.auth.uid.toString(),
-                    documentId,
-                    referenceKey.key,
-                    false,
-                    imageUrl,
-                    body
-                )
-            ).await()
+            val record = RecordDto(Firebase.auth.uid.toString(), documentId, referenceKey.key, false, imageUrl, body)
+            Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).set(record).await()
+            Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).set(record).await()
 
             return Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).get().await().exists()
+                    && Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).get().await().exists()
         } ?: run {
             return false
         }
