@@ -1,23 +1,20 @@
 package com.wantique.home.ui.home
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import com.wantique.base.state.getError
 import com.wantique.base.state.getValue
-import com.wantique.base.state.isErrorOrNull
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseViewModel
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.usecase.GetBannerUseCase
 import com.wantique.home.domain.usecase.GetCategoryUseCase
 import com.wantique.home.domain.usecase.GetProfessorsUseCase
-import com.wantique.home.domain.usecase.GetYearlyExamUseCase
+import com.wantique.home.domain.usecase.GetYearlyExamPlanUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,7 +23,7 @@ class HomeViewModel @Inject constructor(
     private val getBannerUseCase: GetBannerUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getProfessorsUseCase: GetProfessorsUseCase,
-    private val getYearlyExamUseCase: GetYearlyExamUseCase,
+    private val getYearlyExamPlanUseCase: GetYearlyExamPlanUseCase,
     networkTracker: NetworkTracker,
     context: Context
 ) : BaseViewModel(networkTracker, context) {
@@ -80,7 +77,7 @@ class HomeViewModel @Inject constructor(
     private fun getBanner() = safeFlow { getBannerUseCase() }
     private fun getCategory() = safeFlow { getCategoryUseCase() }
     private fun getProfessors() = safeFlow { getProfessorsUseCase() }
-    private fun getYearlyExam() = safeFlow { getYearlyExamUseCase() }
+    private fun getYearlyExam() = safeFlow { getYearlyExamPlanUseCase() }
 
     fun updateCategoryPosition(position: Int) {
         _currentCategoryPosition.value = UiState.Success(position)

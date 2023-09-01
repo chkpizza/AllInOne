@@ -6,19 +6,19 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wantique.home.databinding.ListItemExamBinding
-import com.wantique.home.domain.model.ExamItem
+import com.wantique.home.domain.model.ExamPlanItem
 
-class ExamAdapter : ListAdapter<ExamItem, ExamAdapter.ExamViewHolder>(object : DiffUtil.ItemCallback<ExamItem>() {
-    override fun areItemsTheSame(oldItem: ExamItem, newItem: ExamItem): Boolean {
+class ExamAdapter : ListAdapter<ExamPlanItem, ExamAdapter.ExamViewHolder>(object : DiffUtil.ItemCallback<ExamPlanItem>() {
+    override fun areItemsTheSame(oldItem: ExamPlanItem, newItem: ExamPlanItem): Boolean {
         return oldItem == newItem
     }
 
-    override fun areContentsTheSame(oldItem: ExamItem, newItem: ExamItem): Boolean {
+    override fun areContentsTheSame(oldItem: ExamPlanItem, newItem: ExamPlanItem): Boolean {
         return oldItem == newItem
     }
 }) {
     inner class ExamViewHolder(private val binding: ListItemExamBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: ExamItem) {
+        fun bind(item: ExamPlanItem) {
             binding.item = item
         }
     }

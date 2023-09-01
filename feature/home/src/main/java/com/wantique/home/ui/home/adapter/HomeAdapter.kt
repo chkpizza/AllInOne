@@ -62,7 +62,7 @@ class HomeAdapter(
 
     inner class ExamWrapperViewHolder(private val binding: ListItemExamWrapperBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Home) {
-            (item as Home.Exam).also {
+            (item as Home.YearlyExamPlan).also {
                 binding.homeTvExamTitle.text = it.title
                 binding.homeRvExam.adapter = examAdapter
                 examAdapter.submitList(it.exam)
@@ -74,7 +74,7 @@ class HomeAdapter(
         is Home.Banner -> 1000
         is Home.Category -> 2000
         is Home.Professor -> 3000
-        is Home.Exam -> 4000
+        is Home.YearlyExamPlan -> 4000
         else -> throw RuntimeException()
     }
 
@@ -103,7 +103,7 @@ class HomeAdapter(
             is Home.Banner -> (holder as BannerWrapperViewHolder).bind(getItem(position))
             is Home.Category -> (holder as CategoryWrapperViewHolder).bind(getItem(position))
             is Home.Professor -> (holder as ProfessorWrapperViewHolder).bind(getItem(position))
-            is Home.Exam -> (holder as ExamWrapperViewHolder).bind(getItem(position))
+            is Home.YearlyExamPlan -> (holder as ExamWrapperViewHolder).bind(getItem(position))
         }
     }
 

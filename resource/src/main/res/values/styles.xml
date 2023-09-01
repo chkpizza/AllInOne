@@ -5,12 +5,12 @@
     </style>
 
     <style name="defaultButtonStyle">
-        <item name="android:background">@drawable/common_btn_selector</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@drawable/common_tv_selector</item>
         <item name="android:padding">16dp</item>
         <item name="android:gravity">center</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
+        <item name="android:backgroundTint">@drawable/common_btn_selector</item>
     </style>
 
     <style name="toolbarTextViewStyle">
@@ -22,6 +22,12 @@
     <style name="titleTextViewStyle">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/mainText</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <style name="subTitleTextViewStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/subText</item>
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
@@ -83,6 +89,14 @@
         <item name="android:textSize">14sp</item>
         <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="android:textColor">@color/subText</item>
+    </style>
+    
+    <style name="borderlessEditTextStyle">
+        <item name="android:background">@null</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/mainText</item>
     </style>
 
     <style name="dialogBodyTextStyle">

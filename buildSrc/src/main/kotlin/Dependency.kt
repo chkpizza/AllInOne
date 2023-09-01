@@ -6,6 +6,7 @@ object AndroidX {
     const val NAVIGATION_UI = "androidx.navigation:navigation-ui-ktx:2.6.0"
     const val SPLASH_SCREEN = "androidx.core:core-splashscreen:1.0.1"
     const val LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
+    const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.3.1"
 }
 
 object Google {

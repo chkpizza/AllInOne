@@ -2,14 +2,14 @@ package com.wantique.home.data.mapper
 
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ExamDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.YearlyCurriculumDto
+import com.wantique.firebase.model.YearlyExamPlanDto
 import com.wantique.home.domain.model.BannerItem
 import com.wantique.home.domain.model.Curriculum
 import com.wantique.home.domain.model.DetailCurriculum
-import com.wantique.home.domain.model.ExamItem
+import com.wantique.home.domain.model.ExamPlanItem
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.model.ProfessorInfo
 import com.wantique.home.domain.model.ProfessorItem
@@ -40,14 +40,13 @@ object Mapper {
         }
     }
 
-    fun mapperToDomain(dto: ExamDto): Home.Exam {
-        val examItemList = mutableListOf<ExamItem>().apply {
+    fun mapperToDomain(dto: YearlyExamPlanDto): Home.YearlyExamPlan {
+        val examPlanItemList = mutableListOf<ExamPlanItem>().apply {
             dto.exam.forEach {
-                add(ExamItem(it.regDate, it.examDate, it.name, it.complete))
+                add(ExamPlanItem(it.regDate, it.examDate, it.name, it.complete))
             }
         }
-
-        return Home.Exam(dto.title, examItemList)
+        return Home.YearlyExamPlan(dto.title, examPlanItemList)
     }
 
     fun mapperToDomain(dto: YearlyCurriculumDto): YearlyCurriculum {
