@@ -53,7 +53,7 @@
             android:layout_marginTop="20dp"
             android:text="@string/cancel_withdrawal_description"/>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_withdrawal_btn_redo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

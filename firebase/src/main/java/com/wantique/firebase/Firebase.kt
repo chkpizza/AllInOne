@@ -1,15 +1,18 @@
 package com.wantique.firebase
 
+import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.toObjects
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.ReferenceKey
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
@@ -139,8 +142,36 @@ class Firebase private constructor() {
         }
     }
 
+    suspend fun registerRecord(imageUri: String, body: String): Boolean {
+        getRecordReferenceKey()?.let { referenceKey ->
+            val documentId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+            val imageUrl = if(imageUri.isNotEmpty()) uploadRecordImage(imageUri) else ""
+
+            Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).set(
+                RecordDto(
+                    Firebase.auth.uid.toString(),
+                    documentId,
+                    referenceKey.key,
+                    false,
+                    imageUrl,
+                    body
+                )
+            ).await()
+
+            return Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).get().await().exists()
+        } ?: run {
+            return false
+        }
+    }
+
     private suspend fun getProfessorDetailsReferenceKey(): ReferenceKey? {
         return Firebase.firestore.collection("reference").document("professor_details").get().await().run {
+            toObject<ReferenceKey>()
+        }
+    }
+
+    private suspend fun getRecordReferenceKey(): ReferenceKey? {
+        return Firebase.firestore.collection("reference").document("record").get().await().run {
             toObject<ReferenceKey>()
         }
     }
@@ -148,6 +179,11 @@ class Firebase private constructor() {
     /** 사용자 프로필 이미지를 Storage 에 저장하는 메서드 */
     private suspend fun uploadProfileImage(imageUri: String): String {
         val ref = Firebase.storage.reference.child("profile").child(Firebase.auth.uid.toString()).child("profileImage.jpg")
+        return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
+    }
+
+    private suspend fun uploadRecordImage(imageUri: String): String {
+        val ref = Firebase.storage.reference.child("record").child(Firebase.auth.uid.toString()).child("${System.currentTimeMillis()}.jpg")
         return ref.putFile(imageUri.toUri()).await().storage.downloadUrl.await().toString()
     }
 
@@ -160,6 +196,24 @@ class Firebase private constructor() {
             }
 
             return firestore
+        }
+    }
+    suspend fun chainingTest() {
+        /*
+        Firebase.firestore.collection("daily").document("record").collection("record").document(System.currentTimeMillis().toString()).set(
+            RecordDto(
+                Firebase.auth.uid.toString(),
+                "2023_09_01",
+                "whereEqualTo Chaining 테스트",
+                false
+            )
+        ).await()
+
+         */
+        Firebase.firestore.collection("daily").document("record").collection("record").whereEqualTo("date", "2023_09_01").whereEqualTo("enable", true).get().await().also {
+            it.toObjects<RecordDto>().apply {
+                Log.d("RecordTest", this.toString())
+            }
         }
     }
 }

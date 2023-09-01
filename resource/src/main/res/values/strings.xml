@@ -19,6 +19,8 @@
     <string name="cancel_withdrawal_description">해당 계정은 회원 탈퇴 요청된 계정입니다. 회원 탈퇴 후 30일 이내에는 계정을 복원할 수 있습니다. 30일 이후에는 회원님의 모든 정보가 삭제됩니다. 회원 탈퇴를 철회하실 경우 다시 서비스를  이용하실 수  있습니다. 다시 서비스를 이용하시려면 아래의 시작하기 버튼을  눌러주세요</string>
     <string name="cancel_withdrawal_redo">다시 시작하기</string>
 
+    <string name="settings_toolbar_title">프로필 설정</string>
+
     <string name="home_toolbar_title">홈</string>
     <string name="home_professor_not_update">NOT\nUPDATED</string>
     <string name="home_exam_reg_name">%s 원서 접수</string>
@@ -27,4 +29,6 @@
     <string name="professor_details_curriculum_details">상세 커리큘럼</string>
 
     <string name="daily_toolbar_title">데일리 공시</string>
+
+    <string name="write_record_toolbar_title">매일 기록</string>
 </resources>

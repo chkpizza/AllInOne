@@ -26,6 +26,14 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
-        viewModel.test()
+        updateTopInsets()
+        setUpViewListener()
+    }
+
+    private fun setUpViewListener() {
+        //TODO 테스트를 위한 임시 리스너
+        binding.dailyToolbar.setOnClickListener {
+            navigator.navigate(R.id.action_dailyFragment_to_writeRecordFragment)
+        }
     }
 }
