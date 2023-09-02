@@ -22,6 +22,10 @@ import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Calendar
+import java.util.Date
 
 class Firebase private constructor() {
     /** 로그인 화면에 출력할 배경 이미지를 받아오는 메서드 */
@@ -155,7 +159,7 @@ class Firebase private constructor() {
 
     suspend fun registerRecord(imageUri: String, body: String): Boolean {
         getRecordReferenceKey()?.let { referenceKey ->
-            val documentId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+            val documentId = "${referenceKey.key}-(${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)})-${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
             val imageUrl = if(imageUri.isNotEmpty()) uploadRecordImage(imageUri) else ""
             val record = RecordDto(Firebase.auth.uid.toString(), documentId, referenceKey.key, false, imageUrl, body)
             Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).set(record).await()
