@@ -1,6 +1,8 @@
 package com.wantique.daily.data.repository
 
 import com.wantique.base.state.Resource
+import com.wantique.daily.data.mapper.Mapper
+import com.wantique.daily.domain.model.Daily
 import com.wantique.daily.domain.repository.RecordRepository
 import com.wantique.firebase.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,5 +25,7 @@ class RecordRepositoryImpl @Inject constructor(
     }.catch { e ->
         emit(Resource.Error(e))
     }.flowOn(dispatcher)
+
+
 
 }

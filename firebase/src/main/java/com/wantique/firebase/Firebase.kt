@@ -10,9 +10,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.DailyLetterDto
+import com.wantique.firebase.model.DailyRecordDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.RecordDto
+import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
@@ -155,6 +158,28 @@ class Firebase private constructor() {
         } ?: run {
             return false
         }
+    }
+
+    suspend fun getDailyLetter(): DailyLetterDto? {
+        return Firebase.firestore.collection("daily").document("letter").get().await().run {
+            toObject<DailyLetterDto>()
+        }
+    }
+
+    suspend fun getDailyRecord(): DailyRecordDto? {
+        getRecordReferenceKey()?.let { referenceKey ->
+            val header = Firebase.firestore.collection("daily").document("recordHeader").get().await().run {
+                toObject<RecordHeaderDto>()
+            }
+
+            val records = Firebase.firestore.collection("daily").document("recordHeader").collection("record")
+                .whereEqualTo("date", referenceKey.key).whereEqualTo("enable", true).get().await().run {
+                    toObjects<RecordDto>()
+                }
+            header?.let {
+                return DailyRecordDto(it, records)
+            } ?: return null
+        } ?: return null
     }
 
     private suspend fun getProfessorDetailsReferenceKey(): ReferenceKey? {

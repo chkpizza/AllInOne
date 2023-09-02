@@ -8,10 +8,15 @@
             type="com.wantique.base.ui.BaseViewModel" />
     </data>
 
+    <!--
+        Fab 의 기본 elevation + pressedTranslationZ elevation 값을 고려하여
+        충분한 값의 elevation 설정 필요
+    -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FFFFFF"
+        android:elevation="20dp"
         app:errorHandler="@{baseVM.errorState}">
 
         <TextView
