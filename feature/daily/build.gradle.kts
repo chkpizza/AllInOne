@@ -57,5 +57,4 @@ dependencies {
     implementation(ThirdParty.GLIDE)
     implementation(AndroidX.RECYCLER_VIEW)
     implementation(AndroidX.LIVEDATA)
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.0.3")
 }
