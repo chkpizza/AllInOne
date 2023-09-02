@@ -38,8 +38,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
     }
 
     private fun setUpViewListener() {
-        //TODO 테스트를 위한 임시 리스너
-        binding.dailyToolbar.setOnClickListener {
+        binding.dailyFab.setOnClickListener {
             navigator.navigate(R.id.action_dailyFragment_to_writeRecordFragment)
         }
 
