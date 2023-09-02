@@ -10,6 +10,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.CoverDto
 import com.wantique.firebase.model.DailyLetterDto
 import com.wantique.firebase.model.DailyRecordDto
 import com.wantique.firebase.model.ProfessorDto
@@ -23,6 +24,13 @@ import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
 
 class Firebase private constructor() {
+    /** 로그인 화면에 출력할 배경 이미지를 받아오는 메서드 */
+    suspend fun getCoverImage(): CoverDto? {
+        return Firebase.firestore.collection("app_image").document("cover").get().await().run {
+            toObject<CoverDto>()
+        }
+    }
+
     /** 현재 사용자가 이미 Firestore 에 등록된 사용자인지 확인하는 메서드 */
     suspend fun isExistUser(): Boolean {
         return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()

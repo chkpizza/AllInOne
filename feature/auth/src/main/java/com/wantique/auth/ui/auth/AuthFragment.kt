@@ -51,9 +51,18 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateInsets()
+
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+
+        updateBottomInsets()
         setUpViewListener()
         setUpObservers()
+        request()
+    }
+
+    private fun request() {
+        viewModel.getCoverImage()
     }
 
     private fun setUpViewListener() {

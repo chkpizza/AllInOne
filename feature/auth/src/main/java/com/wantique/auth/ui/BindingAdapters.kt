@@ -6,7 +6,9 @@ import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.wantique.auth.domain.model.Cover
 import com.wantique.base.state.UiState
+import com.wantique.base.state.getValue
 import com.wantique.base.state.isSuccessOrNull
 import java.text.DecimalFormat
 
@@ -40,6 +42,16 @@ object BindingAdapters {
         item.isSuccessOrNull()?.let {
             Glide.with(view.context)
                 .load(it)
+                .into(view)
+        }
+    }
+
+    @BindingAdapter("cover")
+    @JvmStatic
+    fun setCover(view: ImageView, item: UiState<Cover>) {
+        item.isSuccessOrNull()?.let {
+            Glide.with(view.context)
+                .load(item.getValue().imageUrl)
                 .into(view)
         }
     }

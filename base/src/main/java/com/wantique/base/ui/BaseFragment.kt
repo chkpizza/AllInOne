@@ -65,4 +65,14 @@ open class BaseFragment<T: ViewDataBinding>(
             WindowInsetsCompat.CONSUMED
         }
     }
+
+    fun updateBottomInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+    }
 }
