@@ -9,13 +9,6 @@ import com.wantique.base.navigation.Navigator
 
 class NavigatorImpl(private val navController: NavController) : Navigator {
     override fun navigateToInit() {
-        /*
-        val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
-        navGraph.setStartDestination(R.id.init_nav_graph)
-        navController.setGraph(navGraph, null)
-
-         */
-        navController.clearBackStack(R.id.app_nav_graph)
         navController.navigate(R.id.action_main_to_init)
     }
 

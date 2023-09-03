@@ -88,9 +88,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener)
         binding.homeRvContent.adapter = homeAdapter
         viewModel.fetchHome()
-        Log.d("BackStackTest", findNavController().currentBackStack.value.toString())
-        Log.d("BackStackTest", findNavController().currentBackStackEntry.toString())
-        Log.d("BackStackTest", findNavController().currentDestination.toString())
     }
 
     private fun setUpViewListener() {
