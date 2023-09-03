@@ -15,14 +15,11 @@ class NavigatorImpl(private val navController: NavController) : Navigator {
         navController.setGraph(navGraph, null)
 
          */
+        navController.clearBackStack(R.id.app_nav_graph)
+        navController.navigate(R.id.action_main_to_init)
     }
 
     override fun navigateToMain() {
-        /*
-        val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
-        navGraph.setStartDestination(R.id.main_nav_graph)
-        navController.setGraph(navGraph, null)
-         */
         navController.navigate(R.id.action_init_to_main)
     }
 

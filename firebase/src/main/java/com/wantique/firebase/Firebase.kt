@@ -28,6 +28,10 @@ import java.util.Calendar
 import java.util.Date
 
 class Firebase private constructor() {
+    fun signOut() {
+        Firebase.auth.signOut()
+    }
+
     /** 로그인 화면에 출력할 배경 이미지를 받아오는 메서드 */
     suspend fun getCoverImage(): CoverDto? {
         return Firebase.firestore.collection("app_image").document("cover").get().await().run {

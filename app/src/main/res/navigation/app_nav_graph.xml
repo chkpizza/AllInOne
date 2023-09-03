@@ -9,4 +9,7 @@
     <action android:id="@+id/action_init_to_main"
         app:destination="@id/main_nav_graph" />
 
+    <action android:id="@+id/action_main_to_init"
+        app:destination="@id/init_nav_graph" />
+
 </navigation>
