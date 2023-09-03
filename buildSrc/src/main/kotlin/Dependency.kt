@@ -1,5 +1,5 @@
 object AndroidX {
-    const val CORE = "androidx.core:core-ktx:1.8.0"
+    const val CORE = "androidx.core:core-ktx:1.10.1"
     const val APP_COMAPT = "androidx.appcompat:appcompat:1.6.1"
     const val CONSTRAINT_LAYOUT = "androidx.constraintlayout:constraintlayout:2.1.4"
     const val NAVIGATION_FRAGMENT = "androidx.navigation:navigation-fragment-ktx:2.6.0"
