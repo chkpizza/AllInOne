@@ -17,6 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
         super.onCreate(savedInstanceState)
 
         setUpBottomNavigation()
+        initGraph()
     }
 
     private fun setUpBottomNavigation() {
@@ -30,6 +31,16 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
         }
 
         binding.appBottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun initGraph() {
+        val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
+        if(getPreferences(MODE_PRIVATE).getBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), false)) {
+            navGraph.setStartDestination(R.id.main_nav_graph)
+        } else {
+            navGraph.setStartDestination(R.id.init_nav_graph)
+        }
+        navController.graph = navGraph
     }
 
     override fun getNavigator(): Navigator {

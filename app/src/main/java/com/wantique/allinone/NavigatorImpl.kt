@@ -4,16 +4,19 @@ import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.NavDirections
-import androidx.navigation.NavOptions
 import com.wantique.base.navigation.Navigator
 
 class NavigatorImpl(private val navController: NavController) : Navigator {
     override fun navigateToInit() {
-        navController.navigate(R.id.action_main_to_init)
+        val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
+        navGraph.setStartDestination(R.id.init_nav_graph)
+        navController.graph = navGraph
     }
 
     override fun navigateToMain() {
-        navController.navigate(R.id.action_init_to_main)
+        val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
+        navGraph.setStartDestination(R.id.main_nav_graph)
+        navController.graph = navGraph
     }
 
     override fun navigateByDeepLink(uri: String) {

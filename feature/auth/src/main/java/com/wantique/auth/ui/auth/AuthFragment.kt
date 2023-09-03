@@ -53,17 +53,13 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if(requireActivity().getPreferences(MODE_PRIVATE).getBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), false)) {
-            navigator.navigateToMain()
-        } else {
-            binding.lifecycleOwner = this
-            binding.vm = viewModel
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
 
-            updateBottomInsets()
-            setUpViewListener()
-            setUpObservers()
-            request()
-        }
+        updateBottomInsets()
+        setUpViewListener()
+        setUpObservers()
+        request()
     }
 
 
