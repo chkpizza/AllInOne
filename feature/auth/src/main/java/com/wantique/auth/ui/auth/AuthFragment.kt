@@ -2,17 +2,13 @@ package com.wantique.auth.ui.auth
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.FragmentNavigator
-import androidx.navigation.fragment.findNavController
 import androidx.navigation.navGraphViewModels
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -28,7 +24,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-
 
 class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     @Inject lateinit var webClientId: String
@@ -48,6 +43,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
             }
         }
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context.applicationContext as AuthComponentProvider).getAuthComponent().inject(this)
@@ -58,12 +54,13 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
 
         binding.lifecycleOwner = this
         binding.vm = viewModel
+
         updateBottomInsets()
         setUpViewListener()
         setUpObservers()
-        Log.d("CurrentDestination", findNavController().currentBackStack.value.toString())
         request()
     }
+
 
     private fun request() {
         viewModel.getCoverImage()
@@ -74,7 +71,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
             signInWithGoogle()
         }
     }
-
 
     private fun signInWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

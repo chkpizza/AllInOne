@@ -4,11 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.navArgs
@@ -35,11 +31,12 @@ class ProfessorDetailsFragment : BaseFragment<FragmentProfessorDetailsBinding>(R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateInsets()
 
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
+
+        updateInsets()
         setUpRecyclerView()
         setUpViewListener()
         setUpObservers()
