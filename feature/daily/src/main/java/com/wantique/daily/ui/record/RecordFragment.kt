@@ -1,5 +1,7 @@
 package com.wantique.daily.ui.record
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -8,14 +10,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.wantique.base.ui.BaseFragment
 import com.wantique.daily.R
 import com.wantique.daily.databinding.FragmentRecordBinding
+import com.wantique.daily.databinding.LayoutBottomSheetDialogBinding
 import com.wantique.daily.di.DailyComponentProvider
 import com.wantique.daily.domain.model.Record
+import com.wantique.daily.ui.record.adapter.ReportAdapter
 import com.wantique.daily.ui.record.adapter.TodayRecordAdapter
+import com.wantique.daily.ui.record.adapter.listener.OnRecordRemoveClickListener
 import com.wantique.daily.ui.record.adapter.listener.OnRecordReportClickListener
 import javax.inject.Inject
 
@@ -33,20 +41,69 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         updateBottomInsets()
         setUpViewPager()
+        setUpObserver()
     }
 
     private fun setUpViewPager() {
         val onRecordReportClickListener = object : OnRecordReportClickListener {
             override fun onClick(record: Record) {
-                Toast.makeText(requireActivity(), "${record.body} 게시글 신고", Toast.LENGTH_SHORT).show()
+                val dialog = BottomSheetDialog(requireActivity())
+                val binding = LayoutBottomSheetDialogBinding.inflate(LayoutInflater.from(requireActivity()))
+                val adapter = ReportAdapter()
+
+                dialog.setContentView(binding.root)
+                binding.bottomSheetDialogRv.adapter = adapter
+                adapter.submitList(resources.getStringArray(com.wantique.resource.R.array.today_record_report_reason).toList())
+                binding.bottomSheetDialogBtn.setOnClickListener {
+                    if(adapter.selectedPosition == -1) {
+                        Toast.makeText(requireActivity(), "신고 사유를 선택해주세요", Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.reportRecord(record.documentId, resources.getStringArray(com.wantique.resource.R.array.today_record_report_reason)[adapter.selectedPosition])
+                        dialog.dismiss()
+                    }
+                }
+
+                dialog.show()
             }
         }
-        todayRecordAdapter = TodayRecordAdapter(onRecordReportClickListener)
+
+        val onRecordRemoveClickListener = object : OnRecordRemoveClickListener {
+            override fun onClick(record: Record) {
+                //viewModel.removeRecord(record.documentId)
+                AlertDialog.Builder(requireActivity())
+                    .setTitle("기록 삭제")
+                    .setMessage("해당 기록을 삭제하시겠습니까?")
+                    .setPositiveButton("삭제하기") { _, _ ->
+                        viewModel.removeRecord(record.documentId)
+                    }
+                    .setNegativeButton("취소하기", null)
+                    .show()
+            }
+        }
+
+        todayRecordAdapter = TodayRecordAdapter(onRecordReportClickListener, onRecordRemoveClickListener)
         binding.recordVpTodayRecord.adapter = todayRecordAdapter
         todayRecordAdapter.submitList(args.record.toList())
 
         binding.recordVpTodayRecord.setCurrentItem(args.position, false)
+    }
+
+    private fun setUpObserver() {
+        viewModel.report.asLiveData().observe(viewLifecycleOwner) {
+            it?.let {
+                Toast.makeText(requireActivity(), "해당 게시글을 신고하였습니다\n해당 게시글은 검토 후 조치할 예정입니다", Toast.LENGTH_SHORT).show()
+                navigator.navigateUp()
+            }
+        }
+
+        viewModel.remove.asLiveData().observe(viewLifecycleOwner) {
+            it?.let {
+                Toast.makeText(requireActivity(), "해당 기록을 정상적으로 삭제하였습니다", Toast.LENGTH_SHORT).show()
+                navigator.navigateUp()
+            }
+        }
     }
 }

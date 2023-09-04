@@ -11,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.wantique.daily.databinding.ListItemTodayRecordBinding
 import com.wantique.daily.domain.model.Record
+import com.wantique.daily.ui.record.adapter.listener.OnRecordRemoveClickListener
 import com.wantique.daily.ui.record.adapter.listener.OnRecordReportClickListener
 import com.wantique.firebase.Firebase
 
 class TodayRecordAdapter(
-    private val onRecordReportClickListener: OnRecordReportClickListener
+    private val onRecordReportClickListener: OnRecordReportClickListener,
+    private val onRecordRemoveClickListener: OnRecordRemoveClickListener
 ) : ListAdapter<Record, TodayRecordAdapter.TodayRecordViewHolder>(object : DiffUtil.ItemCallback<Record>() {
     override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
         return oldItem == newItem
@@ -31,6 +33,10 @@ class TodayRecordAdapter(
 
             binding.todayRecordIvReport.setOnClickListener {
                 onRecordReportClickListener.onClick(item)
+            }
+
+            binding.todayRecordTvRemove.setOnClickListener {
+                onRecordRemoveClickListener.onClick(item)
             }
         }
     }

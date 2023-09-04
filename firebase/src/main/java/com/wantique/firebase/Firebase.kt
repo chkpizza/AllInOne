@@ -18,6 +18,7 @@ import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
+import com.wantique.firebase.model.ReportDto
 import com.wantique.firebase.model.TodayRecordDto
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
@@ -196,14 +197,44 @@ class Firebase private constructor() {
                     toObjects<RecordDto>()
                 }
 
+            val report = Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").get().await().run {
+                toObjects<ReportDto>()
+            }
+
+            val filteredRecord = (record.associateBy { it.documentId } - report.map { it.documentId }.toSet()).values.toList()
+
             header?.let { 
-                return DailyRecordDto(it, record.mapNotNull { _record ->
+                return DailyRecordDto(it, filteredRecord.mapNotNull { _record ->
                     getUserProfile(_record.authorUid)?.let { user ->
                         TodayRecordDto(_record.authorUid, _record.documentId, _record.date, _record.imageUrl, _record.body, user.nickName, user.profileImageUrl)
                     }
                 })
             } ?: return null
         } ?: return null
+    }
+
+    suspend fun removeRecord(documentId: String): Boolean {
+        Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).delete().await()
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).delete().await()
+
+        return !Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).get().await().exists()
+                && !Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).get().await().exists()
+    }
+
+    suspend fun reportRecord(documentId: String, reason: String): Boolean {
+        val report = ReportDto(
+            documentId,
+            reason,
+            Firebase.auth.uid.toString()
+        )
+
+        val reportId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+
+        Firebase.firestore.collection("reportRecord").document(reportId).set(report).await()
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").document(reportId).set(report).await()
+
+        return Firebase.firestore.collection("reportRecord").document(reportId).get().await().exists() &&
+                Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").document(reportId).get().await().exists()
     }
 
     private suspend fun getUserProfile(uid: String): UserDto? {

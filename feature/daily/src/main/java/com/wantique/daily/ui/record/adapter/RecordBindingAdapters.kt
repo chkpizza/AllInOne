@@ -2,6 +2,7 @@ package com.wantique.daily.ui.record.adapter
 
 import android.net.Uri
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -42,5 +43,11 @@ object RecordBindingAdapters {
     @JvmStatic
     fun setReport(view: ImageView, item: Record) {
         view.isVisible = Firebase.getInstance().getCurrentUserUid() != item.authorUid
+    }
+
+    @BindingAdapter("remove")
+    @JvmStatic
+    fun setRemove(view: TextView, item: Record) {
+        view.isVisible = Firebase.getInstance().getCurrentUserUid() == item.authorUid
     }
 }

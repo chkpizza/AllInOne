@@ -26,6 +26,25 @@ class RecordRepositoryImpl @Inject constructor(
         emit(Resource.Error(e))
     }.flowOn(dispatcher)
 
+    override fun reportRecord(documentId: String, reason: String): Flow<Resource<Boolean>> = flow {
+        if(firebase.reportRecord(documentId, reason)) {
+            emit(Resource.Success(true))
+        } else {
+            emit(Resource.Error(Throwable("해당 게시글을 정상적으로 신고하지 못했습니다.")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
+
+    override fun removeRecord(documentId: String): Flow<Resource<Boolean>> = flow {
+        if(firebase.removeRecord(documentId)) {
+            emit(Resource.Success(true))
+        } else {
+            emit(Resource.Error(Throwable("기록을 삭제하지 못했습니다")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
 
 
 }

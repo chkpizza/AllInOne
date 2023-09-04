@@ -39,6 +39,19 @@
             android:layout_marginTop="64dp"
             android:layout_marginEnd="16dp"/>
 
+        <TextView
+            android:id="@+id/today_record_tv_remove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="64dp"
+            android:layout_marginEnd="16dp"
+            android:text="삭제하기"
+            app:remove="@{item}"
+            style="@style/defaultTextViewStyle"
+            android:textColor="@color/colorPrimary"/>
+
 
         <TextView
             android:id="@+id/today_record_tv_body"
