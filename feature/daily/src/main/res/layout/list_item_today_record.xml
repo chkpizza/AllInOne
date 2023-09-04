@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#252525">
+        android:background="@color/disabledBackground">
 
         <ImageView
             android:id="@+id/today_record_iv_image"
@@ -50,7 +50,7 @@
             android:text="삭제하기"
             app:remove="@{item}"
             style="@style/defaultTextViewStyle"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/subText"/>
 
 
         <TextView
@@ -62,7 +62,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="100dp"
-            android:textColor="@color/white"
+            android:textColor="@color/subText"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:textColor="@color/white"
+            android:textColor="@color/subText"
             android:text="@{item.nickName}"
             app:layout_constraintBottom_toBottomOf="@id/today_record_iv_profile_image"
             app:layout_constraintStart_toEndOf="@id/today_record_iv_profile_image"

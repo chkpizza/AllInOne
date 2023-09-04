@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.AllInOne" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Base.Theme.AllInOne" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <!--
@@ -11,7 +11,7 @@
 
     <style name="Theme.AllInOne" parent="Base.Theme.AllInOne">
         <item name="bottomSheetDialogTheme">@style/DefaultBottomSheetDialog</item>
-        <item name="android:navigationBarColor">#B3FFFFFF</item>
+        <item name="android:navigationBarColor">#F6F6F6</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>
