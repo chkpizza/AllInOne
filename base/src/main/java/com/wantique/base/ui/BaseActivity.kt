@@ -33,13 +33,13 @@ open class BaseActivity<T: ViewDataBinding>(
     }
 
     private fun setUpEdgeToEdge() {
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightStatusBars = true
+            WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
             WindowInsetsControllerCompat(window, window.decorView).isAppearanceLightNavigationBars = true
         } else {
-            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or  View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 }
