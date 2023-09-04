@@ -2,6 +2,7 @@ package com.wantique.daily.di
 
 import com.wantique.base.di.FeatureScope
 import com.wantique.daily.ui.daily.DailyFragment
+import com.wantique.daily.ui.record.RecordFragment
 import com.wantique.daily.ui.record.WriteRecordFragment
 import dagger.Subcomponent
 
@@ -15,4 +16,5 @@ interface DailyComponent {
 
     fun inject(fragment: DailyFragment)
     fun inject(fragment: WriteRecordFragment)
+    fun inject(fragment: RecordFragment)
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/daily_nav_graph"
     app:startDestination="@id/dailyFragment">
 
@@ -11,9 +12,25 @@
         <action
             android:id="@+id/action_dailyFragment_to_writeRecordFragment"
             app:destination="@id/writeRecordFragment" />
+        <action
+            android:id="@+id/action_dailyFragment_to_recordFragment"
+            app:destination="@id/recordFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeRecordFragment"
         android:name="com.wantique.daily.ui.record.WriteRecordFragment"
         android:label="WriteRecordFragment" />
+    <fragment
+        android:id="@+id/recordFragment"
+        android:name="com.wantique.daily.ui.record.RecordFragment"
+        android:label="fragment_record"
+        tools:layout="@layout/fragment_record">
+        <argument
+            android:name="position"
+            app:argType="integer" />
+
+        <argument
+            android:name="record"
+            app:argType="com.wantique.daily.domain.model.Record[]" />
+    </fragment>
 </navigation>

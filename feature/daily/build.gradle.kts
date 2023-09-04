@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -57,4 +58,5 @@ dependencies {
     implementation(ThirdParty.GLIDE)
     implementation(AndroidX.RECYCLER_VIEW)
     implementation(AndroidX.LIVEDATA)
+    implementation(ThirdParty.CIRCLE_IMAGE_VIEW)
 }

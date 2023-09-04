@@ -36,5 +36,5 @@ object ThirdParty {
     const val SQUIRCLE_IMAGE_VIEW = "app.juky:squircleview:0.6.1"
     const val GLIDE = "com.github.bumptech.glide:glide:4.16.0"
     const val GOOGLE_SIGN_IN_BUTTON = "com.github.TutorialsAndroid:GButton:v1.0.19"
-
+    const val CIRCLE_IMAGE_VIEW = "com.mikhaellopez:circularimageview:4.3.1"
 }

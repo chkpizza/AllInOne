@@ -8,8 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.wantique.daily.databinding.ListItemRecordPreviewBinding
 import com.wantique.daily.domain.model.Record
+import com.wantique.daily.ui.daily.adapter.listener.OnRecordClickListener
 
-class RecordPreviewAdapter : ListAdapter<Record, RecordPreviewAdapter.RecordPreviewViewHolder>(object : DiffUtil.ItemCallback<Record>() {
+class RecordPreviewAdapter(
+    private val onRecordClickListener: OnRecordClickListener
+) : ListAdapter<Record, RecordPreviewAdapter.RecordPreviewViewHolder>(object : DiffUtil.ItemCallback<Record>() {
     override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
         return oldItem == newItem
     }
@@ -26,6 +29,10 @@ class RecordPreviewAdapter : ListAdapter<Record, RecordPreviewAdapter.RecordPrev
                 .into(binding.recordPreviewIvImage)
 
             binding.recordPreviewTvBody.text = item.body
+
+            binding.root.setOnClickListener {
+                onRecordClickListener.onClick(bindingAdapterPosition, currentList)
+            }
         }
     }
 

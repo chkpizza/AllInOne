@@ -9,8 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.wantique.daily.databinding.ListItemDailyLetterBinding
 import com.wantique.daily.databinding.ListItemDailyRecordBinding
 import com.wantique.daily.domain.model.Daily
+import com.wantique.daily.ui.daily.adapter.listener.OnRecordClickListener
 
-class DailyAdapter : ListAdapter<Daily, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<Daily>() {
+class DailyAdapter(
+    private val onRecordClickListener: OnRecordClickListener
+) : ListAdapter<Daily, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<Daily>() {
     override fun areItemsTheSame(oldItem: Daily, newItem: Daily): Boolean {
         return oldItem == newItem
     }
@@ -20,7 +23,7 @@ class DailyAdapter : ListAdapter<Daily, RecyclerView.ViewHolder>(object : DiffUt
     }
 
 }) {
-    private val recordPreviewAdapter = RecordPreviewAdapter()
+    private val recordPreviewAdapter = RecordPreviewAdapter(onRecordClickListener)
 
     inner class DailyLetterViewHolder(private val binding: ListItemDailyLetterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Daily) {

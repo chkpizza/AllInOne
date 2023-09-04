@@ -18,18 +18,21 @@ import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
+import com.wantique.firebase.model.TodayRecordDto
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.Calendar
-import java.util.Date
 
 class Firebase private constructor() {
     fun signOut() {
         Firebase.auth.signOut()
+    }
+
+    fun getCurrentUserUid(): String {
+        return Firebase.auth.uid.toString()
     }
 
     /** 로그인 화면에 출력할 배경 이미지를 받아오는 메서드 */
@@ -188,14 +191,25 @@ class Firebase private constructor() {
                 toObject<RecordHeaderDto>()
             }
 
-            val records = Firebase.firestore.collection("daily").document("recordHeader").collection("record")
+            val record = Firebase.firestore.collection("daily").document("recordHeader").collection("record")
                 .whereEqualTo("date", referenceKey.key).whereEqualTo("enable", true).get().await().run {
                     toObjects<RecordDto>()
                 }
-            header?.let {
-                return DailyRecordDto(it, records)
+
+            header?.let { 
+                return DailyRecordDto(it, record.mapNotNull { _record ->
+                    getUserProfile(_record.authorUid)?.let { user ->
+                        TodayRecordDto(_record.authorUid, _record.documentId, _record.date, _record.imageUrl, _record.body, user.nickName, user.profileImageUrl)
+                    }
+                })
             } ?: return null
         } ?: return null
+    }
+
+    private suspend fun getUserProfile(uid: String): UserDto? {
+        return Firebase.firestore.collection("user").document(uid).get().await().run {
+            toObject<UserDto>()
+        }
     }
 
     private suspend fun getProfessorDetailsReferenceKey(): ReferenceKey? {

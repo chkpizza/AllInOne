@@ -12,7 +12,7 @@ object Mapper {
     fun mapperToDomain(dto: DailyRecordDto): Daily.DailyRecord {
         val header = RecordHeader(dto.recordHeader.title, dto.recordHeader.subTitle)
         val record = dto.record.map {
-            Record(it.authorUid, it.documentId, it.date, it.imageUrl, it.body)
+            Record(it.authorUid, it.documentId, it.date, it.imageUrl, it.body, it.nickName, it.profileImageUrl)
         }
 
         return Daily.DailyRecord(header, record)

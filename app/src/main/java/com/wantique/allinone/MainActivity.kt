@@ -1,6 +1,7 @@
 package com.wantique.allinone
 
 import android.os.Bundle
+import android.util.Log
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -34,6 +35,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(R.layout.activity_main), 
     }
 
     private fun initGraph() {
+        Log.d("S20FECauseErrorTest", "initGraph call")
         val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
         if(getPreferences(MODE_PRIVATE).getBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), false)) {
             navGraph.setStartDestination(R.id.main_nav_graph)

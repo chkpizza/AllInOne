@@ -2,17 +2,16 @@ package com.wantique.daily.ui.daily
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
-import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
 import com.wantique.daily.R
 import com.wantique.daily.databinding.FragmentDailyBinding
 import com.wantique.daily.di.DailyComponentProvider
+import com.wantique.daily.domain.model.Record
 import com.wantique.daily.ui.daily.adapter.DailyAdapter
+import com.wantique.daily.ui.daily.adapter.listener.OnRecordClickListener
 import com.wantique.firebase.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,7 +62,14 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
     }
 
     private fun setUpRecyclerView() {
-        dailyAdapter = DailyAdapter()
+        val onRecordClickListener = object : OnRecordClickListener {
+            override fun onClick(position: Int, record: List<Record>) {
+                val action = DailyFragmentDirections.actionDailyFragmentToRecordFragment(position, record.toTypedArray())
+                navigator.navigate(action)
+            }
+        }
+
+        dailyAdapter = DailyAdapter(onRecordClickListener)
         binding.dailyRv.adapter = dailyAdapter
     }
 
