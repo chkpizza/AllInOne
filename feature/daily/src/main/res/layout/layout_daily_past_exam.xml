@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="item"
+            type="com.wantique.daily.domain.model.Daily.DailyPastExam" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,9 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:text="@{item.header.title}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="소중한 시간을 매일 기록해요" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/daily_past_exam_tv_sub_title"
@@ -29,9 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="6dp"
+            android:text="@{item.header.subTitle}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/daily_past_exam_tv_title"
-            tools:text="오늘의 기록" />
+            app:layout_constraintTop_toBottomOf="@id/daily_past_exam_tv_title" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/daily_past_exam_container"

@@ -41,7 +41,7 @@
         android:name="com.wantique.daily.ui.pastExam.PastExamFragment"
         android:label="PastExamFragment">
         <argument
-            android:name="paseExam"
+            android:name="pastExam"
             app:argType="com.wantique.daily.domain.model.PastExam[]" />
     </fragment>
 </navigation>
