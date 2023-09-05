@@ -25,6 +25,7 @@ import com.wantique.daily.ui.record.adapter.ReportAdapter
 import com.wantique.daily.ui.record.adapter.TodayRecordAdapter
 import com.wantique.daily.ui.record.adapter.listener.OnRecordRemoveClickListener
 import com.wantique.daily.ui.record.adapter.listener.OnRecordReportClickListener
+import com.wantique.resource.AppDialog
 import javax.inject.Inject
 
 class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_record) {
@@ -72,14 +73,17 @@ class RecordFragment : BaseFragment<FragmentRecordBinding>(R.layout.fragment_rec
 
         val onRecordRemoveClickListener = object : OnRecordRemoveClickListener {
             override fun onClick(record: Record) {
-                //viewModel.removeRecord(record.documentId)
-                AlertDialog.Builder(requireActivity())
-                    .setTitle("기록 삭제")
-                    .setMessage("해당 기록을 삭제하시겠습니까?")
-                    .setPositiveButton("삭제하기") { _, _ ->
+                AppDialog.Builder(requireActivity())
+                    .setBody("해당 기록을 삭제하시겠습니까?")
+                    .setPositiveButtonText("삭제하기")
+                    .setNegativeButtonText("취소하기")
+                    .setPositionButtonClickListener {
                         viewModel.removeRecord(record.documentId)
+                        it.dismiss()
                     }
-                    .setNegativeButton("취소하기", null)
+                    .setNegativeButtonClickListener {
+                        it.dismiss()
+                    }
                     .show()
             }
         }
