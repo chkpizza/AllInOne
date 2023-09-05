@@ -62,5 +62,13 @@
 
         </com.google.android.material.card.MaterialCardView>
 
+        <View
+            app:layout_constraintTop_toBottomOf="@id/daily_past_exam_container"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_width="0dp"
+            android:layout_height="8dp" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
