@@ -15,6 +15,9 @@
         <action
             android:id="@+id/action_dailyFragment_to_recordFragment"
             app:destination="@id/recordFragment" />
+        <action
+            android:id="@+id/action_dailyFragment_to_pastExamFragment"
+            app:destination="@id/pastExamFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeRecordFragment"
@@ -32,5 +35,13 @@
         <argument
             android:name="record"
             app:argType="com.wantique.daily.domain.model.Record[]" />
+    </fragment>
+    <fragment
+        android:id="@+id/pastExamFragment"
+        android:name="com.wantique.daily.ui.pastExam.PastExamFragment"
+        android:label="PastExamFragment">
+        <argument
+            android:name="paseExam"
+            app:argType="com.wantique.daily.domain.model.PastExam[]" />
     </fragment>
 </navigation>

@@ -7,4 +7,5 @@ import kotlinx.coroutines.flow.Flow
 interface DailyRepository {
     fun getDailyLetter(): Flow<Resource<Daily.DailyLetter>>
     fun getDailyRecord(): Flow<Resource<Daily.DailyRecord>>
+    fun getDailyPastExam(): Flow<Resource<Daily.DailyPastExam>>
 }

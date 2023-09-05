@@ -35,4 +35,15 @@ class DailyRepositoryImpl @Inject constructor(
     }.catch {
         emit(Resource.Error(it))
     }.flowOn(dispatcher)
+
+
+    override fun getDailyPastExam(): Flow<Resource<Daily.DailyPastExam>> = flow {
+        firebase.getDailyPastExam()?.let {
+            emit(Resource.Success(Mapper.mapperToDomain(it)))
+        } ?: run {
+            emit(Resource.Error(Throwable("기출문제 데이터를 불러오지 못했습니다")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
 }

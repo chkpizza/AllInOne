@@ -10,7 +10,9 @@ import com.wantique.daily.R
 import com.wantique.daily.databinding.FragmentDailyBinding
 import com.wantique.daily.di.DailyComponentProvider
 import com.wantique.daily.domain.model.Record
+import com.wantique.daily.domain.model.TodayPastExam
 import com.wantique.daily.ui.daily.adapter.DailyAdapter
+import com.wantique.daily.ui.daily.adapter.listener.OnPastExamClickListener
 import com.wantique.daily.ui.daily.adapter.listener.OnRecordClickListener
 import com.wantique.firebase.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -64,12 +66,17 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
     private fun setUpRecyclerView() {
         val onRecordClickListener = object : OnRecordClickListener {
             override fun onClick(position: Int, record: List<Record>) {
-                val action = DailyFragmentDirections.actionDailyFragmentToRecordFragment(position, record.toTypedArray())
-                navigator.navigate(action)
+                navigator.navigate(DailyFragmentDirections.actionDailyFragmentToRecordFragment(position, record.toTypedArray()))
             }
         }
 
-        dailyAdapter = DailyAdapter(onRecordClickListener)
+        val onPastExamClickListener = object : OnPastExamClickListener {
+            override fun onClick(pastExam: TodayPastExam) {
+                navigator.navigate(DailyFragmentDirections.actionDailyFragmentToPastExamFragment(pastExam.pastExam.toTypedArray()))
+            }
+        }
+
+        dailyAdapter = DailyAdapter(onRecordClickListener, onPastExamClickListener)
         binding.dailyRv.adapter = dailyAdapter
     }
 

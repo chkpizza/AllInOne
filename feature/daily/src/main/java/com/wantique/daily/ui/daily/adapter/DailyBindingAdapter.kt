@@ -1,5 +1,6 @@
 package com.wantique.daily.ui.daily.adapter
 
+import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ object DailyBindingAdapter {
     @JvmStatic
     fun setDaily(view: RecyclerView, item: UiState<List<Daily>>) {
         item.isSuccessOrNull()?.let {
+            Log.d("DailyTest", it.toString())
             (view.adapter as DailyAdapter).submitList(it)
         }
     }

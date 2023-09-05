@@ -10,21 +10,29 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.ChoiceDto
 import com.wantique.firebase.model.CoverDto
 import com.wantique.firebase.model.DailyLetterDto
+import com.wantique.firebase.model.DailyPastExamDto
 import com.wantique.firebase.model.DailyRecordDto
+import com.wantique.firebase.model.DescriptionDto
+import com.wantique.firebase.model.PastExamDto
+import com.wantique.firebase.model.PastExamHeaderDto
 import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
 import com.wantique.firebase.model.ReportDto
+import com.wantique.firebase.model.TodayPastExamDto
 import com.wantique.firebase.model.TodayRecordDto
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Calendar
 
 class Firebase private constructor() {
@@ -237,6 +245,22 @@ class Firebase private constructor() {
                 Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").document(reportId).get().await().exists()
     }
 
+    suspend fun getDailyPastExam(): DailyPastExamDto? {
+        val header = Firebase.firestore.collection("daily").document("pastExamHeader").get().await().run {
+            toObject<PastExamHeaderDto>()
+        }
+
+        val todayPastExam = Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(LocalDate.now().dayOfMonth)).get().await().run {
+            toObject<TodayPastExamDto>()
+        }
+
+        if(header == null || todayPastExam == null) {
+            return null
+        }
+
+        return DailyPastExamDto(header, todayPastExam)
+    }
+
     private suspend fun getUserProfile(uid: String): UserDto? {
         return Firebase.firestore.collection("user").document(uid).get().await().run {
             toObject<UserDto>()
@@ -295,4 +319,90 @@ class Firebase private constructor() {
             }
         }
     }
+
+    suspend fun set() {
+        /*
+        Firebase.firestore.collection("daily").document("pastExamHeader").set(
+            PastExamHeaderDto(
+                "매일 3개의 기출문제 정복 프로젝트",
+                "자투리 시간 극한의 활용!"
+            )
+        ).await()
+
+         */
+        Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(LocalDate.now().dayOfMonth))
+            .set(
+                TodayPastExamDto(
+                    listOf(
+                        PastExamDto(
+                            "DESCRIPTION",
+                            "다음 중 행정심판법 에 따른 행정심판을 제기할 수 없는 경우만을 모두 고르면? (다툼이 있는 경우 판례에 의함)",
+                            listOf(
+                                DescriptionDto(
+                                    "ㄱ.",
+                                    "공공기관의 정보공개에 관한 법률 상 정보공개와 관련한 공공기관의 비공개결정에 대하여 이의신청을 한 경우"
+                                ),
+                                DescriptionDto(
+                                    "ㄴ.",
+                                    "공익사업을 위한 토지 등의 취득 및 보상에 관한 법률 상 토지수용위원회의 수용재결에 이의가 있어 중앙토지수용위원회에 이의를 신청한 경우"
+                                ),
+                                DescriptionDto(
+                                    "ㄷ.",
+                                    "난민법 상 난민불인정결정에 대해 법무부장관에게 이의신청을 한 경우"
+                                ),
+                                DescriptionDto(
+                                    "ㄹ.",
+                                    "민원 처리에 관한 법률 상 법정민원에 대한 행정기관의 장의 거부처분에 대해 그 행정기관의 장에게 이의신청을 한 경우"
+                                )
+                            ),
+                            listOf(
+                                ChoiceDto("①", "ㄱ,ㄴ"),
+                                ChoiceDto("②", "ㄱ,ㄹ"),
+                                ChoiceDto("③", "ㄴ,ㄷ"),
+                                ChoiceDto("④.", "ㄷ,ㄹ")
+                            ),
+                            2,
+                            "",
+                            "(2023년 지방직 9급 행정법 05번 문제)"
+                        ),
+                        PastExamDto(
+                            "NORMAL",
+                            "행정작용에 대한 설명으로 옳은 것은? (다툼이 있는 경우 판례에 의함)",
+                            emptyList(),
+                            listOf(
+                                ChoiceDto(
+                                    "①", "구체적인 계획을 입안함에 있어 지침이 되거나 특정 사업의 기본방향을 제시하는 내용의 행정계획은 항고소송의 대상인 행정처분에 해당하지 않는다."
+                                ),
+                                ChoiceDto(
+                                    "②",
+                                    "공법상 계약이 법령 위반 등의 내용상 하자가 있는 경우에도 그 하자가 중대명백한 것이 아니면 취소할 수 있는 하자에 불과하고 이에 대한 다툼은 당사자소송에 의하여야 한다"
+                                ),
+                                ChoiceDto(
+                                    "③",
+                                    "지도, 권고, 조언 등의 행정지도는 법령의 근거를 요하고 항고소송의 대상이 된다."
+                                ),
+                                ChoiceDto(
+                                    "④",
+                                    "국가를 당사자로 하는 계약에 관한 법률 에 따라 국가가 당사자가 되는 이른바 공공계약에 관한 법적 분쟁은 원칙적으로 행정법원의 관할 사항이다."
+                                )
+                            ),
+                            1,
+                            "",
+                            "(2023년 지방직 9급 행정법 04번 문제)"
+                        )
+                    )
+                )
+            ).await()
+    }
+
+    suspend fun getPastExam() {
+        Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(LocalDate.now().dayOfMonth)).get().await().run {
+            toObject<TodayPastExamDto>()?.let {
+                Log.d("TodayExamTest", it.toString())
+            } ?: run {
+                Log.d("TodayExamTest", "is null")
+            }
+        }
+    }
 }
+

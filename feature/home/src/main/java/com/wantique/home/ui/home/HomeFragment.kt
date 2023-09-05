@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.wantique.base.navigation.NavigatorProvider
 import com.wantique.base.ui.BaseFragment
+import com.wantique.firebase.Firebase
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.ui.home.adapter.HomeAdapter
