@@ -18,8 +18,9 @@ import com.wantique.firebase.model.DailyRecordDto
 import com.wantique.firebase.model.DescriptionDto
 import com.wantique.firebase.model.PastExamDto
 import com.wantique.firebase.model.PastExamHeaderDto
-import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.ProfessorPreviewDto
+import com.wantique.firebase.model.ProfessorPreviewItemDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
@@ -98,46 +99,46 @@ class Firebase private constructor() {
     }
 
     /** 과목별 교수님 정보를 가져오는 메서드 */
-    suspend fun getProfessors(): List<ProfessorDto> {
-        val professorDtoList = mutableListOf<ProfessorDto>()
+    suspend fun getProfessors(): List<ProfessorPreviewDto> {
+        val professorDtoList = mutableListOf<ProfessorPreviewDto>()
 
-        Firebase.firestore.collection("home").document("korean").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("korean").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("english").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("english").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("history").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("history").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("administrative_law").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("administrative_law").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("public_administration").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("public_administration").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
@@ -154,7 +155,7 @@ class Firebase private constructor() {
     /** 특정 교수님의 연간 커리큘럼 정보를 가져오는 메서드 */
     suspend fun getProfessorCurriculum(professorId: String): YearlyCurriculumDto? {
         getProfessorDetailsReferenceKey()?.let { referenceKey ->
-            return Firebase.firestore.collection("professor_details").document(professorId).collection(referenceKey.key).document("curriculum").get().await().run {
+            return Firebase.firestore.collection("home").document("professor").collection("details").document(professorId).collection(referenceKey.key).document("curriculum").get().await().run {
                 toObject<YearlyCurriculumDto>()
             }
         } ?: run {
@@ -165,7 +166,7 @@ class Firebase private constructor() {
     /** 특정 교수님의 이름, 슬로건, 공식 홈페이지 정보를 가져오는 메서드 */
     suspend fun getProfessorInfo(professorId: String): ProfessorInfoDto? {
         getProfessorDetailsReferenceKey()?.let { referenceKey ->
-            return Firebase.firestore.collection("professor_details").document(professorId).collection(referenceKey.key).document("info").get().await().run {
+            return Firebase.firestore.collection("home").document("professor").collection("details").document(professorId).collection(referenceKey.key).document("information").get().await().run {
                 toObject<ProfessorInfoDto>()
             }
         } ?: run {
