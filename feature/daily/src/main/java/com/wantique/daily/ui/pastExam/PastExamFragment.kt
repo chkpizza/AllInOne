@@ -36,6 +36,7 @@ class PastExamFragment : BaseFragment<FragmentPastExamBinding>(R.layout.fragment
     private fun setUpViewPager() {
         pastExamAdapter = PastExamAdapter()
         binding.pastExamVp.adapter = pastExamAdapter
+        binding.pastExamVp.offscreenPageLimit = args.pastExam.size
         pastExamAdapter.submitList(args.pastExam.toList())
     }
 
