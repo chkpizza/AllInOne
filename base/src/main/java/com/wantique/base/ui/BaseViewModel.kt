@@ -32,7 +32,7 @@ import kotlin.experimental.ExperimentalTypeInference
 open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Context) : ViewModel() {
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
-    
+
     protected val _loadingState = MutableSharedFlow<UiState<Boolean>>()
     val loadingState = _loadingState.stateIn(
         initialValue = UiState.Initialize,
@@ -76,7 +76,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
         _loadingState.emit(UiState.Loading)
 
         if (isNetworkAvailable()) {
-            //_errorState.value = null
+            _errorState.value = null
             emitAll(call())
         } else {
             emit(UiState.Error(Throwable("NETWORK_CONNECTION_ERROR")))
@@ -89,7 +89,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
         _loadingState.emit(UiState.Loading)
 
         val state = if(isNetworkAvailable()) {
-            //_errorState.value = null
+            _errorState.value = null
             call()
         } else {
             UiState.Error(Throwable("NETWORK_CONNECTION_ERROR"))
