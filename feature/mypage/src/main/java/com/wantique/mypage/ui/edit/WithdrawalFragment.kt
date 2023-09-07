@@ -13,6 +13,7 @@ import com.wantique.firebase.Firebase
 import com.wantique.mypage.R
 import com.wantique.mypage.databinding.FragmentWithdrawalBinding
 import com.wantique.mypage.di.MyPageComponentProvider
+import com.wantique.resource.AppDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,12 +37,26 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>(R.layout.frag
     }
 
     private fun setUpViewListener() {
+        binding.withdrawalToolbar.setNavigationOnClickListener {
+            navigator.navigateUp()
+        }
+
         binding.withdrawalCb.setOnCheckedChangeListener { _, isChecked ->
             binding.withdrawalBtnWithdrawal.isEnabled = isChecked
         }
 
         binding.withdrawalBtnWithdrawal.setOnClickListener {
-            viewModel.withdrawalUser()
+            AppDialog.Builder(requireActivity())
+                .setBody("회원 탈퇴를 계속 진행하시겠습니까?")
+                .setPositiveButtonText("탈퇴하기")
+                .setNegativeButtonText("취소하기")
+                .setPositionButtonClickListener {
+                    viewModel.withdrawalUser()
+                    it.dismiss()
+                }
+                .setNegativeButtonClickListener {
+                    it.dismiss()
+                }.show()
         }
 
         binding.withdrawalBtnWithdrawal.isEnabled = false

@@ -45,7 +45,7 @@
             android:id="@+id/edit_tv_edit_profile"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="프로필 수정"
+            android:text="@string/edit_edit_profile_title"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_view_divide_toolbar"
             app:layout_constraintStart_toStartOf="parent"
@@ -65,9 +65,10 @@
 
         <TextView
             android:id="@+id/edit_tv_withdrawal"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="회원 탈퇴"
+            android:text="@string/edit_withdrawal_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_separator_edit_profile"
             app:layout_constraintStart_toStartOf="parent"
             android:paddingStart="16dp"

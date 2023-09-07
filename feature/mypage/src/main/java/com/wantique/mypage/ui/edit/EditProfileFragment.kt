@@ -51,6 +51,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(R.layout.fr
     }
 
     private fun setUpViewListener() {
+        binding.editProfileToolbar.setNavigationOnClickListener {
+            navigator.navigateUp()
+        }
+
         binding.editProfileIvProfile.setOnClickListener {
             galleryLauncher.launch(Intent().also {
                 it.type = "image/*"

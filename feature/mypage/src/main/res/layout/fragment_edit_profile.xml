@@ -83,7 +83,7 @@
             android:layout_marginTop="20dp"
             android:maxLines="1"
             style="@style/defaultEditTextStyle"
-            android:hint="변경하실 닉네임을 입력해주세요"/>
+            android:hint="@string/edit_input_nick_name_hint"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/edit_profile_btn_edit"
@@ -95,7 +95,7 @@
             android:layout_marginBottom="20dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
-            android:text="변경하기"
+            android:text="@string/edit_modify_user_profile"
             style="@style/defaultButtonStyle"/>
 
         <include layout="@layout/layout_error"
