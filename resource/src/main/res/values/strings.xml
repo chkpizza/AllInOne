@@ -39,4 +39,23 @@
         <item>욕설·명예훼손</item>
         <item>동일한 내용 반복</item>
     </string-array>
+
+    <string name="my_page_toolbar_title">마이페이지</string>
+    <string name="my_page_recommend_title">제안하기</string>
+    <string name="my_page_update_title">앱 업데이트</string>
+    <string name="my_page_privacy_policy_title">개인정보처리방침</string>
+    <string name="my_page_open_source_license_title">오픈소스 라이선스</string>
+
+    <string name="edit_toolbar_title">내 정보 수정</string>
+    <string name="edit_edit_profile_title">프로필 수정</string>
+    <string name="edit_withdrawal_title">회원 탈퇴</string>
+    <string name="edit_profile_toolbar_title">프로필 수정</string>
+    <string name="edit_input_nick_name_hint">변경하실 닉네임을 입력해주세요</string>
+    <string name="edit_modify_user_profile">변경하기</string>
+    <string name="withdrawal_toolbar_title">회원 탈퇴</string>
+    <string name="withdrawal_header">그동안 LiveData 를 이용해주셔서\n감사합니다.</string>
+    <string name="withdrawal_caution">*회원 탈퇴 유의사항\n\n(1) 30일 이내 로그인 시 탈퇴 철회를 신청하실 수 있습니다.\n\n(2) 탈퇴 철회 기간 이후 사용자 데이터는 완전 삭제됩니다</string>
+    <string name="withdrawal_agree">회원 탈퇴 동의</string>
+    <string name="withdrawal_agree_description">회원 탈퇴 유의사항을 모드 확인하였으며, 회원 탈퇴에 동의합니다.</string>
+    <string name="withdrawal_start_withdrawal">회원 탈퇴하기</string>
 </resources>

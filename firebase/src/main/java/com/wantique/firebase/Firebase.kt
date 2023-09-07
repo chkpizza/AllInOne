@@ -28,6 +28,7 @@ import com.wantique.firebase.model.ReportDto
 import com.wantique.firebase.model.TodayPastExamDto
 import com.wantique.firebase.model.TodayRecordDto
 import com.wantique.firebase.model.UserDto
+import com.wantique.firebase.model.WithdrawalDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
@@ -39,6 +40,17 @@ import java.util.Calendar
 class Firebase private constructor() {
     fun signOut() {
         Firebase.auth.signOut()
+    }
+
+    suspend fun withdrawal(): Boolean {
+        Firebase.firestore.collection("withdrawal").document(Firebase.auth.uid.toString()).set(
+            WithdrawalDto(
+                LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy_MM_dd")),
+                Firebase.auth.uid.toString()
+            )
+        ).await()
+
+        return Firebase.firestore.collection("withdrawal").document(Firebase.auth.uid.toString()).get().await().exists()
     }
 
     fun getCurrentUserUid(): String {
@@ -260,6 +272,31 @@ class Firebase private constructor() {
         }
 
         return DailyPastExamDto(header, todayPastExam)
+    }
+
+    suspend fun getCurrentUserProfile(): UserDto? {
+        return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().run {
+            toObject<UserDto>()
+        }
+    }
+
+    suspend fun modifyUserProfile(imageUri: String, nickName: String): Boolean {
+        if(imageUri.isNotEmpty()) {
+            Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).update(
+                mapOf(
+                    "nickName" to nickName,
+                    "profileImageUrl" to uploadProfileImage(imageUri)
+                )
+            ).await()
+        } else {
+            Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).update(
+                mapOf(
+                    "nickName" to nickName
+                )
+            ).await()
+        }
+
+        return true
     }
 
     private suspend fun getUserProfile(uid: String): UserDto? {

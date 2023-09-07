@@ -6,6 +6,7 @@ import com.wantique.base.di.CoroutineDispatcherModule
 import com.wantique.base.di.ViewModelFactoryModule
 import com.wantique.daily.di.DailyComponent
 import com.wantique.home.di.HomeComponent
+import com.wantique.mypage.di.MyPageComponent
 import dagger.BindsInstance
 import dagger.Component
 import dagger.Module
@@ -25,7 +26,8 @@ interface AppComponent {
     fun getAuthComponent(): AuthComponent.Factory
     fun getHomeComponent(): HomeComponent.Factory
     fun getDailyComponent(): DailyComponent.Factory
+    fun getMyPageComponent(): MyPageComponent.Factory
 }
 
-@Module(subcomponents = [AuthComponent::class, HomeComponent::class, DailyComponent::class])
+@Module(subcomponents = [AuthComponent::class, HomeComponent::class, DailyComponent::class, MyPageComponent::class])
 object SubComponentModule
