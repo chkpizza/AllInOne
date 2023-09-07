@@ -5,6 +5,8 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="com.wantique.base.state.UiState" />
+        <import type="android.view.View" />
         <variable
             name="vm"
             type="com.wantique.auth.ui.auth.AuthViewModel" />
@@ -98,6 +100,16 @@
         <include layout="@layout/layout_error"
             android:id="@+id/settings_layout_error"
             bind:baseVM="@{vm}"/>
+
+        <ProgressBar
+            android:id="@+id/settings_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{(vm.loadingState instanceof UiState.Loading) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

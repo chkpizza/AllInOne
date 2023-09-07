@@ -2,6 +2,7 @@ package com.wantique.auth.ui.auth
 
 import android.app.Activity.RESULT_OK
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -25,7 +26,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
 class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     @Inject lateinit var webClientId: String
     @Inject lateinit var factory: ViewModelProvider.Factory
@@ -44,6 +44,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
             }
         }
     }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context.applicationContext as AuthComponentProvider).getAuthComponent().inject(this)
@@ -51,9 +52,19 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateInsets()
+
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+
+        updateBottomInsets()
         setUpViewListener()
         setUpObservers()
+        request()
+    }
+
+
+    private fun request() {
+        viewModel.getCoverImage()
     }
 
     private fun setUpViewListener() {
@@ -61,7 +72,6 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
             signInWithGoogle()
         }
     }
-
 
     private fun signInWithGoogle() {
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

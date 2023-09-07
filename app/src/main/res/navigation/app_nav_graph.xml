@@ -6,4 +6,14 @@
     <include app:graph="@navigation/init_nav_graph" />
     <include app:graph="@navigation/main_nav_graph" />
 
+    <action android:id="@+id/action_init_to_main"
+        app:popUpTo="@id/app_nav_graph"
+        app:popUpToInclusive="true"
+        app:destination="@id/main_nav_graph" />
+
+    <action android:id="@+id/action_main_to_init"
+        app:popUpTo="@id/app_nav_graph"
+        app:popUpToInclusive="true"
+        app:destination="@id/init_nav_graph" />
+
 </navigation>

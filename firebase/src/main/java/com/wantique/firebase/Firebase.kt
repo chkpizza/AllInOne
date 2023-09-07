@@ -10,16 +10,48 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ProfessorDto
+import com.wantique.firebase.model.ChoiceDto
+import com.wantique.firebase.model.CoverDto
+import com.wantique.firebase.model.DailyLetterDto
+import com.wantique.firebase.model.DailyPastExamDto
+import com.wantique.firebase.model.DailyRecordDto
+import com.wantique.firebase.model.DescriptionDto
+import com.wantique.firebase.model.PastExamDto
+import com.wantique.firebase.model.PastExamHeaderDto
 import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.ProfessorPreviewDto
+import com.wantique.firebase.model.ProfessorPreviewItemDto
 import com.wantique.firebase.model.RecordDto
+import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
+import com.wantique.firebase.model.ReportDto
+import com.wantique.firebase.model.TodayPastExamDto
+import com.wantique.firebase.model.TodayRecordDto
 import com.wantique.firebase.model.UserDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import kotlinx.coroutines.tasks.await
+import java.text.DecimalFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.Calendar
 
 class Firebase private constructor() {
+    fun signOut() {
+        Firebase.auth.signOut()
+    }
+
+    fun getCurrentUserUid(): String {
+        return Firebase.auth.uid.toString()
+    }
+
+    /** 로그인 화면에 출력할 배경 이미지를 받아오는 메서드 */
+    suspend fun getCoverImage(): CoverDto? {
+        return Firebase.firestore.collection("app_image").document("cover").get().await().run {
+            toObject<CoverDto>()
+        }
+    }
+
     /** 현재 사용자가 이미 Firestore 에 등록된 사용자인지 확인하는 메서드 */
     suspend fun isExistUser(): Boolean {
         return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().exists()
@@ -67,46 +99,46 @@ class Firebase private constructor() {
     }
 
     /** 과목별 교수님 정보를 가져오는 메서드 */
-    suspend fun getProfessors(): List<ProfessorDto> {
-        val professorDtoList = mutableListOf<ProfessorDto>()
+    suspend fun getProfessors(): List<ProfessorPreviewDto> {
+        val professorDtoList = mutableListOf<ProfessorPreviewDto>()
 
-        Firebase.firestore.collection("home").document("korean").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("korean").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("english").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("english").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("history").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("history").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("administrative_law").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("administrative_law").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
-        Firebase.firestore.collection("home").document("public_administration").get().await().also { snapshot ->
-            snapshot.toObject<ProfessorDto>()?.let {
+        Firebase.firestore.collection("home").document("professor").collection("preview").document("public_administration").get().await().also { snapshot ->
+            snapshot.toObject<ProfessorPreviewDto>()?.let {
                 professorDtoList.add(it)
             } ?: run {
-                professorDtoList.add(ProfessorDto(emptyList()))
+                professorDtoList.add(ProfessorPreviewDto(emptyList()))
             }
         }
 
@@ -123,7 +155,7 @@ class Firebase private constructor() {
     /** 특정 교수님의 연간 커리큘럼 정보를 가져오는 메서드 */
     suspend fun getProfessorCurriculum(professorId: String): YearlyCurriculumDto? {
         getProfessorDetailsReferenceKey()?.let { referenceKey ->
-            return Firebase.firestore.collection("professor_details").document(professorId).collection(referenceKey.key).document("curriculum").get().await().run {
+            return Firebase.firestore.collection("home").document("professor").collection("details").document(professorId).collection(referenceKey.key).document("curriculum").get().await().run {
                 toObject<YearlyCurriculumDto>()
             }
         } ?: run {
@@ -134,7 +166,7 @@ class Firebase private constructor() {
     /** 특정 교수님의 이름, 슬로건, 공식 홈페이지 정보를 가져오는 메서드 */
     suspend fun getProfessorInfo(professorId: String): ProfessorInfoDto? {
         getProfessorDetailsReferenceKey()?.let { referenceKey ->
-            return Firebase.firestore.collection("professor_details").document(professorId).collection(referenceKey.key).document("info").get().await().run {
+            return Firebase.firestore.collection("home").document("professor").collection("details").document(professorId).collection(referenceKey.key).document("information").get().await().run {
                 toObject<ProfessorInfoDto>()
             }
         } ?: run {
@@ -144,7 +176,7 @@ class Firebase private constructor() {
 
     suspend fun registerRecord(imageUri: String, body: String): Boolean {
         getRecordReferenceKey()?.let { referenceKey ->
-            val documentId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+            val documentId = "${referenceKey.key}-(${SimpleDateFormat("yyyy-MM-dd").format(Calendar.getInstance().time)})-${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
             val imageUrl = if(imageUri.isNotEmpty()) uploadRecordImage(imageUri) else ""
             val record = RecordDto(Firebase.auth.uid.toString(), documentId, referenceKey.key, false, imageUrl, body)
             Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).set(record).await()
@@ -154,6 +186,85 @@ class Firebase private constructor() {
                     && Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).get().await().exists()
         } ?: run {
             return false
+        }
+    }
+
+    suspend fun getDailyLetter(): DailyLetterDto? {
+        return Firebase.firestore.collection("daily").document("letter").get().await().run {
+            toObject<DailyLetterDto>()
+        }
+    }
+
+    suspend fun getDailyRecord(): DailyRecordDto? {
+        getRecordReferenceKey()?.let { referenceKey ->
+            val header = Firebase.firestore.collection("daily").document("recordHeader").get().await().run {
+                toObject<RecordHeaderDto>()
+            }
+
+            val record = Firebase.firestore.collection("daily").document("recordHeader").collection("record")
+                .whereEqualTo("date", referenceKey.key).whereEqualTo("enable", true).get().await().run {
+                    toObjects<RecordDto>()
+                }
+
+            val report = Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").get().await().run {
+                toObjects<ReportDto>()
+            }
+
+            val filteredRecord = (record.associateBy { it.documentId } - report.map { it.documentId }.toSet()).values.toList()
+
+            header?.let { 
+                return DailyRecordDto(it, filteredRecord.mapNotNull { _record ->
+                    getUserProfile(_record.authorUid)?.let { user ->
+                        TodayRecordDto(_record.authorUid, _record.documentId, _record.date, _record.imageUrl, _record.body, user.nickName, user.profileImageUrl)
+                    }
+                })
+            } ?: return null
+        } ?: return null
+    }
+
+    suspend fun removeRecord(documentId: String): Boolean {
+        Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).delete().await()
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).delete().await()
+
+        return !Firebase.firestore.collection("daily").document("recordHeader").collection("record").document(documentId).get().await().exists()
+                && !Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("record").document(documentId).get().await().exists()
+    }
+
+    suspend fun reportRecord(documentId: String, reason: String): Boolean {
+        val report = ReportDto(
+            documentId,
+            reason,
+            Firebase.auth.uid.toString()
+        )
+
+        val reportId = "${System.currentTimeMillis()}-${Firebase.auth.uid.toString()}"
+
+        Firebase.firestore.collection("reportRecord").document(reportId).set(report).await()
+        Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").document(reportId).set(report).await()
+
+        return Firebase.firestore.collection("reportRecord").document(reportId).get().await().exists() &&
+                Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).collection("reportRecord").document(reportId).get().await().exists()
+    }
+
+    suspend fun getDailyPastExam(): DailyPastExamDto? {
+        val header = Firebase.firestore.collection("daily").document("pastExamHeader").get().await().run {
+            toObject<PastExamHeaderDto>()
+        }
+
+        val todayPastExam = Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(LocalDate.now().dayOfMonth)).get().await().run {
+            toObject<TodayPastExamDto>()
+        }
+
+        if(header == null || todayPastExam == null) {
+            return null
+        }
+
+        return DailyPastExamDto(header, todayPastExam)
+    }
+
+    private suspend fun getUserProfile(uid: String): UserDto? {
+        return Firebase.firestore.collection("user").document(uid).get().await().run {
+            toObject<UserDto>()
         }
     }
 
@@ -209,4 +320,16 @@ class Firebase private constructor() {
             }
         }
     }
+
+    suspend fun set() {
+        Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(8))
+            .set(
+                TodayPastExamDto(
+                    listOf(
+
+                    )
+                )
+            ).await()
+    }
 }
+

@@ -79,6 +79,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(R.layout.fragment
             viewModel.checkNickName(binding.settingsEtNickName.text.toString().replace(" ", ""))
         }
 
+        binding.settingsLayoutError.networkErrorBtnRetry.setOnClickListener {
+            retry()
+        }
+
         binding.settingsBtnRegistration.isEnabled = false
     }
 
@@ -97,6 +101,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(R.layout.fragment
                 false -> Toast.makeText(requireActivity(), "사용자 등록에 실패하였습니다", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun retry() {
+        viewModel.checkNickName(binding.settingsEtNickName.text.toString().replace(" ", ""))
     }
 
     private fun finalize() {

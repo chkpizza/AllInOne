@@ -4,7 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.viewModelScope
+import com.wantique.auth.domain.model.Cover
 import com.wantique.auth.domain.usecase.CheckDuplicateNickNameUseCase
+import com.wantique.auth.domain.usecase.GetCoverImageUseCase
 import com.wantique.auth.domain.usecase.IsExistUserUseCase
 import com.wantique.auth.domain.usecase.IsWithdrawalUserUseCase
 import com.wantique.auth.domain.usecase.RedoUserUseCase
@@ -25,6 +27,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class AuthViewModel @Inject constructor(
+    private val getCoverImageUseCase: GetCoverImageUseCase,
     private val isExistUserUseCase: IsExistUserUseCase,
     private val isWithdrawalUserUseCase: IsWithdrawalUserUseCase,
     private val registerUserUseCase: RegisterUserUseCase,
@@ -33,6 +36,9 @@ class AuthViewModel @Inject constructor(
     networkTracker: NetworkTracker,
     context: Context
 ) : BaseViewModel(networkTracker, context) {
+    private val _cover = MutableStateFlow<UiState<Cover>>(UiState.Initialize)
+    val cover = _cover.asStateFlow()
+
     private val _exist = MutableSharedFlow<Boolean>()
     val exist = _exist.asSharedFlow()
 
@@ -47,6 +53,20 @@ class AuthViewModel @Inject constructor(
 
     private val _uri = MutableStateFlow<UiState<Uri>>(UiState.Initialize)
     val uri = _uri.asStateFlow()
+
+    fun getCoverImage() {
+        viewModelScope.launch {
+            safeFlow {
+                getCoverImageUseCase()
+            }.onEach {
+                it.isErrorOrNull()?.let { e ->
+                    _errorState.emit(e)
+                } ?: run {
+                    _cover.value = UiState.Success(it.getValue())
+                }
+            }.collect()
+        }
+    }
 
     fun isExistUser() {
         viewModelScope.launch {
@@ -76,23 +96,6 @@ class AuthViewModel @Inject constructor(
             }.collect()
         }
     }
-
-    /*
-    fun registerUser() {
-        viewModelScope.launch {
-            safeFlow {
-                registerUserUseCase()
-            }.onEach {
-                it.isErrorOrNull()?.let { throwable ->
-                    _errorState.emit(throwable)
-                } ?: run {
-                    _registration.emit(it.getValue())
-                }
-            }.collect()
-        }
-    }
-
-     */
 
     fun redoUser() {
         viewModelScope.launch {

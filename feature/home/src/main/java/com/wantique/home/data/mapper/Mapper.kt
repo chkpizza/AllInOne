@@ -2,8 +2,8 @@ package com.wantique.home.data.mapper
 
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ProfessorDto
 import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.ProfessorPreviewDto
 import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.firebase.model.YearlyExamPlanDto
 import com.wantique.home.domain.model.BannerItem
@@ -30,7 +30,7 @@ object Mapper {
         return Home.Category(dto.title, dto.item)
     }
 
-    fun mapperToDomain(dto: List<ProfessorDto>): List<Home.Professor> {
+    fun mapperToDomain(dto: List<ProfessorPreviewDto>): List<Home.Professor> {
         return dto.map {
             val professorItemList = mutableListOf<ProfessorItem>()
             it.item.forEach { item ->
