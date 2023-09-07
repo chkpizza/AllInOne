@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.wantique.base.navigation.NavigatorProvider
+import com.wantique.base.state.UiState
 import com.wantique.base.ui.BaseFragment
 import com.wantique.firebase.Firebase
 import com.wantique.home.R
@@ -65,12 +66,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
         updateTopInsets()
         setUpRecyclerView()
         setUpViewListener()
+        request()
     }
 
     private fun setUpRecyclerView() {
@@ -88,16 +90,23 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
         homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener)
         binding.homeRvContent.adapter = homeAdapter
-        viewModel.fetchHome()
     }
 
     private fun setUpViewListener() {
-        binding.homeLayoutError.networkErrorBtnRetry.setOnClickListener {
-            viewModel.fetchHome()
+        binding.homeRefresh.setOnRefreshListener {
+            if(viewModel.home.value is UiState.Success) {
+                binding.homeRefresh.isRefreshing = false
+            } else {
+                request()
+            }
         }
 
         binding.homeToolbar.setOnClickListener {
             navigator.navigate(HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment(""))
         }
+    }
+
+    private fun request() {
+        viewModel.fetchHome()
     }
 }

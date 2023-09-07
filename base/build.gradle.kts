@@ -50,4 +50,5 @@ dependencies {
     kapt(ThirdParty.DAGGER_COMPILER)
     implementation(AndroidX.NAVIGATION_UI)
     implementation(AndroidX.NAVIGATION_FRAGMENT)
+    implementation(AndroidX.SWIPE_REFRESH_LAYOUT)
 }

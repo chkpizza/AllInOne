@@ -56,4 +56,5 @@ dependencies {
     implementation(ThirdParty.GLIDE)
     implementation(AndroidX.LIVEDATA)
     implementation(AndroidX.RECYCLER_VIEW)
+    implementation(AndroidX.SWIPE_REFRESH_LAYOUT)
 }

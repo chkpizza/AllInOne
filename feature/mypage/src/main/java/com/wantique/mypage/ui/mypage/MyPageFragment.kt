@@ -32,7 +32,7 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
         updateInsets()
@@ -41,6 +41,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
     }
 
     private fun setUpViewListener() {
+        binding.myPageRefresh.setOnRefreshListener {
+            request()
+        }
+
         binding.myPageSignOut.setOnClickListener {
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {

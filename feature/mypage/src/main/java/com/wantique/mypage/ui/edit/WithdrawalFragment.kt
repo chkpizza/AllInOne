@@ -31,7 +31,7 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>(R.layout.frag
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
         updateInsets()
@@ -42,10 +42,6 @@ class WithdrawalFragment : BaseFragment<FragmentWithdrawalBinding>(R.layout.frag
     private fun setUpViewListener() {
         binding.withdrawalToolbar.setNavigationOnClickListener {
             navigator.navigateUp()
-        }
-
-        binding.withdrawalLayoutError.networkErrorBtnRetry.setOnClickListener {
-            viewModel.withdrawalUser()
         }
 
         binding.withdrawalCb.setOnCheckedChangeListener { _, isChecked ->

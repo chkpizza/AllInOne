@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.state.NetworkState
@@ -11,12 +14,14 @@ import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlin.experimental.ExperimentalTypeInference
 
@@ -25,8 +30,8 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
 
-    protected val _loadingState = MutableStateFlow<UiState<Boolean>>(UiState.Initialize)
-    val loadingState = _loadingState.asStateFlow()
+    private val _loadingState = MutableLiveData<UiState<Boolean>>(UiState.Initialize)
+    val loadingState: LiveData<UiState<Boolean>> get() = _loadingState
 
     private lateinit var networkState: NetworkState
 
@@ -83,7 +88,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
             UiState.Error(Throwable("NETWORK_CONNECTION_ERROR"))
         }
 
-        _loadingState.value = UiState.Initialize
+       _loadingState.value = UiState.Initialize
 
         return state
     }

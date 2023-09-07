@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import com.wantique.base.ui.BaseFragment
 import com.wantique.daily.R
@@ -34,7 +35,7 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
         updateTopInsets()
@@ -48,10 +49,6 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
             navigator.navigate(R.id.action_dailyFragment_to_writeRecordFragment)
         }
 
-        binding.dailyLayoutError.networkErrorBtnRetry.setOnClickListener {
-            request()
-        }
-
         binding.dailyToolbar.setOnClickListener {
             lifecycleScope.launch {
                 withContext(Dispatchers.IO) {
@@ -60,6 +57,10 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
                 Firebase.getInstance().signOut()
                 navigator.navigateToInit()
             }
+        }
+
+        binding.dailyRefresh.setOnRefreshListener {
+            request()
         }
     }
 

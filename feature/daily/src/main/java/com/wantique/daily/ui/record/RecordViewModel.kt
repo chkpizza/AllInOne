@@ -57,7 +57,7 @@ class RecordViewModel @Inject constructor(
                 }
             }.onEach {
                 it.isErrorOrNull()?.let { e ->
-                    _errorState.value = e
+                    _errorState.emit(e)
                 } ?: run {
                     _registration.value = it.getValue()
                 }
@@ -71,7 +71,7 @@ class RecordViewModel @Inject constructor(
                 reportRecordUseCase(documentId, reason)
             }.onEach {
                 it.isErrorOrNull()?.let { e ->
-                    _errorState.value = e
+                    _errorState.emit(e)
                 } ?: run {
                     _report.value = it.getValue()
                 }
@@ -85,7 +85,7 @@ class RecordViewModel @Inject constructor(
                 removeRecordUseCase(documentId)
             }.onEach {
                 it.isErrorOrNull()?.let { e ->
-                    _errorState.value = e
+                    _errorState.emit(e)
                 } ?: run {
                     _remove.value = it.getValue()
                 }

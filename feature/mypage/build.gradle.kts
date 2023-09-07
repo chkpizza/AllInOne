@@ -55,4 +55,5 @@ dependencies {
     implementation(AndroidX.LIVEDATA)
     implementation(ThirdParty.SQUIRCLE_IMAGE_VIEW)
     implementation(ThirdParty.GLIDE)
+    implementation(AndroidX.SWIPE_REFRESH_LAYOUT)
 }
