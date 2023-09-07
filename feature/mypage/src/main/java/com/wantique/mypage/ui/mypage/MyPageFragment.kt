@@ -1,6 +1,8 @@
 package com.wantique.mypage.ui.mypage
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -51,6 +53,13 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         binding.myPageIvProfile.setOnClickListener {
             navigator.navigate(R.id.action_myPageFragment_to_editFragment)
+        }
+
+        binding.myPageTvUpdate.setOnClickListener {
+            val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("market://details?id=${requireActivity().packageName}")
+            }
+            startActivity(playStoreIntent)
         }
     }
 

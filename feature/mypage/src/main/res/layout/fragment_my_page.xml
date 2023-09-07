@@ -77,13 +77,15 @@
 
         <TextView
             android:id="@+id/my_page_tv_recommend"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/my_page_recommend_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/my_page_separator_profile"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             style="@style/defaultTextViewStyle"/>
 
         <View
@@ -93,18 +95,19 @@
             app:layout_constraintTop_toBottomOf="@id/my_page_tv_recommend"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/separator"
-            android:layout_marginTop="16dp"/>
+            android:background="@color/separator" />
 
         <TextView
             android:id="@+id/my_page_tv_update"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/my_page_update_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/my_page_separator_recommend"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             style="@style/defaultTextViewStyle"/>
 
         <View
@@ -114,18 +117,19 @@
             app:layout_constraintTop_toBottomOf="@id/my_page_tv_update"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/separator"
-            android:layout_marginTop="16dp"/>
+            android:background="@color/separator" />
 
         <TextView
             android:id="@+id/my_page_tv_privacy_policy"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/my_page_privacy_policy_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/my_page_separator_update"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             style="@style/defaultTextViewStyle"/>
 
         <View
@@ -135,18 +139,19 @@
             app:layout_constraintTop_toBottomOf="@id/my_page_tv_privacy_policy"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/separator"
-            android:layout_marginTop="16dp"/>
+            android:background="@color/separator" />
 
         <TextView
             android:id="@+id/my_page_tv_open_source_license"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/my_page_open_source_license_title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/my_page_separator_privacy_policy"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginStart="16dp"
+            android:paddingStart="16dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp"
             style="@style/defaultTextViewStyle"/>
 
         <View
@@ -156,8 +161,7 @@
             app:layout_constraintTop_toBottomOf="@id/my_page_tv_open_source_license"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@color/separator"
-            android:layout_marginTop="16dp"/>
+            android:background="@color/separator" />
 
         <TextView
             android:id="@+id/my_page_sign_out"
