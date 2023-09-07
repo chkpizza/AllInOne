@@ -16,6 +16,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
@@ -29,9 +32,13 @@ import kotlin.experimental.ExperimentalTypeInference
 open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Context) : ViewModel() {
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
-
-    private val _loadingState = MutableLiveData<UiState<Boolean>>(UiState.Initialize)
-    val loadingState: LiveData<UiState<Boolean>> get() = _loadingState
+    
+    protected val _loadingState = MutableSharedFlow<UiState<Boolean>>()
+    val loadingState = _loadingState.stateIn(
+        initialValue = UiState.Initialize,
+        started = SharingStarted.WhileSubscribed(5000),
+        scope = viewModelScope
+    )
 
     private lateinit var networkState: NetworkState
 
@@ -66,29 +73,29 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     }
 
     fun <T> safeFlow(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
-        _loadingState.value = UiState.Loading
+        _loadingState.emit(UiState.Loading)
 
         if (isNetworkAvailable()) {
-            _errorState.value = null
+            //_errorState.value = null
             emitAll(call())
         } else {
             emit(UiState.Error(Throwable("NETWORK_CONNECTION_ERROR")))
         }
 
-        _loadingState.value = UiState.Initialize
+        _loadingState.emit(UiState.Initialize)
     }
 
     suspend fun <T> safeCall(call: suspend  () -> UiState<T>): UiState<T> {
-        _loadingState.value = UiState.Loading
+        _loadingState.emit(UiState.Loading)
 
         val state = if(isNetworkAvailable()) {
-            _errorState.value = null
+            //_errorState.value = null
             call()
         } else {
             UiState.Error(Throwable("NETWORK_CONNECTION_ERROR"))
         }
 
-       _loadingState.value = UiState.Initialize
+       _loadingState.emit(UiState.Initialize)
 
         return state
     }
