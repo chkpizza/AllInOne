@@ -55,6 +55,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(R.layout.fr
             navigator.navigateUp()
         }
 
+        binding.editProfileLayoutError.networkErrorBtnRetry.setOnClickListener {
+            request()
+        }
+
         binding.editProfileIvProfile.setOnClickListener {
             galleryLauncher.launch(Intent().also {
                 it.type = "image/*"
@@ -82,7 +86,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(R.layout.fr
     private fun setUpObserver() {
         viewModel.modify.asLiveData().observe(viewLifecycleOwner) {
             it?.let { result ->
-                Log.d("resultTest", result.toString())
                 if(!result) {
                     Toast.makeText(requireActivity(), "프로필을 수정하지 못했습니다", Toast.LENGTH_SHORT).show()
                 }

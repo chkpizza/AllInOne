@@ -99,7 +99,7 @@
             style="@style/defaultButtonStyle"/>
 
         <include layout="@layout/layout_error"
-            android:id="@+id/daily_layout_error"
+            android:id="@+id/edit_profile_layout_error"
             bind:baseVM="@{vm}" />
 
         <ProgressBar
