@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/past_exam_choice_tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="①."
+            style="@style/defaultTextViewStyle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/past_exam_choice_tv_choice"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            style="@style/defaultTextViewStyle"
+            tools:text="국가를 당사자로 하는 계약에 관한 법률 에 따라 국가가 당사자가 되는 이른바 공공계약에 관한 법적 분쟁은 원칙적으로 행정법원의 관할 사항이다."
+            app:layout_constraintTop_toTopOf="@id/past_exam_choice_tv_number"
+            app:layout_constraintStart_toEndOf="@id/past_exam_choice_tv_number"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

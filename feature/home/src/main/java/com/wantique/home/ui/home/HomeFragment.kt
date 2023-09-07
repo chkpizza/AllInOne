@@ -2,13 +2,17 @@ package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.wantique.base.navigation.NavigatorProvider
 import com.wantique.base.ui.BaseFragment
+import com.wantique.firebase.Firebase
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.ui.home.adapter.HomeAdapter
@@ -23,8 +27,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
     @Inject lateinit var factory: ViewModelProvider.Factory
     //private val viewModel by navGraphViewModels<HomeViewModel>(R.id.home_nav_graph) { factory }
     private val viewModel by lazy { ViewModelProvider(this, factory)[HomeViewModel::class.java]}
-    private var clickTime: Long = 0
     private lateinit var onBackPressedCallback: OnBackPressedCallback
+    private var clickTime: Long = 0
 
     private lateinit var homeAdapter: HomeAdapter
 
@@ -33,8 +37,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         (context.applicationContext as HomeComponentProvider).getHomeComponent().inject(this)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        clickTime = 0
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         onBackPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if(System.currentTimeMillis() - clickTime >= 3500) {
@@ -45,9 +52,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
                 }
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
         return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onBackPressedCallback.remove()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -83,10 +95,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
         binding.homeLayoutError.networkErrorBtnRetry.setOnClickListener {
             viewModel.fetchHome()
         }
-    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        onBackPressedCallback.remove()
+        binding.homeToolbar.setOnClickListener {
+            navigator.navigate(HomeFragmentDirections.actionHomeFragmentToProfessorDetailsFragment(""))
+        }
     }
 }

@@ -23,6 +23,7 @@ open class BaseFragment<T: ViewDataBinding>(
 
     protected lateinit var navigator: Navigator
 
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (context as NavigatorProvider).also {
@@ -37,6 +38,7 @@ open class BaseFragment<T: ViewDataBinding>(
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+
         return binding.root
     }
 
@@ -61,6 +63,16 @@ open class BaseFragment<T: ViewDataBinding>(
             val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
                 topMargin = insets.top
+            }
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    fun updateBottomInsets() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, windowInsets ->
+            val insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
+                bottomMargin = insets.bottom
             }
             WindowInsetsCompat.CONSUMED
         }

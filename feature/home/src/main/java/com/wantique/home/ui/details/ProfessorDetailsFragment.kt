@@ -31,11 +31,12 @@ class ProfessorDetailsFragment : BaseFragment<FragmentProfessorDetailsBinding>(R
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateInsets()
 
         binding.lifecycleOwner = this
         binding.vm = viewModel
 
+
+        updateInsets()
         setUpRecyclerView()
         setUpViewListener()
         setUpObservers()

@@ -8,7 +8,7 @@
     <color name="disabledBackground">#EEEDF0</color>
     <color name="disabledText">#CFCFD1</color>
     <color name="white">#ffffff</color>
-    <color name="bottomNavigationViewBackground">#F2F0E0</color>
+    <color name="bottomNavigationViewBackground">#F9F9F9</color>
     <color name="bottomNavigationViewActiveIndicator">#E6E4C0</color>
     <color name="megaTextColor">#0082FF</color>
     <color name="dangiTextColor">#172C8D</color>

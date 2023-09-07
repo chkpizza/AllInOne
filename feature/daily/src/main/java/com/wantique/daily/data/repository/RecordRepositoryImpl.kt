@@ -1,6 +1,8 @@
 package com.wantique.daily.data.repository
 
 import com.wantique.base.state.Resource
+import com.wantique.daily.data.mapper.Mapper
+import com.wantique.daily.domain.model.Daily
 import com.wantique.daily.domain.repository.RecordRepository
 import com.wantique.firebase.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,5 +25,26 @@ class RecordRepositoryImpl @Inject constructor(
     }.catch { e ->
         emit(Resource.Error(e))
     }.flowOn(dispatcher)
+
+    override fun reportRecord(documentId: String, reason: String): Flow<Resource<Boolean>> = flow {
+        if(firebase.reportRecord(documentId, reason)) {
+            emit(Resource.Success(true))
+        } else {
+            emit(Resource.Error(Throwable("해당 게시글을 정상적으로 신고하지 못했습니다.")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
+
+    override fun removeRecord(documentId: String): Flow<Resource<Boolean>> = flow {
+        if(firebase.removeRecord(documentId)) {
+            emit(Resource.Success(true))
+        } else {
+            emit(Resource.Error(Throwable("기록을 삭제하지 못했습니다")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
+
 
 }

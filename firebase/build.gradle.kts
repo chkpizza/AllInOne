@@ -5,11 +5,11 @@ plugins {
 
 android {
     namespace = "com.wantique.firebase"
-    compileSdk = 33
+    compileSdk = Version.compileSdk
 
     defaultConfig {
-        minSdk = 24
-        targetSdk = 33
+        minSdk = Version.minSdk
+        targetSdk = Version.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")

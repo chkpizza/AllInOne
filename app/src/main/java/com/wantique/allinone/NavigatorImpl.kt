@@ -10,13 +10,13 @@ class NavigatorImpl(private val navController: NavController) : Navigator {
     override fun navigateToInit() {
         val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
         navGraph.setStartDestination(R.id.init_nav_graph)
-        navController.setGraph(navGraph, null)
+        navController.graph = navGraph
     }
 
     override fun navigateToMain() {
         val navGraph = navController.navInflater.inflate(R.navigation.app_nav_graph)
         navGraph.setStartDestination(R.id.main_nav_graph)
-        navController.setGraph(navGraph, null)
+        navController.graph = navGraph
     }
 
     override fun navigateByDeepLink(uri: String) {
