@@ -157,6 +157,12 @@ class Firebase private constructor() {
         }
     }
 
+    suspend fun getUserProfile(): UserDto? {
+        return Firebase.firestore.collection("user").document(Firebase.auth.uid.toString()).get().await().run {
+            toObject<UserDto>()
+        }
+    }
+
     private suspend fun getProfessorDetailsReferenceKey(): ReferenceKey? {
         return Firebase.firestore.collection("reference").document("professor_details").get().await().run {
             toObject<ReferenceKey>()

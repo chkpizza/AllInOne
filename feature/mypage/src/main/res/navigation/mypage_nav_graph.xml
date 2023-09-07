@@ -6,6 +6,6 @@
 
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.wantique.mypage.MyPageFragment"
+        android:name="com.wantique.mypage.ui.mypage.MyPageFragment"
         android:label="MyPageFragment" />
 </navigation>

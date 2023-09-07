@@ -8,8 +8,10 @@ import com.wantique.daily.di.DailyComponent
 import com.wantique.daily.di.DailyComponentProvider
 import com.wantique.home.di.HomeComponent
 import com.wantique.home.di.HomeComponentProvider
+import com.wantique.mypage.di.MyPageComponent
+import com.wantique.mypage.di.MyPageComponentProvider
 
-class NewApplication : Application(), AuthComponentProvider, HomeComponentProvider, DailyComponentProvider {
+class NewApplication : Application(), AuthComponentProvider, HomeComponentProvider, DailyComponentProvider, MyPageComponentProvider {
     private val appComponent by lazy { DaggerAppComponent.factory().create(this, getString(R.string.default_web_client_id)) }
 
     override fun getAuthComponent(): AuthComponent {
@@ -22,5 +24,9 @@ class NewApplication : Application(), AuthComponentProvider, HomeComponentProvid
 
     override fun getDailyComponent(): DailyComponent {
         return appComponent.getDailyComponent().create()
+    }
+
+    override fun getMyPageComponent(): MyPageComponent {
+        return appComponent.getMyPageComponent().create()
     }
 }

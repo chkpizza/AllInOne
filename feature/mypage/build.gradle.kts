@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":firebase"))
     implementation(project(":resource"))
     implementation(project(":base"))
 
@@ -52,4 +52,7 @@ dependencies {
     implementation(AndroidX.NAVIGATION_FRAGMENT)
     implementation(ThirdParty.DAGGER)
     kapt(ThirdParty.DAGGER_COMPILER)
+    implementation(AndroidX.LIVEDATA)
+    implementation(ThirdParty.SQUIRCLE_IMAGE_VIEW)
+    implementation(ThirdParty.GLIDE)
 }
