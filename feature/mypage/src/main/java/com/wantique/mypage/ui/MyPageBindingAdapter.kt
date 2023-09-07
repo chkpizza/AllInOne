@@ -1,4 +1,4 @@
-package com.wantique.mypage.ui.mypage.adapter
+package com.wantique.mypage.ui
 
 import android.widget.ImageView
 import android.widget.TextView

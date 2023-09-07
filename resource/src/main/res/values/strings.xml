@@ -39,4 +39,14 @@
         <item>욕설·명예훼손</item>
         <item>동일한 내용 반복</item>
     </string-array>
+
+    <string name="my_page_toolbar_title">마이페이지</string>
+    <string name="my_page_recommend_title">제안하기</string>
+    <string name="my_page_update_title">앱 업데이트</string>
+    <string name="my_page_privacy_policy_title">개인정보처리방침</string>
+    <string name="my_page_open_source_license_title">오픈소스 라이선스</string>
+
+    <string name="edit_toolbar_title">내 정보 수정</string>
+    <string name="edit_profile_toolbar_title">프로필 수정</string>
+    <string name="withdrawal_toolbar_title">회원 탈퇴</string>
 </resources>

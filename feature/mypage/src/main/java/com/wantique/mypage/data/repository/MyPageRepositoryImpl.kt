@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class MyPageRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDispatcher, private val firebase: Firebase) : MyPageRepository {
     override fun getUserProfile(): Flow<Resource<UserProfile>> = flow {
-        firebase.getUserProfile()?.let {
+        firebase.getCurrentUserProfile()?.let {
             emit(Resource.Success(Mapper.mapperToDomain(it)))
         } ?: run {
             emit(Resource.Error(Throwable("사용자 프로필을 가져오지 못했습니다")))
