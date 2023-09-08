@@ -1,6 +1,5 @@
 package com.wantique.firebase
 
-import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -10,17 +9,13 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
-import com.wantique.firebase.model.ChoiceDto
 import com.wantique.firebase.model.CoverDto
 import com.wantique.firebase.model.DailyLetterDto
 import com.wantique.firebase.model.DailyPastExamDto
 import com.wantique.firebase.model.DailyRecordDto
-import com.wantique.firebase.model.DescriptionDto
-import com.wantique.firebase.model.PastExamDto
 import com.wantique.firebase.model.PastExamHeaderDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.ProfessorPreviewDto
-import com.wantique.firebase.model.ProfessorPreviewItemDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
@@ -338,35 +333,6 @@ class Firebase private constructor() {
 
             return firestore
         }
-    }
-    suspend fun chainingTest() {
-        /*
-        Firebase.firestore.collection("daily").document("record").collection("record").document(System.currentTimeMillis().toString()).set(
-            RecordDto(
-                Firebase.auth.uid.toString(),
-                "2023_09_01",
-                "whereEqualTo Chaining 테스트",
-                false
-            )
-        ).await()
-
-         */
-        Firebase.firestore.collection("daily").document("record").collection("record").whereEqualTo("date", "2023_09_01").whereEqualTo("enable", true).get().await().also {
-            it.toObjects<RecordDto>().apply {
-                Log.d("RecordTest", this.toString())
-            }
-        }
-    }
-
-    suspend fun set() {
-        Firebase.firestore.collection("daily").document("pastExamHeader").collection("pastExam").document(DecimalFormat("00").format(8))
-            .set(
-                TodayPastExamDto(
-                    listOf(
-
-                    )
-                )
-            ).await()
     }
 }
 
