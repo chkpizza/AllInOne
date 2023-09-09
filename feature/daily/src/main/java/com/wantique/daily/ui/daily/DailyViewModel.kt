@@ -7,6 +7,7 @@ import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
 import com.wantique.base.state.getError
 import com.wantique.base.state.getValue
+import com.wantique.base.state.isErrorOrNull
 import com.wantique.base.ui.BaseViewModel
 import com.wantique.daily.domain.model.Daily
 import com.wantique.daily.domain.usecase.GetDailyLetterUseCase
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -43,7 +45,6 @@ class DailyViewModel @Inject constructor(
                         _errorState.value = record.getError()
                     }
                     pastExam is UiState.Error -> {
-                        Log.d("pastExamErrorTest", "error")
                         _errorState.value = pastExam.getError()
                     }
                 }

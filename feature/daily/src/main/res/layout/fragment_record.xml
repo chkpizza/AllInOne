@@ -4,13 +4,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-
+        <variable
+            name="vm"
+            type="com.wantique.daily.ui.record.RecordViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.record.RecordFragment">
+        tools:context=".ui.record.RecordFragment"
+        app:errorHandler="@{vm.errorState}">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/record_vp_today_record"

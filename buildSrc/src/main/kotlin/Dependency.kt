@@ -7,6 +7,7 @@ object AndroidX {
     const val SPLASH_SCREEN = "androidx.core:core-splashscreen:1.0.1"
     const val LIVEDATA = "androidx.lifecycle:lifecycle-livedata-ktx:2.6.1"
     const val RECYCLER_VIEW = "androidx.recyclerview:recyclerview:1.3.1"
+    const val SWIPE_REFRESH_LAYOUT = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }
 
 object Google {

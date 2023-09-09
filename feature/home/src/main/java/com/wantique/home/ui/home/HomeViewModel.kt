@@ -1,6 +1,7 @@
 package com.wantique.home.ui.home
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.wantique.base.network.NetworkTracker
 import com.wantique.base.state.UiState
@@ -73,7 +74,52 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }
+
+        /*
+        if(_home.value !is UiState.Success) {
+            viewModelScope.launch {
+                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam()) { banner, category, professors, exam ->
+                    when {
+                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success -> {
+                            _professorsState.value = UiState.Success(professors.getValue())
+                            _currentCategoryPosition.value = UiState.Success(0)
+                            UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
+                        }
+
+                        banner is UiState.Error -> {
+                            _errorState.value = banner.getError()
+                            null
+                        }
+
+                        category is UiState.Error -> {
+                            _errorState.value = category.getError()
+                            null
+                        }
+
+                        professors is UiState.Error -> {
+                            _errorState.value = professors.getError()
+                            null
+                        }
+
+                        exam is UiState.Error -> {
+                            _errorState.value = exam.getError()
+                            null
+                        }
+                        else -> null
+                    }
+                }.collect { state ->
+                    state?.let { _home.value = it }
+                }
+            }
+        }
+        else {
+
+        }
+
+         */
     }
+
+
     private fun getBanner() = safeFlow { getBannerUseCase() }
     private fun getCategory() = safeFlow { getCategoryUseCase() }
     private fun getProfessors() = safeFlow { getProfessorsUseCase() }

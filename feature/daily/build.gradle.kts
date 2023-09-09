@@ -59,4 +59,5 @@ dependencies {
     implementation(AndroidX.RECYCLER_VIEW)
     implementation(AndroidX.LIVEDATA)
     implementation(ThirdParty.CIRCLE_IMAGE_VIEW)
+    implementation(AndroidX.SWIPE_REFRESH_LAYOUT)
 }

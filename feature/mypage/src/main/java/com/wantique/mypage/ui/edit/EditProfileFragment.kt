@@ -41,7 +41,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(R.layout.fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
         updateInsets()
@@ -82,7 +82,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding>(R.layout.fr
     private fun setUpObserver() {
         viewModel.modify.asLiveData().observe(viewLifecycleOwner) {
             it?.let { result ->
-                Log.d("resultTest", result.toString())
                 if(!result) {
                     Toast.makeText(requireActivity(), "프로필을 수정하지 못했습니다", Toast.LENGTH_SHORT).show()
                 }

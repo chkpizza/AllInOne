@@ -15,6 +15,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        errorHandler="@{vm.errorState}"
         tools:context=".ui.edit.EditProfileFragment">
 
         <androidx.appcompat.widget.Toolbar
@@ -97,20 +98,6 @@
             android:layout_marginEnd="16dp"
             android:text="@string/edit_modify_user_profile"
             style="@style/defaultButtonStyle"/>
-
-        <include layout="@layout/layout_error"
-            android:id="@+id/daily_layout_error"
-            bind:baseVM="@{vm}" />
-
-        <ProgressBar
-            android:id="@+id/daily_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:visibility="@{(vm.loadingState instanceof UiState.Loading) ? View.VISIBLE : View.GONE}"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@ class ProfessorDetailsFragment : BaseFragment<FragmentProfessorDetailsBinding>(R
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.vm = viewModel
 
 
@@ -53,7 +53,7 @@ class ProfessorDetailsFragment : BaseFragment<FragmentProfessorDetailsBinding>(R
             navigator.navigateUp()
         }
 
-        binding.professorDetailsLayoutError.networkErrorBtnRetry.setOnClickListener {
+        binding.professorDetailsRefresh.setOnRefreshListener {
             request()
         }
     }
