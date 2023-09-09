@@ -33,9 +33,9 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     protected val _errorState = MutableStateFlow<Throwable?>(null)
     val errorState = _errorState.asStateFlow()
 
-    protected val _loadingState = MutableSharedFlow<UiState<Boolean>>()
+    protected val _loadingState = MutableSharedFlow<Boolean>()
     val loadingState = _loadingState.stateIn(
-        initialValue = UiState.Initialize,
+        initialValue = false,
         started = SharingStarted.WhileSubscribed(5000),
         scope = viewModelScope
     )
@@ -73,7 +73,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
     }
 
     fun <T> safeFlow(call: () -> Flow<UiState<T>>): Flow<UiState<T>> = flow {
-        _loadingState.emit(UiState.Loading)
+        _loadingState.emit(true)
 
         if (isNetworkAvailable()) {
             _errorState.value = null
@@ -82,11 +82,11 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
             emit(UiState.Error(Throwable("NETWORK_CONNECTION_ERROR")))
         }
 
-        _loadingState.emit(UiState.Initialize)
+        _loadingState.emit(false)
     }
 
     suspend fun <T> safeCall(call: suspend  () -> UiState<T>): UiState<T> {
-        _loadingState.emit(UiState.Loading)
+        _loadingState.emit(true)
 
         val state = if(isNetworkAvailable()) {
             _errorState.value = null
@@ -95,7 +95,7 @@ open class BaseViewModel(networkTracker: NetworkTracker, applicationContext: Con
             UiState.Error(Throwable("NETWORK_CONNECTION_ERROR"))
         }
 
-       _loadingState.emit(UiState.Initialize)
+        _loadingState.emit(false)
 
         return state
     }
