@@ -59,6 +59,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             navigator.navigate(R.id.action_myPageFragment_to_editFragment)
         }
 
+        binding.myPageTvRecommend.setOnClickListener {
+            navigator.navigate(R.id.action_myPageFragment_to_recommendFragment)
+        }
+
         binding.myPageTvUpdate.setOnClickListener {
             val playStoreIntent = Intent(Intent.ACTION_VIEW).apply {
                 data = Uri.parse("market://details?id=${requireActivity().packageName}")

@@ -4,8 +4,10 @@ import com.wantique.base.di.FeatureScope
 import com.wantique.firebase.Firebase
 import com.wantique.mypage.data.repository.EditRepositoryImpl
 import com.wantique.mypage.data.repository.MyPageRepositoryImpl
+import com.wantique.mypage.data.repository.RecommendRepositoryImpl
 import com.wantique.mypage.domain.repository.EditRepository
 import com.wantique.mypage.domain.repository.MyPageRepository
+import com.wantique.mypage.domain.repository.RecommendRepository
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
@@ -22,5 +24,11 @@ class RepositoryModule {
     @Provides
     fun provideEditRepository(dispatcher: CoroutineDispatcher, firebase: Firebase): EditRepository {
         return EditRepositoryImpl(dispatcher, firebase)
+    }
+
+    @FeatureScope
+    @Provides
+    fun provideRecommendRepository(dispatcher: CoroutineDispatcher, firebase: Firebase): RecommendRepository {
+        return RecommendRepositoryImpl(dispatcher, firebase)
     }
 }

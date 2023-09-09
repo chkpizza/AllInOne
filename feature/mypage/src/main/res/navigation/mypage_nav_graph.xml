@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_editFragment"
             app:destination="@id/editFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_recommendFragment"
+            app:destination="@id/recommendFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -31,4 +34,8 @@
         android:id="@+id/withdrawalFragment"
         android:name="com.wantique.mypage.ui.edit.WithdrawalFragment"
         android:label="WithdrawalFragment" />
+    <fragment
+        android:id="@+id/recommendFragment"
+        android:name="com.wantique.mypage.ui.recommend.RecommendFragment"
+        android:label="RecommendFragment" />
 </navigation>
