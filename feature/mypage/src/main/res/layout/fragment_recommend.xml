@@ -14,7 +14,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.recommend.RecommendFragment">
+        tools:context=".ui.recommend.RecommendFragment"
+        app:errorHandler="@{vm.errorState}">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/recommend_toolbar"
