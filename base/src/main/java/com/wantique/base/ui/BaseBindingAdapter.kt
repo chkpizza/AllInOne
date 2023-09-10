@@ -22,8 +22,9 @@ object BaseBindingAdapter {
 
     @BindingAdapter("isRefreshing")
     @JvmStatic
-    fun setRefreshing(view: SwipeRefreshLayout, item: UiState<Boolean>) {
-        if(item == UiState.Initialize) {
+    fun setRefreshing(view: SwipeRefreshLayout, state: Boolean) {
+        Log.d("loadingState", state.toString())
+        if(!state) {
             view.isRefreshing = false
         }
     }

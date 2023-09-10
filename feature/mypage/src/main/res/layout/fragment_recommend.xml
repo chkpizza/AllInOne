@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <import type="com.wantique.base.state.UiState" />
+        <variable
+            name="vm"
+            type="com.wantique.mypage.ui.recommend.RecommendViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.recommend.RecommendFragment"
+        app:errorHandler="@{vm.errorState}">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/recommend_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+            <TextView
+                android:id="@+id/recommend_tv_toolbar_title"
+                style="@style/toolbarTextViewStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/recommend_toolbar_title" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/recommend_view_divide_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recommend_toolbar" />
+
+        <EditText
+            android:id="@+id/recommend_et_body"
+            style="@style/borderlessEditTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="top"
+            android:hint="@string/recommend_input_recommend_hint"
+            android:maxLength="400"
+            android:maxLines="15"
+            app:layout_constraintBottom_toTopOf="@id/recommend_btn_registration"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/recommend_view_divide_toolbar" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/recommend_btn_registration"
+            style="@style/defaultButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="20dp"
+            android:text="등록하기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/recommend_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{(vm.loadingState == true) ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

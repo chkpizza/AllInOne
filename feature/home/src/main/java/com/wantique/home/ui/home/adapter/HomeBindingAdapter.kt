@@ -12,6 +12,7 @@ import com.wantique.base.state.UiState
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.model.ProfessorItem
+import java.text.DecimalFormat
 
 object HomeBindingAdapter {
     @BindingAdapter("home")
@@ -67,28 +68,11 @@ object HomeBindingAdapter {
         view.isVisible = !item
     }
 
-    /*
-    @BindingAdapter("errorHandler")
-    @JvmStatic
-    fun handleError(view: ConstraintLayout, e: Throwable?) {
-        e?.let {
-            if(it.message == "NETWORK_CONNECTION_ERROR") {
-                view.isVisible = true
-            } else {
-                Toast.makeText(view.context, it.message, Toast.LENGTH_SHORT).show()
-                view.isVisible = false
-            }
-        } ?: run {
-            view.isVisible = false
-        }
-    }
-
-     */
-
     @BindingAdapter("indicator")
     @JvmStatic
     fun setIndicator(view: ViewPager2, indicator: TextView) {
-        indicator.text = "1 / ${view.adapter?.itemCount}"
+        indicator.text = "${view.currentItem + 1} / ${view.adapter?.itemCount}"
+
         view.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 indicator.text = "${position + 1} / ${view.adapter?.itemCount}"

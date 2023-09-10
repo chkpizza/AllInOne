@@ -16,6 +16,7 @@ import com.wantique.firebase.model.DailyRecordDto
 import com.wantique.firebase.model.PastExamHeaderDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.ProfessorPreviewDto
+import com.wantique.firebase.model.RecommendDto
 import com.wantique.firebase.model.RecordDto
 import com.wantique.firebase.model.RecordHeaderDto
 import com.wantique.firebase.model.ReferenceKey
@@ -292,6 +293,19 @@ class Firebase private constructor() {
         }
 
         return true
+    }
+
+    suspend fun registerRecommend(recommend: String): Boolean {
+        val documentId = "${System.currentTimeMillis()}_${Firebase.auth.uid.toString()}"
+        Firebase.firestore.collection("recommend").document(documentId).set(
+            RecommendDto(
+                Firebase.auth.uid.toString(),
+                recommend,
+                LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyy_MM_dd"))
+            )
+        ).await()
+
+        return Firebase.firestore.collection("recommend").document(documentId).get().await().exists()
     }
 
     private suspend fun getUserProfile(uid: String): UserDto? {

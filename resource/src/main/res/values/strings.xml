@@ -58,4 +58,6 @@
     <string name="withdrawal_agree">회원 탈퇴 동의</string>
     <string name="withdrawal_agree_description">회원 탈퇴 유의사항을 모드 확인하였으며, 회원 탈퇴에 동의합니다.</string>
     <string name="withdrawal_start_withdrawal">회원 탈퇴하기</string>
+    <string name="recommend_toolbar_title">제안하기</string>
+    <string name="recommend_input_recommend_hint">다양한 내용을 제안해주시면 적극 서비스에 반영 하도록 하겠습니다!</string>
 </resources>

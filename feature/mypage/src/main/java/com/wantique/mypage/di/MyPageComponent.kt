@@ -5,6 +5,7 @@ import com.wantique.mypage.ui.edit.EditFragment
 import com.wantique.mypage.ui.edit.EditProfileFragment
 import com.wantique.mypage.ui.edit.WithdrawalFragment
 import com.wantique.mypage.ui.mypage.MyPageFragment
+import com.wantique.mypage.ui.recommend.RecommendFragment
 import dagger.Subcomponent
 
 @FeatureScope
@@ -19,4 +20,5 @@ interface MyPageComponent {
     fun inject(fragment: EditFragment)
     fun inject(fragment: EditProfileFragment)
     fun inject(fragment: WithdrawalFragment)
+    fun inject(fragment: RecommendFragment)
 }

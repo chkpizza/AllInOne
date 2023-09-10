@@ -6,9 +6,11 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.base.ui.BaseFragment
 import com.wantique.firebase.Firebase
@@ -16,6 +18,7 @@ import com.wantique.mypage.R
 import com.wantique.mypage.databinding.FragmentMyPageBinding
 import com.wantique.mypage.di.MyPageComponentProvider
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -57,6 +60,10 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
 
         binding.myPageIvProfile.setOnClickListener {
             navigator.navigate(R.id.action_myPageFragment_to_editFragment)
+        }
+
+        binding.myPageTvRecommend.setOnClickListener {
+            navigator.navigate(R.id.action_myPageFragment_to_recommendFragment)
         }
 
         binding.myPageTvUpdate.setOnClickListener {
