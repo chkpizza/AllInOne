@@ -8,6 +8,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.wantique.daily.R
 import com.wantique.daily.databinding.ListItemChoiceBinding
 import com.wantique.daily.domain.model.Choice
@@ -35,14 +36,17 @@ class ChoiceAdapter(
                 binding.pastExamChoiceTvNumber.setTextColor(ContextCompat.getColor(binding.root.context, com.wantique.resource.R.color.colorPrimary))
             }
 
-            binding.root.setOnClickListener {
-                if(bindingAdapterPosition +1 == answer) {
-                    result = answer
-                    notifyDataSetChanged()
-                } else {
-                    Toast.makeText(binding.root.context, "다시 한번 확인해보세요!", Toast.LENGTH_SHORT).show()
+            if(result == -1) {
+                binding.root.setOnClickListener {
+                    if(bindingAdapterPosition +1 == answer) {
+                        result = answer
+                        notifyDataSetChanged()
+                    } else {
+                        Snackbar.make(binding.root, "다시 한번 확인해보세요!", Snackbar.LENGTH_SHORT).show()
+                    }
                 }
-
+            } else  {
+                binding.root.setOnClickListener(null)
             }
         }
     }

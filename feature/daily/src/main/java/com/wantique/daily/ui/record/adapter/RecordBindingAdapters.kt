@@ -3,9 +3,11 @@ package com.wantique.daily.ui.record.adapter
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.mikhaellopez.circularimageview.CircularImageView
 import com.wantique.base.state.UiState
 import com.wantique.base.state.isSuccessOrNull
 import com.wantique.daily.R
@@ -32,11 +34,12 @@ object RecordBindingAdapters {
 
     @BindingAdapter("profileImage")
     @JvmStatic
-    fun setProfileImage(view: ImageView, item: String) {
-        Glide.with(view.context)
-            .load(item)
-            .placeholder(R.drawable.ic_empty_profile)
-            .into(view)
+    fun setProfileImage(view: CircularImageView, item: String) {
+        if(item.isNotEmpty()) {
+            Glide.with(view.context)
+                .load(item)
+                .into(view)
+        }
     }
 
     @BindingAdapter("report")

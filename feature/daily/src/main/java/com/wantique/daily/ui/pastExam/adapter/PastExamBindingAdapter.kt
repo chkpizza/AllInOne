@@ -1,5 +1,6 @@
 package com.wantique.daily.ui.pastExam.adapter
 
+import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -26,10 +27,11 @@ object PastExamBindingAdapter {
     @BindingAdapter("indicator")
     @JvmStatic
     fun setIndicator(view: ViewPager2, indicator: TextView) {
-        indicator.text = "01 / ${DecimalFormat("00").format(view.adapter?.itemCount)}"
+        indicator.text = "${DecimalFormat("00").format(view.currentItem + 1)} / ${DecimalFormat("00").format(view.adapter?.itemCount)}"
+
         view.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
-                indicator.text = "${DecimalFormat("00").format(position + 1)} / ${DecimalFormat("00").format((view.adapter?.itemCount))}"
+                indicator.text = "${DecimalFormat("00").format(position + 1)} / ${DecimalFormat("00").format(view.adapter?.itemCount)}"
             }
         })
     }
