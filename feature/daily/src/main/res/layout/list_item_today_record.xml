@@ -19,6 +19,7 @@
             android:layout_height="0dp"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
+            android:background="@color/disabledBackground"
             app:recordBackgroundImage="@{item.imageUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
