@@ -1,5 +1,6 @@
 package com.wantique.mypage.ui
 
+import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -24,6 +25,16 @@ object MyPageBindingAdapter {
     fun setNickName(view: TextView, item: UiState<UserProfile>) {
         item.isSuccessOrNull()?.let {
             view.text = it.name
+        }
+    }
+
+    @BindingAdapter("imageUri")
+    @JvmStatic
+    fun setImageUri(view: ImageView, item: UiState<Uri>) {
+        item.isSuccessOrNull()?.let {
+            Glide.with(view.context)
+                .load(it)
+                .into(view)
         }
     }
 }

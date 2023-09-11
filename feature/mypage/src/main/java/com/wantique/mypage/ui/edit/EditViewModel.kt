@@ -33,7 +33,10 @@ class EditViewModel @Inject constructor(
     private val _profile = MutableStateFlow<UiState<UserProfile>>(UiState.Initialize)
     val profile = _profile.asStateFlow()
 
-    private var uri: Uri? = null
+    //private var uri: Uri? = null
+
+    private val _uri = MutableStateFlow<UiState<Uri>>(UiState.Initialize)
+    val uri = _uri.asStateFlow()
 
     private val _modify = MutableStateFlow<Boolean?>(null)
     val modify = _modify.asStateFlow()
@@ -56,7 +59,7 @@ class EditViewModel @Inject constructor(
     }
 
     fun setProfileUri(uri: Uri) {
-        this.uri = uri
+        _uri.value = UiState.Success(uri)
     }
 
     fun checkValidNickName(nickName: String) {
@@ -79,7 +82,9 @@ class EditViewModel @Inject constructor(
 
     private fun modifyUserProfile(nickName: String) {
         viewModelScope.launch {
-            val imageUri = uri?.toString() ?: ""
+            //val imageUri = uri?.toString() ?: ""
+            //val imageUri = uri.value.isSuccessOrNull().toString() ?: ""
+            val imageUri = uri.value.isSuccessOrNull()?.toString() ?: ""
             safeFlow {
                 modifyUserProfileUseCase(imageUri, nickName)
             }.onEach {

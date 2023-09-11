@@ -52,6 +52,7 @@
             android:layout_height="104dp"
             android:layout_marginTop="36dp"
             app:profileImage="@{vm.profile}"
+            app:imageUri="@{vm.uri}"
             app:squircle_background_color="@color/disabledBackground"
             app:layout_constraintTop_toBottomOf="@id/edit_profile_view_divide_toolbar"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,8 +69,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             style="@style/titleTextViewStyle"
-            android:layout_marginTop="12dp"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginTop="12dp" />
 
         <EditText
             android:id="@+id/edit_profile_et_nick_name"
