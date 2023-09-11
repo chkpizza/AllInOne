@@ -6,7 +6,6 @@ plugins {
 }
 
 android {
-
     compileSdk = Version.compileSdk
     buildToolsVersion = Version.buildToolsVersion
 
