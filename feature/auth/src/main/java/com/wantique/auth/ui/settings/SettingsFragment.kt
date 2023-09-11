@@ -79,10 +79,6 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding>(R.layout.fragment
             viewModel.checkNickName(binding.settingsEtNickName.text.toString().replace(" ", ""))
         }
 
-        binding.settingsLayoutError.networkErrorBtnRetry.setOnClickListener {
-            retry()
-        }
-
         binding.settingsBtnRegistration.isEnabled = false
     }
 
