@@ -49,16 +49,6 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
             navigator.navigate(R.id.action_dailyFragment_to_writeRecordFragment)
         }
 
-        binding.dailyToolbar.setOnClickListener {
-            lifecycleScope.launch {
-                withContext(Dispatchers.IO) {
-                    requireActivity().getPreferences(Context.MODE_PRIVATE).edit().putBoolean(getString(com.wantique.resource.R.string.common_sign_in_key), false).apply()
-                }
-                Firebase.getInstance().signOut()
-                navigator.navigateToInit()
-            }
-        }
-
         binding.dailyRefresh.setOnRefreshListener {
             request()
         }
