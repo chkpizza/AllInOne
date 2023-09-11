@@ -29,7 +29,7 @@
 
     <string name="professor_details_curriculum_details">상세 커리큘럼</string>
 
-    <string name="daily_toolbar_title">데일리 공시</string>
+    <string name="daily_toolbar_title">매일 프로젝트</string>
     <string name="daily_record_empty_description">오늘 등록된 기록이 없어요\n첫 기록을 작성해봐요!</string>
     <string name="daily_past_exam_description">오늘의 기출문제를\n확인해봐요!</string>
 
