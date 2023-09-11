@@ -13,8 +13,8 @@ android {
         applicationId = "com.wantique.allinone"
         minSdk = Version.minSdk
         targetSdk = Version.targetSdk
-        versionCode = 3
-        versionName = "3.0"
+        versionCode = 4
+        versionName = "4.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
