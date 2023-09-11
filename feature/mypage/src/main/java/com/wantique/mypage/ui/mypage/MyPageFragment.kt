@@ -72,6 +72,14 @@ class MyPageFragment : BaseFragment<FragmentMyPageBinding>(R.layout.fragment_my_
             }
             startActivity(playStoreIntent)
         }
+
+        binding.myPageTvPrivacyPolicy.setOnClickListener {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(resources.getString(com.wantique.resource.R.string.my_page_privacy_policy_url))))
+        }
+
+        binding.myPageTvOpenSourceLicense.setOnClickListener {
+            navigator.navigate(R.id.action_myPageFragment_to_ossLicenseFragment)
+        }
     }
 
     private fun request() {

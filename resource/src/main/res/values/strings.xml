@@ -46,6 +46,7 @@
     <string name="my_page_update_title">앱 업데이트</string>
     <string name="my_page_privacy_policy_title">개인정보처리방침</string>
     <string name="my_page_open_source_license_title">오픈소스 라이선스</string>
+    <string name="my_page_privacy_policy_url">https://allinonewantieuq.blogspot.com/2023/09/blog-post.html</string>
 
     <string name="edit_toolbar_title">내 정보 수정</string>
     <string name="edit_edit_profile_title">프로필 수정</string>
@@ -61,4 +62,48 @@
     <string name="withdrawal_start_withdrawal">회원 탈퇴하기</string>
     <string name="recommend_toolbar_title">제안하기</string>
     <string name="recommend_input_recommend_hint">다양한 내용을 제안해주시면 적극 서비스에 반영 하도록 하겠습니다!</string>
+    <string name="oss_license_toolbar">오픈소스 라이선스</string>
+    <string-array name="oss_license_name">
+        <item>AndroidX Core</item>
+        <item>AndroidX AppCompat</item>
+        <item>AndroidX ConstraintLayout</item>
+        <item>AndroidX Navigation UI</item>
+        <item>AndroidX Navigation Fragment</item>
+        <item>AndroidX Core Splash Screen</item>
+        <item>AndroidX Lifecycle LiveData</item>
+        <item>AndroidX RecyclerView</item>
+        <item>AndroidX SwipeRefreshLayout</item>
+        <item>Google Material</item>
+        <item>Firebase BOM</item>
+        <item>Firebase Analytics</item>
+        <item>Firebase Auth</item>
+        <item>Firebase Firestore</item>
+        <item>Firebase Storage</item>
+        <item>Dagger2</item>
+        <item>SquircleView</item>
+        <item>Glide</item>
+        <item>CirclularImageView</item>
+    </string-array>
+
+    <string-array name="oss_license_url">
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/androidx/androidx/blob/androidx-main/LICENSE.txt</item>
+        <item>https://github.com/material-components/material-components-android</item>
+        <item>https://github.com/firebase/firebase-android-sdk/blob/master/third_party/licenses/apache-2.0.txt</item>
+        <item>https://github.com/firebase/firebase-android-sdk/blob/master/third_party/licenses/apache-2.0.txt</item>
+        <item>https://github.com/firebase/firebase-android-sdk/blob/master/third_party/licenses/apache-2.0.txt</item>
+        <item>https://github.com/firebase/firebase-android-sdk/blob/master/third_party/licenses/apache-2.0.txt</item>
+        <item>https://github.com/firebase/firebase-android-sdk/blob/master/third_party/licenses/apache-2.0.txt</item>
+        <item>https://github.com/google/dagger/blob/master/LICENSE.txt</item>
+        <item>https://github.com/google/dagger/blob/master/LICENSE.txt</item>
+        <item>https://github.com/bumptech/glide/blob/master/LICENSE</item>
+        <item>https://github.com/lopspower/CircularImageView/blob/master/LICENSE</item>
+    </string-array>
 </resources>

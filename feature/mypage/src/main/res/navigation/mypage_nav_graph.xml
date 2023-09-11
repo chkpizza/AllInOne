@@ -14,6 +14,9 @@
         <action
             android:id="@+id/action_myPageFragment_to_recommendFragment"
             app:destination="@id/recommendFragment" />
+        <action
+            android:id="@+id/action_myPageFragment_to_ossLicenseFragment"
+            app:destination="@id/ossLicenseFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
@@ -38,4 +41,8 @@
         android:id="@+id/recommendFragment"
         android:name="com.wantique.mypage.ui.recommend.RecommendFragment"
         android:label="RecommendFragment" />
+    <fragment
+        android:id="@+id/ossLicenseFragment"
+        android:name="com.wantique.mypage.ui.oss.OssLicenseFragment"
+        android:label="OssLicenseFragment" />
 </navigation>
