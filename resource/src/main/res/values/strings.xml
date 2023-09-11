@@ -4,6 +4,7 @@
         format: component_description
         ex: sms_verify_toolbar_title
      -->
+    <string name="app_name">올인원</string>
     <string name="common_sign_in_key">SIGN_IN</string>
 
     <string name="auth_sign_in">구글로 시작하기</string>
