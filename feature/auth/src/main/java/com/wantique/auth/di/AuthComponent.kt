@@ -7,7 +7,7 @@ import com.wantique.base.di.FeatureScope
 import dagger.Subcomponent
 
 @FeatureScope
-@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class, FireStoreModule::class])
+@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class])
 interface AuthComponent {
     @Subcomponent.Factory
     interface Factory {

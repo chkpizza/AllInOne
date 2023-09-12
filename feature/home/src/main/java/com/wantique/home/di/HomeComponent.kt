@@ -6,7 +6,7 @@ import com.wantique.home.ui.details.ProfessorDetailsFragment
 import dagger.Subcomponent
 
 @FeatureScope
-@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class, FireStoreModule::class])
+@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class])
 interface HomeComponent {
     @Subcomponent.Factory
     interface Factory {

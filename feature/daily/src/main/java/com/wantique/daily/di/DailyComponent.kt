@@ -8,7 +8,7 @@ import com.wantique.daily.ui.record.WriteRecordFragment
 import dagger.Subcomponent
 
 @FeatureScope
-@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class, FireStoreModule::class])
+@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class])
 interface DailyComponent {
     @Subcomponent.Factory
     interface Factory {

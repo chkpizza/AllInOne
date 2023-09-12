@@ -1,15 +1,15 @@
-package com.wantique.home.di
+package com.wantique.allinone.di
 
-import com.wantique.base.di.FeatureScope
 import com.wantique.firebase.Firebase
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
-class FireStoreModule {
-    @FeatureScope
+class FirebaseModule {
+    @Singleton
     @Provides
-    fun provideFireStore(): Firebase {
+    fun provideFirebase(): Firebase {
         return Firebase.getInstance()
     }
 }

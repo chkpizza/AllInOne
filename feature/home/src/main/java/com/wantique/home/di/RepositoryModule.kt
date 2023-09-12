@@ -14,8 +14,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 class RepositoryModule {
     @FeatureScope
     @Provides
-    fun provideAuthRepository(dispatcher: CoroutineDispatcher, firestore: Firebase): HomeRepository {
-        return HomeRepositoryImpl(dispatcher, firestore)
+    fun provideAuthRepository(dispatcher: CoroutineDispatcher, firebase: Firebase): HomeRepository {
+        return HomeRepositoryImpl(dispatcher, firebase)
     }
 
     @FeatureScope

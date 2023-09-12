@@ -9,7 +9,7 @@ import com.wantique.mypage.ui.recommend.RecommendFragment
 import dagger.Subcomponent
 
 @FeatureScope
-@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class, FirebaseModule::class])
+@Subcomponent(modules = [ViewModelModule::class, RepositoryModule::class])
 interface MyPageComponent {
     @Subcomponent.Factory
     interface Factory {

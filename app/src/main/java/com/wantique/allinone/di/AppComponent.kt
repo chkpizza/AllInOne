@@ -13,7 +13,7 @@ import dagger.Module
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [SubComponentModule::class, ViewModelFactoryModule::class, CoroutineDispatcherModule::class])
+@Component(modules = [SubComponentModule::class, ViewModelFactoryModule::class, FirebaseModule::class, CoroutineDispatcherModule::class])
 interface AppComponent {
     @Component.Factory
     interface Factory {
