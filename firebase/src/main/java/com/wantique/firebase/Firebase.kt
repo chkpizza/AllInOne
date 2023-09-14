@@ -1,6 +1,5 @@
 package com.wantique.firebase
 
-import android.util.Log
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
@@ -371,37 +370,5 @@ class Firebase private constructor() {
             return firestore
         }
     }
-
-    suspend fun setNotice() {
-        /*
-        Firebase.firestore.collection("home").document("notice").set(
-            NoticeHeaderDto(
-                "놓치지면 손해! 수험 소식"
-            )
-        ).await()
-
-         */
-        val documentId = System.currentTimeMillis().toString()
-        Firebase.firestore.collection("home").document("notice").collection("details").document(documentId).set(
-            NoticeItemDto(
-                "5 기출 사례형 분석 라이브특강 일정 변경 안내",
-                "5 박준철 교수님의 건강 상의 문제로 2023.04.23 일요일 오후에 진행하기로 한 라이브 방송이 4월 24일로 변경되었습니다. 수강생 분들은 꼭 참고해주세요!",
-                "https://www.google.com",
-                "박준철 교수님",
-                documentId
-            )
-        ).await()
-    }
-
-    /*
-    suspend fun getNotice() {
-        Firebase.firestore.collection("home").document("notice").collection("details").orderBy("timestamp", Query.Direction.DESCENDING)
-            .limit(3).get().await().also {
-                val notice = it.toObjects<NoticeDetailsDto>()
-                Log.d("noticeTest", notice.toString())
-            }
-    }
-
-     */
 }
 
