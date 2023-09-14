@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.wantique.base.navigation.NavigatorProvider
 import com.wantique.base.state.UiState
@@ -21,6 +22,7 @@ import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.domain.model.ProfessorItem
 import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
 import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
@@ -108,5 +110,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun request() {
         viewModel.fetchHome()
+    }
+
+    private fun setNotice() {
+        lifecycleScope.launch {
+            Firebase.getInstance().setNotice()
+        }
+    }
+
+    private fun getNotice() {
+        lifecycleScope.launch {
+            //Firebase.getInstance().getNotice()
+            Firebase.getInstance().getNotice()
+        }
     }
 }

@@ -48,4 +48,14 @@ class HomeRepositoryImpl @Inject constructor(private val dispatcher: CoroutineDi
     }.catch {
         emit(Resource.Error(it))
     }.flowOn(dispatcher)
+
+    override fun getNotice(): Flow<Resource<Home.Notice>> = flow {
+        firebase.getNotice()?.let {
+            emit(Resource.Success(Mapper.mapperToDomain(it)))
+        } ?: run {
+            emit(Resource.Error(Throwable("공지사항을 가져오지 못했습니다")))
+        }
+    }.catch { e ->
+        emit(Resource.Error(e))
+    }.flowOn(dispatcher)
 }

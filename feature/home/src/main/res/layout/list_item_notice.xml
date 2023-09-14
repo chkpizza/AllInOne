@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <TextView
+            android:id="@+id/notice_tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            style="@style/defaultTextViewStyle"
+            tools:text="기출 사례형 분석 라이브특강 일정 변경 안내"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/notice_tv_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/notice_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="8dp"
+            tools:text="박준철 교수님의 건강 상의 문제로 2023.04.23 일요일 오후에 진행하기로 한 라이브 방송을 4월 24일에 진행합니다. 박준철 교수님의 수강생 분들은 꼭 참고해주세요! "
+            style="@style/bodyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/notice_tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/notice_tv_body"
+            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/defaultTextViewStyle"
+            tools:text="박준철 교수님"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="12dp"/>
+
+        <View
+            app:layout_constraintTop_toBottomOf="@id/notice_tv_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:background="@color/separator"
+            android:layout_width="0dp"
+            android:layout_height="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
