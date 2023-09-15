@@ -9,4 +9,5 @@ interface HomeRepository {
     fun getCategory(): Flow<Resource<Home.Category>>
     fun getProfessors(): Flow<Resource<List<Home.Professor>>>
     fun getYearlyExam(): Flow<Resource<Home.YearlyExamPlan>>
+    fun getNotice(): Flow<Resource<Home.Notice>>
 }

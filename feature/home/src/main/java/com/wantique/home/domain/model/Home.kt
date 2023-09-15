@@ -19,6 +19,11 @@ sealed class Home {
         val title: String,
         val exam: List<ExamPlanItem>
     ) : Home()
+
+    data class Notice(
+        val header: String,
+        val notice: List<NoticeItem>
+    ) : Home()
 }
 
 data class BannerItem(
@@ -38,4 +43,12 @@ data class ExamPlanItem(
     val examDate: String,
     val name: String,
     val complete: Boolean
+)
+
+data class NoticeItem(
+    val title: String,
+    val body: String,
+    val url: String,
+    val name: String,
+    val documentId: String
 )

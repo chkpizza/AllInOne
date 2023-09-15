@@ -2,18 +2,14 @@ package com.wantique.home.ui.home
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import com.wantique.base.navigation.NavigatorProvider
 import com.wantique.base.state.UiState
 import com.wantique.base.ui.BaseFragment
-import com.wantique.firebase.Firebase
 import com.wantique.home.R
 import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.ui.home.adapter.HomeAdapter

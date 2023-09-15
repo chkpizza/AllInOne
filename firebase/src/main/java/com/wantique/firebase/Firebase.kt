@@ -2,6 +2,7 @@ package com.wantique.firebase
 
 import androidx.core.net.toUri
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.firestore.ktx.toObjects
@@ -13,6 +14,9 @@ import com.wantique.firebase.model.CoverDto
 import com.wantique.firebase.model.DailyLetterDto
 import com.wantique.firebase.model.DailyPastExamDto
 import com.wantique.firebase.model.DailyRecordDto
+import com.wantique.firebase.model.NoticeDto
+import com.wantique.firebase.model.NoticeHeaderDto
+import com.wantique.firebase.model.NoticeItemDto
 import com.wantique.firebase.model.PastExamHeaderDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.ProfessorPreviewDto
@@ -306,6 +310,24 @@ class Firebase private constructor() {
         ).await()
 
         return Firebase.firestore.collection("recommend").document(documentId).get().await().exists()
+    }
+
+    /** 홈 화면의 4번째 섹션인 공지사항을 가져오는 메서드 */
+    suspend fun getNotice(): NoticeDto? {
+        val header = Firebase.firestore.collection("home").document("notice").get().await().run {
+            toObject<NoticeHeaderDto>()
+        }
+
+        val notice = Firebase.firestore.collection("home").document("notice").collection("details").orderBy("timestamp", Query.Direction.DESCENDING).limit(3).get().await().run {
+            toObjects<NoticeItemDto>()
+        }
+
+
+        return header?.let {
+            NoticeDto(it, notice)
+        } ?: run {
+            null
+        }
     }
 
     private suspend fun getUserProfile(uid: String): UserDto? {

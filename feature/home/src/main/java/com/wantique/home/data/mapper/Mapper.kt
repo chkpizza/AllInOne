@@ -2,6 +2,7 @@ package com.wantique.home.data.mapper
 
 import com.wantique.firebase.model.BannerDto
 import com.wantique.firebase.model.CategoryDto
+import com.wantique.firebase.model.NoticeDto
 import com.wantique.firebase.model.ProfessorInfoDto
 import com.wantique.firebase.model.ProfessorPreviewDto
 import com.wantique.firebase.model.YearlyCurriculumDto
@@ -11,6 +12,7 @@ import com.wantique.home.domain.model.Curriculum
 import com.wantique.home.domain.model.DetailCurriculum
 import com.wantique.home.domain.model.ExamPlanItem
 import com.wantique.home.domain.model.Home
+import com.wantique.home.domain.model.NoticeItem
 import com.wantique.home.domain.model.ProfessorInfo
 import com.wantique.home.domain.model.ProfessorItem
 import com.wantique.home.domain.model.YearlyCurriculum
@@ -64,5 +66,15 @@ object Mapper {
 
     fun mapperToDomain(dto: ProfessorInfoDto): ProfessorInfo {
         return ProfessorInfo(dto.name, dto.slogan, dto.url)
+    }
+
+    fun mapperToDomain(dto: NoticeDto): Home.Notice {
+        mutableListOf<NoticeItem>().apply {
+            dto.notice.forEach {
+                add(NoticeItem(it.title, it.body, it.url, it.name, it.documentId))
+            }
+
+            return Home.Notice(dto.header.header, this)
+        }
     }
 }

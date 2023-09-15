@@ -12,10 +12,12 @@ import com.wantique.base.ui.BaseViewModel
 import com.wantique.home.domain.model.Home
 import com.wantique.home.domain.usecase.GetBannerUseCase
 import com.wantique.home.domain.usecase.GetCategoryUseCase
+import com.wantique.home.domain.usecase.GetNoticeUseCase
 import com.wantique.home.domain.usecase.GetProfessorsUseCase
 import com.wantique.home.domain.usecase.GetYearlyExamPlanUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -25,6 +27,7 @@ class HomeViewModel @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getProfessorsUseCase: GetProfessorsUseCase,
     private val getYearlyExamPlanUseCase: GetYearlyExamPlanUseCase,
+    private val getNoticeUseCase: GetNoticeUseCase,
     networkTracker: NetworkTracker,
     context: Context
 ) : BaseViewModel(networkTracker, context) {
@@ -40,38 +43,68 @@ class HomeViewModel @Inject constructor(
     fun fetchHome() {
         if(_home.value !is UiState.Success) {
             viewModelScope.launch {
-                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam()) { banner, category, professors, exam ->
+                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam(), getNotice()) { banner , category, professors, exam, notice ->
                     when {
-                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success -> {
+                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success && notice is UiState.Success -> {
                             _professorsState.value = UiState.Success(professors.getValue())
                             _currentCategoryPosition.value = UiState.Success(0)
-                            UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
+                            _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue(), notice.getValue()))
                         }
 
                         banner is UiState.Error -> {
                             _errorState.value = banner.getError()
-                            null
                         }
 
                         category is UiState.Error -> {
                             _errorState.value = category.getError()
-                            null
                         }
 
                         professors is UiState.Error -> {
                             _errorState.value = professors.getError()
-                            null
                         }
 
                         exam is UiState.Error -> {
                             _errorState.value = exam.getError()
-                            null
                         }
-                        else -> null
+
+                        notice is UiState.Error -> {
+                            _errorState.value = notice.getError()
+                        }
                     }
-                }.collect { state ->
-                    state?.let { _home.value = it }
-                }
+                }.collect()
+
+                /*
+                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam(), getNotice()) { banner, category, professors, exam, notice ->
+                    when {
+                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success && notice is UiState.Success -> {
+                            _professorsState.value = UiState.Success(professors.getValue())
+                            _currentCategoryPosition.value = UiState.Success(0)
+                            //_home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue(), notice.getValue()))
+                        }
+
+                        banner is UiState.Error -> {
+                            _errorState.value = banner.getError()
+                        }
+
+                        category is UiState.Error -> {
+                            _errorState.value = category.getError()
+                        }
+
+                        professors is UiState.Error -> {
+                            _errorState.value = professors.getError()
+                        }
+
+                        exam is UiState.Error -> {
+                            _errorState.value = exam.getError()
+                        }
+
+                        notice is UiState.Error -> {
+                            _errorState.value = notice.getError()
+                        }
+                    }
+                }.collect()
+
+                 */
             }
         }
 
@@ -124,6 +157,7 @@ class HomeViewModel @Inject constructor(
     private fun getCategory() = safeFlow { getCategoryUseCase() }
     private fun getProfessors() = safeFlow { getProfessorsUseCase() }
     private fun getYearlyExam() = safeFlow { getYearlyExamPlanUseCase() }
+    private fun getNotice() = safeFlow { getNoticeUseCase() }
 
     fun updateCategoryPosition(position: Int) {
         _currentCategoryPosition.value = UiState.Success(position)

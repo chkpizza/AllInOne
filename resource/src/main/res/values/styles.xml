@@ -41,6 +41,12 @@
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
+    <style name="bodyTextViewStyle">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/subText</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+    </style>
+
     <style name="largeTextViewStyle">
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/mainText</item>
