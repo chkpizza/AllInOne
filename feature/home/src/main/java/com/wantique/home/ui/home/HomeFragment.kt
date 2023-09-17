@@ -90,11 +90,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private fun setUpViewListener() {
         binding.homeRefresh.setOnRefreshListener {
-            if(viewModel.home.value is UiState.Success) {
-                binding.homeRefresh.isRefreshing = false
-            } else {
-                request()
-            }
+            viewModel.refresh()
         }
 
         binding.homeToolbar.setOnClickListener {
