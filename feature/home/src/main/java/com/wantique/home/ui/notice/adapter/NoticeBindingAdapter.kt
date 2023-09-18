@@ -50,4 +50,12 @@ object NoticeBindingAdapter {
             }
         }
     }
+
+    @BindingAdapter("uploadDate")
+    @JvmStatic
+    fun setUploadDate(view: TextView, item: UiState<NoticeItem>) {
+        item.isSuccessOrNull()?.let {
+            view.text = it.uploadDate
+        }
+    }
 }

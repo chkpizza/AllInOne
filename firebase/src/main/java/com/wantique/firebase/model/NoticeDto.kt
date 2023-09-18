@@ -17,6 +17,7 @@ data class NoticeItemDto(
     val body: String = "",
     val url: String = "",
     val name: String = "",
+    val uploadDate: String = "",
     val documentId: String = "",
     @ServerTimestamp
     val timestamp: Timestamp? = null

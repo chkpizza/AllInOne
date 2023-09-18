@@ -382,5 +382,19 @@ class Firebase private constructor() {
             return firestore
         }
     }
+
+    suspend fun uploadNotice() {
+        val documentId = System.currentTimeMillis().toString()
+        Firebase.firestore.collection("home").document("notice").collection("details").document(documentId).set(
+            NoticeItemDto(
+                "3 기출 사례형 분석 라이브특강 일정 변경 안내",
+                "박준철 교수님의 건강 상의 문제로 2023.04.23 일요일 오후에 진행하기로 한 라이브 방송을 4월 24일로 변경되었습니다. 강의를 수강하시고 계신 수험생분들께서는 참고해주세요!",
+                "https://www.google.com",
+                "박준철 교수님",
+                "2023년 09월 18일",
+                documentId
+            )
+        ).await()
+    }
 }
 

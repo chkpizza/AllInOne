@@ -50,5 +50,6 @@ data class NoticeItem(
     val body: String,
     val url: String,
     val name: String,
+    val uploadDate: String,
     val documentId: String
 )

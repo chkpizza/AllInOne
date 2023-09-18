@@ -72,7 +72,7 @@ object Mapper {
     fun mapperToDomain(dto: NoticeDto): Home.Notice {
         mutableListOf<NoticeItem>().apply {
             dto.notice.forEach {
-                add(NoticeItem(it.title, it.body, it.url, it.name, it.documentId))
+                add(NoticeItem(it.title, it.body, it.url, it.name, it.uploadDate, it.documentId))
             }
 
             return Home.Notice(dto.header.header, this)
@@ -80,7 +80,7 @@ object Mapper {
     }
 
     fun mapperToDomain(dto: NoticeItemDto): NoticeItem {
-        return NoticeItem(dto.title, dto.body, dto.url, dto.name, dto.documentId)
+        return NoticeItem(dto.title, dto.body, dto.url, dto.name, dto.uploadDate, dto.documentId)
     }
 
     /*
@@ -93,7 +93,7 @@ object Mapper {
      */
     fun mapperToDomain(vararg dto: NoticeItemDto): List<NoticeItem> {
         return dto.map {
-            NoticeItem(it.title, it.body, it.url, it.name, it.documentId)
+            NoticeItem(it.title, it.body, it.url, it.name, it.uploadDate, it.documentId)
         }
     }
 }
