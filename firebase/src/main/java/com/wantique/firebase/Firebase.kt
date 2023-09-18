@@ -330,6 +330,18 @@ class Firebase private constructor() {
         }
     }
 
+    suspend fun getNoticeById(id: String): NoticeItemDto? {
+        return Firebase.firestore.collection("home").document("notice").collection("details").document(id).get().await().run {
+            toObject<NoticeItemDto>()
+        }
+    }
+
+    suspend fun getAllNotice(): List<NoticeItemDto> {
+        return Firebase.firestore.collection("home").document("notice").collection("details").orderBy("timestamp", Query.Direction.DESCENDING).get().await().run {
+            toObjects<NoticeItemDto>()
+        }
+    }
+
     private suspend fun getUserProfile(uid: String): UserDto? {
         return Firebase.firestore.collection("user").document(uid).get().await().run {
             toObject<UserDto>()

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.wantique.home.ui.notice.NoticeViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.notice.NoticeFragment"
+        app:errorHandler="@{vm.errorState}">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/notice_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="?attr/homeAsUpIndicator">
+
+            <TextView
+                android:id="@+id/notice_tv_toolbar_title"
+                style="@style/toolbarTextViewStyle"
+                app:noticeToolbarTitle="@{vm.notice}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <View
+            android:id="@+id/notice_divide_toolbar"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/separator"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notice_toolbar" />
+
+        <TextView
+            android:id="@+id/notice_tv_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:noticeTitle="@{vm.notice}"
+            app:layout_constraintTop_toBottomOf="@id/notice_divide_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            style="@style/titleTextViewStyle"
+            android:gravity="center"
+            tools:text="기출 사례형 분석 라이브특강 일정 변경 안내 "/>
+
+        <TextView
+            android:id="@+id/notice_tv_body"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/notice_tv_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="20dp"
+            app:noticeBody="@{vm.notice}"
+            tools:text="박준철 교수님의 건강 상의 문제로 2023.04.23 일요일 오후에 진행하기로 한 라이브 방송을 4월 24일로 변경되었습니다. 강의를 수강하시고 계신 수험생분들께서는 참고해주세요!"
+            style="@style/bodyTextViewStyle"/>
+
+        <TextView
+            android:id="@+id/notice_tv_link"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/notice_tv_body"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp"
+            android:text="교수님의 공지사항 확인하기"
+            app:noticeLink="@{vm.notice}"
+            style="@style/defaultTextViewStyle"
+            android:gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:padding="20dp"
+            android:background="@drawable/common_tv_background"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
