@@ -2,9 +2,8 @@ package com.wantique.home.data.repository
 
 import com.wantique.base.state.Resource
 import com.wantique.firebase.Firebase
-import com.wantique.home.data.mapper.Mapper
-import com.wantique.home.domain.model.ProfessorInfo
-import com.wantique.home.domain.model.YearlyCurriculum
+import com.wantique.firebase.model.ProfessorInfoDto
+import com.wantique.firebase.model.YearlyCurriculumDto
 import com.wantique.home.domain.repository.ProfessorDetailsRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -17,25 +16,23 @@ class ProfessorDetailsRepositoryImpl @Inject constructor(
     private val dispatcher: CoroutineDispatcher,
     private val firebase: Firebase
 ) : ProfessorDetailsRepository {
-    override fun getProfessorCurriculum(professorId: String): Flow<Resource<YearlyCurriculum>> = flow {
+    override fun getProfessorCurriculum(professorId: String): Flow<Resource<YearlyCurriculumDto>> = flow {
         firebase.getProfessorCurriculum(professorId)?.let {
-            emit(Resource.Success(Mapper.mapperToDomain(it)))
+            emit(Resource.Success(it))
         } ?: run {
-            emit(Resource.Error(Throwable("교수님의 커리큘럼 정보를 가져오지 못했습니다")))
+            emit(Resource.Error(Throwable("커리큘럼 정보를 가져오지 못했습니다")))
         }
-    }.catch {
-        emit(Resource.Error(it))
+    }.catch { e ->
+        emit(Resource.Error(e))
     }.flowOn(dispatcher)
 
-    override fun getProfessorInfo(professorId: String): Flow<Resource<ProfessorInfo>> = flow {
+    override fun getProfessorInfo(professorId: String): Flow<Resource<ProfessorInfoDto>> = flow {
         firebase.getProfessorInfo(professorId)?.let {
-            emit(Resource.Success(Mapper.mapperToDomain(it)))
+            emit(Resource.Success(it))
         } ?: run {
             emit(Resource.Error(Throwable("교수님의 정보를 가져오지 못했습니다")))
         }
-    }.catch {
-        emit(Resource.Error(it))
+    }.catch { e ->
+        emit(Resource.Error(e))
     }.flowOn(dispatcher)
-
-
 }
