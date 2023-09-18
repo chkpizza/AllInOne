@@ -72,84 +72,42 @@ class HomeViewModel @Inject constructor(
                         }
                     }
                 }.collect()
-
-                /*
-                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam(), getNotice()) { banner, category, professors, exam, notice ->
-                    when {
-                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success && notice is UiState.Success -> {
-                            _professorsState.value = UiState.Success(professors.getValue())
-                            _currentCategoryPosition.value = UiState.Success(0)
-                            //_home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue(), notice.getValue()))
-                        }
-
-                        banner is UiState.Error -> {
-                            _errorState.value = banner.getError()
-                        }
-
-                        category is UiState.Error -> {
-                            _errorState.value = category.getError()
-                        }
-
-                        professors is UiState.Error -> {
-                            _errorState.value = professors.getError()
-                        }
-
-                        exam is UiState.Error -> {
-                            _errorState.value = exam.getError()
-                        }
-
-                        notice is UiState.Error -> {
-                            _errorState.value = notice.getError()
-                        }
-                    }
-                }.collect()
-
-                 */
             }
         }
+    }
 
-        /*
-        if(_home.value !is UiState.Success) {
-            viewModelScope.launch {
-                combine(getBanner(), getCategory(), getProfessors(), getYearlyExam()) { banner, category, professors, exam ->
-                    when {
-                        banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success -> {
-                            _professorsState.value = UiState.Success(professors.getValue())
-                            _currentCategoryPosition.value = UiState.Success(0)
-                            UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue()))
-                        }
-
-                        banner is UiState.Error -> {
-                            _errorState.value = banner.getError()
-                            null
-                        }
-
-                        category is UiState.Error -> {
-                            _errorState.value = category.getError()
-                            null
-                        }
-
-                        professors is UiState.Error -> {
-                            _errorState.value = professors.getError()
-                            null
-                        }
-
-                        exam is UiState.Error -> {
-                            _errorState.value = exam.getError()
-                            null
-                        }
-                        else -> null
+    fun refresh() {
+        viewModelScope.launch {
+            combine(getBanner(), getCategory(), getProfessors(), getYearlyExam(), getNotice()) { banner , category, professors, exam, notice ->
+                when {
+                    banner is UiState.Success && category is UiState.Success && professors is UiState.Success && exam is UiState.Success && notice is UiState.Success -> {
+                        _professorsState.value = UiState.Success(professors.getValue())
+                        _currentCategoryPosition.value = UiState.Success(0)
+                        _home.value = UiState.Success(listOf(banner.getValue(), category.getValue(), professors.getValue()[0], exam.getValue(), notice.getValue()))
                     }
-                }.collect { state ->
-                    state?.let { _home.value = it }
+
+                    banner is UiState.Error -> {
+                        _errorState.value = banner.getError()
+                    }
+
+                    category is UiState.Error -> {
+                        _errorState.value = category.getError()
+                    }
+
+                    professors is UiState.Error -> {
+                        _errorState.value = professors.getError()
+                    }
+
+                    exam is UiState.Error -> {
+                        _errorState.value = exam.getError()
+                    }
+
+                    notice is UiState.Error -> {
+                        _errorState.value = notice.getError()
+                    }
                 }
-            }
+            }.collect()
         }
-        else {
-
-        }
-
-         */
     }
 
 

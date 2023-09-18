@@ -15,7 +15,9 @@ import com.wantique.home.databinding.FragmentHomeBinding
 import com.wantique.home.ui.home.adapter.HomeAdapter
 import com.wantique.home.di.HomeComponentProvider
 import com.wantique.home.domain.model.ProfessorItem
+import com.wantique.home.ui.home.adapter.listener.OnAllNoticeClickListener
 import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.home.adapter.listener.OnNoticeClickListener
 import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
 import javax.inject.Inject
 
@@ -84,17 +86,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(R.layout.fragment_home) {
             }
         }
 
-        homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener)
+        val onNoticeClickListener = object : OnNoticeClickListener {
+            override fun onClick(documentId: String) {
+                navigator.navigate(HomeFragmentDirections.actionHomeFragmentToNoticeFragment(documentId))
+            }
+        }
+
+        val onAllNoticeClickListener = object : OnAllNoticeClickListener {
+            override fun onClick() {
+                navigator.navigate(R.id.action_homeFragment_to_noticeListFragment)
+            }
+
+        }
+
+        homeAdapter = HomeAdapter(onCategoryClickListener, onProfessorClickListener, onNoticeClickListener, onAllNoticeClickListener)
         binding.homeRvContent.adapter = homeAdapter
     }
 
     private fun setUpViewListener() {
         binding.homeRefresh.setOnRefreshListener {
-            if(viewModel.home.value is UiState.Success) {
-                binding.homeRefresh.isRefreshing = false
-            } else {
-                request()
-            }
+            viewModel.refresh()
         }
 
         binding.homeToolbar.setOnClickListener {

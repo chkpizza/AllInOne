@@ -11,12 +11,16 @@ import com.wantique.home.databinding.LayoutExamBinding
 import com.wantique.home.databinding.LayoutNoticeBinding
 import com.wantique.home.databinding.LayoutProfessorBinding
 import com.wantique.home.domain.model.Home
+import com.wantique.home.ui.home.adapter.listener.OnAllNoticeClickListener
 import com.wantique.home.ui.home.adapter.listener.OnCategoryClickListener
+import com.wantique.home.ui.home.adapter.listener.OnNoticeClickListener
 import com.wantique.home.ui.home.adapter.listener.OnProfessorClickListener
 
 class HomeAdapter(
     private val onCategoryClickListener: OnCategoryClickListener,
-    private val onProfessorClickListener: OnProfessorClickListener
+    private val onProfessorClickListener: OnProfessorClickListener,
+    private val onNoticeClickListener: OnNoticeClickListener,
+    private val onAllNoticeClickListener: OnAllNoticeClickListener
 ) : ListAdapter<Home, RecyclerView.ViewHolder>(object : DiffUtil.ItemCallback<Home>() {
     override fun areItemsTheSame(oldItem: Home, newItem: Home): Boolean {
         return oldItem == newItem
@@ -30,7 +34,7 @@ class HomeAdapter(
     private val categoryAdapter = CategoryAdapter(onCategoryClickListener)
     private val professorAdapter = ProfessorAdapter(onProfessorClickListener)
     private val examAdapter = ExamAdapter()
-    private val noticeAdapter = NoticeAdapter()
+    private val noticeAdapter = NoticeAdapter(onNoticeClickListener)
 
     inner class BannerWrapperViewHolder(private val binding: LayoutBannerBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Home) {
@@ -78,6 +82,10 @@ class HomeAdapter(
                 binding.noticeTvHeader.text = it.header
                 binding.noticeRv.adapter = noticeAdapter
                 noticeAdapter.submitList(it.notice)
+
+                binding.noticeTvMoreView.setOnClickListener {
+                    onAllNoticeClickListener.onClick()
+                }
             }
         }
     }

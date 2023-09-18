@@ -32,6 +32,29 @@ class DailyViewModel @Inject constructor(
     val daily = _daily.asStateFlow()
 
     fun fetchDaily() {
+        if(_daily.value !is UiState.Success) {
+            viewModelScope.launch {
+                combine(getDailyLetter(), getDailyRecord(), getDailyPastExam()) { letter, record, pastExam ->
+                    when {
+                        letter is UiState.Success && record is UiState.Success && pastExam is UiState.Success -> {
+                            _daily.value = UiState.Success(listOf(letter.getValue(), record.getValue(), pastExam.getValue()))
+                        }
+                        letter is UiState.Error -> {
+                            _errorState.value = letter.getError()
+                        }
+                        record is UiState.Error -> {
+                            _errorState.value = record.getError()
+                        }
+                        pastExam is UiState.Error -> {
+                            _errorState.value = pastExam.getError()
+                        }
+                    }
+                }.collect()
+            }
+        }
+    }
+
+    fun refresh() {
         viewModelScope.launch {
             combine(getDailyLetter(), getDailyRecord(), getDailyPastExam()) { letter, record, pastExam ->
                 when {

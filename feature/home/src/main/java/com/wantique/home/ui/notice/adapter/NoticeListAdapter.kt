@@ -1,4 +1,4 @@
-package com.wantique.home.ui.home.adapter
+package com.wantique.home.ui.notice.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,11 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.wantique.home.databinding.ListItemNoticeBinding
 import com.wantique.home.domain.model.NoticeItem
-import com.wantique.home.ui.home.adapter.listener.OnNoticeClickListener
 
-class NoticeAdapter(
+class NoticeListAdapter(
     private val onNoticeClickListener: OnNoticeClickListener
-) : ListAdapter<NoticeItem, NoticeAdapter.NoticeViewHolder>(object : DiffUtil.ItemCallback<NoticeItem>() {
+) : ListAdapter<NoticeItem, NoticeListAdapter.NoticeListViewHolder>(object : DiffUtil.ItemCallback<NoticeItem>() {
     override fun areItemsTheSame(oldItem: NoticeItem, newItem: NoticeItem): Boolean {
         return oldItem == newItem
     }
@@ -20,7 +19,7 @@ class NoticeAdapter(
         return oldItem == newItem
     }
 }) {
-    inner class NoticeViewHolder(private val binding: ListItemNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NoticeListViewHolder(private val binding: ListItemNoticeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: NoticeItem) {
             binding.item = item
 
@@ -30,12 +29,12 @@ class NoticeAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeListViewHolder {
         val binding = ListItemNoticeBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NoticeViewHolder(binding)
+        return NoticeListViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: NoticeViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: NoticeListViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
 }

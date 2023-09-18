@@ -50,7 +50,8 @@ class DailyFragment : BaseFragment<FragmentDailyBinding>(R.layout.fragment_daily
         }
 
         binding.dailyRefresh.setOnRefreshListener {
-            request()
+            //request()
+            viewModel.refresh()
         }
     }
 

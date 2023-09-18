@@ -11,6 +11,12 @@
         <action
             android:id="@+id/action_homeFragment_to_professorDetailsFragment"
             app:destination="@id/professorDetailsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_noticeListFragment"
+            app:destination="@id/noticeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/professorDetailsFragment"
@@ -19,5 +25,21 @@
         <argument
             android:name="id"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.wantique.home.ui.notice.NoticeFragment"
+        android:label="NoticeFragment" >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/noticeListFragment"
+        android:name="com.wantique.home.ui.notice.NoticeListFragment"
+        android:label="NoticeListFragment" >
+        <action
+            android:id="@+id/action_noticeListFragment_to_noticeFragment"
+            app:destination="@id/noticeFragment" />
     </fragment>
 </navigation>
