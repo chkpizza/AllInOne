@@ -68,7 +68,7 @@ class AuthFragment : BaseFragment<FragmentAuthBinding>(R.layout.fragment_auth) {
     }
 
     private fun setUpViewListener() {
-        binding.authBtnSignIn.setOnClickListener {
+        binding.authContainerGoogleSignIn.setOnClickListener {
             signInWithGoogle()
         }
     }
